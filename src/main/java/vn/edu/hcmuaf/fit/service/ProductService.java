@@ -1378,7 +1378,6 @@ public class ProductService {
         return result;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getListBillByIdCustomer("ad_quoc"));
+    public static void main(String[] args) throws SQLException {
     }
 }

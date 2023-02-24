@@ -39,7 +39,7 @@ public class DoProfile extends HttpServlet {
                     String change = "update customer set name = '" + name + "', phone = '" + phone + "', address = '" + address + "' where username ='" + username + "';";
                     pre.executeUpdate(change);
                     request.setAttribute("success", "Thay đổi thông tin thành công");
-                    request.getRequestDispatcher("account.jsp").forward(request, response);
+                    request.getRequestDispatcher("edit-account.jsp").forward(request, response);
                 }
             }
         } catch (SQLException e) {
