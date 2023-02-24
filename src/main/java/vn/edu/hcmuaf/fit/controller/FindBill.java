@@ -16,12 +16,7 @@ public class FindBill extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id_bill = request.getParameter("text");
-        List<Bill> list = new ArrayList<Bill>();
-        try {
-            list.add(ProductService.getBill(id_bill));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<Bill> list = ProductService.findBill(id_bill);
         request.setAttribute("list",list);
         long sales = 0;
         int count = 0;
