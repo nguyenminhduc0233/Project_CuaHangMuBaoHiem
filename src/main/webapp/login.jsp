@@ -68,6 +68,9 @@ To change this template use File | Settings | File Templates.
                 </div>
                 <p style="color: red"><%=(error != null && error != "") ? error : ""%>
                 </p>
+                <p>Or sign in with:</p>
+                <a href="#"><i class="fa-brands fa-facebook-f" style="font-size: 20px;"></i></a>
+                <a href="#"><i class="fa-brands fa-google-plus-g" style="font-size: 20px; margin-left: 20px"></i></a>
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
