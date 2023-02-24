@@ -1126,6 +1126,20 @@ public class ProductService {
             }
             return result;
         }
+    public static List<Bill> findBill(String para) {
+        List<Bill> list = new ArrayList<Bill>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Statement statement = dbConnect.get();
+        try {
+            ResultSet rs = statement.executeQuery("select id from bill where id like '%"+para+"%'");
+            while (rs.next()) {
+                list.add(getBill(rs.getString("id")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
     public static List<Bill> getListBillByIdCustomer (String id_cus) {
         List<Bill> result = new ArrayList<Bill>();
         try {
@@ -1238,52 +1252,6 @@ public class ProductService {
                 e.printStackTrace();
             }
         }
-        public static Map<String,String> getListComment(String id_pro){
-            Map<String,String> result = new HashMap<String,String>();
-            try {
-                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id_customer,comment from comment where id_product=?");
-                ps.setString(1,id_pro);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()){
-                    result.put(rs.getString(1),rs.getString(2));
-                }
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-            return result;
-        }
-        public static int getStarComment(String id_cus,String id_pro, String comment){
-            int result = 0;
-            try {
-                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id_customer=? and id_product=? and comment=?");
-                ps.setString(1,id_cus);
-                ps.setString(2,id_pro);
-                ps.setString(3,comment);
-                ResultSet rs = ps.executeQuery();
-                if(rs.next()){
-                    result+= rs.getInt(1);
-                }
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
-            return result;
-        }
-    public static String getDateComment(String id_cus,String id_pro, String comment) {
-        String result = "";
-        try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select DAY(date),MONTH(date),YEAR(date) from comment where id_customer=? and id_product=? and comment=?");
-            ps.setString(1, id_cus);
-            ps.setString(2, id_pro);
-            ps.setString(3, comment);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                result += rs.getInt(1) + "/" + rs.getInt(2) + "/" + rs.getInt(3);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
     public static List<Product> listType(String type, String id) {
         List<Product> list = new ArrayList<Product>();
 
@@ -1377,7 +1345,107 @@ public class ProductService {
         }
         return result;
     }
+    public static List<Integer> getListIDCommentByProduct(String idpro){
+        List<Integer> list = new ArrayList<Integer>();
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from comment where id_product=?");
+            prs.setString(1,idpro);
+            ResultSet rs = prs.executeQuery();
+            while(rs.next()){
+                list.add(rs.getInt("id"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static String getIdCustomerByIdComment(int id){
+        String result = "";
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from comment where id=?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while(rs.next()){
+                result +=rs.getString("id_customer");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static String getCommentByIdComment(int id){
+        String result = "";
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select comment from comment where id=?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while(rs.next()){
+                result +=rs.getString("comment");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static int getStarByIdComment(int id){
+        int result = 0;
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id=?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while(rs.next()){
+                result = rs.getInt("star");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static Date getDateByIdComment(int id){
+        String result = "";
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select date from comment where id=?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            if(rs.next()){
+                return rs.getDate("date");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static int getDisplayByIdComment(int id){
+        int result = 0;
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select display from comment where id=?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            if(rs.next()){
+                return rs.getInt("display");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static void changeDisplayComment(int id){
+        int dislay = getDisplayByIdComment(id);
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update comment set display = ? where id =?");
+            prs.setInt(2,id);
+            if(dislay==0){
+                prs.setInt(1,1);
+            }else{
+                prs.setInt(1,0);
+            }
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws SQLException {
+
     }
 }

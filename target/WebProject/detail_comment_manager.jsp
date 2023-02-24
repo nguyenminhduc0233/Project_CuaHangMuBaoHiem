@@ -1,36 +1,41 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: ACER
+  Date: 2/19/2023
+  Time: 3:26 PM
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page import="java.util.List" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.Bill" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chỉnh sửa hóa đơn</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <title>Chi tiết hóa đơn</title>
   <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
   />
   <link rel="stylesheet" href="admin/assets/css/tailwind.output.css" />
-  <link rel="stylesheet" href="admin/assets/css/filter.css" />
   <script
           src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
           defer
   ></script>
   <script src="admin/assets/js/init-alpine.js"></script>
-
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
   <style>
-    .button{
-      width: 106px;
-      height: 37px;
-      float: left;
+    .text-primary{
+      color: #FFD333;
     }
-
+    .fa-eye{
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -96,10 +101,7 @@
           </a>
         </li>
         <li class="relative px-6 py-3">
-                <span
-                        class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                        aria-hidden="true"
-                ></span>
+
           <a
                   class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                   href="/Project_CuaHangMuBaoHiem_war/list-bill"
@@ -156,8 +158,31 @@
             <span class="ml-4">Quản lý trang chủ</span>
           </a>
         </li>
+        <li class="relative px-6 py-3">
+                <span
+                        class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                        aria-hidden="true"
+                ></span>
+          <a
+                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                  href="/Project_CuaHangMuBaoHiem_war/list-bill"
+          >
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+            >
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Quản lí bình luận</span>
+          </a>
+        </li>
       </ul>
-
     </div>
   </aside>
   <!-- Mobile sidebar -->
@@ -257,127 +282,79 @@
     </header>
     <main class="h-full pb-16 overflow-y-auto">
       <div class="container grid px-6 mx-auto">
-        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-          Chỉnh sửa thông tin hóa đơn
-        </h2>
+
+        <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200" style= "font-size: 1rem;margin-top: 50px"><a href="comment_manager.jsp">Quản lý bình luận </a><span style="font-size: 1rem;color: rgb(183, 183, 183);">/ Tất cả bình luận</span></h2>
+        <!-- With actions -->
+
+        <br><br>
         <%
-          Bill bill = (Bill)request.getAttribute("bill");
-          String address = bill.getAddress();
-          String phone = bill.getPhone();
-          address = address==null?"":address;
-          phone = phone==null?"":phone;
-          String status = "";
-
-          switch (bill.getStatus()){
-            case "Đang gửi":status+="sending";break;
-            case "Đã nhận":status+="recived";break;
-            case "Đã hủy":status+="cancel";break;
-          }
+          List<Integer> comment = (List<Integer>) request.getAttribute("detail_comment");
+          String id_product = (String) request.getAttribute("id_product");
         %>
+        <h2 class="my-6 text-2xl font-semibold text-gray-300 dark:text-gray-200" style="font-size: medium;font-weight: normal">
+          ID: <%=id_product%>
+          <br><br>
+          Tên: <%=ProductService.getProduct(id_product).getName()%>
+        </h2>
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+          <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+              <thead>
+              <tr
+                      class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+              >
+                <th class="px-4 py-3">ID khách hàng</th>
+                <th class="px-4 py-3">Tên khách hàng</th>
+                <th class="px-4 py-3">Số sao đánh giá</th>
+                <th class="px-4 py-3">Bình luận</th>
+                <th class="px-4 py-3">Ngày đánh giá</th>
+              </tr>
+              </thead>
+              <tbody
+                      class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
+              >
+              <%
+                NumberFormat nf = new NumberFormat();
+                for(int s: comment){
 
-        <form action="/Project_CuaHangMuBaoHiem_war/fix-bill" method="get">
-          <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-            <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Id hóa đơn</span>
-              <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                     name=""  value="<%=bill.getId()%>"    disabled  />
-              <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                   type="hidden"  name="id"  value="<%=bill.getId()%>"   />
-            </label>
+              %>
+              <tr class="text-gray-700 dark:text-gray-400">
+                <td class="px-4 py-3 text-sm">
+                  <%=ProductService.getIdCustomerByIdComment(s)%>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  <%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(s)).getName()%>
+                </td>
+                <td class="px-4 py-3 text-sm">
 
-            <br>
-            <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Số điện thoại</span>
-              <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                     name="phone"   value="<%=phone%>"     />
-            </label>
-            <br>
-            <label class="block text-sm">
-              <span class="text-gray-700 dark:text-gray-400">Địa chỉ</span>
-              <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                     name="address"     value="<%=address%>"     />
-            </label>
-            <br>
-            <%if(bill.getStatus().equals("Đang gửi")){%>
-            <label
-                    class="inline-flex items-center text-gray-600 dark:text-gray-400"
-            >
-              <input id="sending"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="status"
-                     value="Đang gửi"
-              />
-              <span class="ml-2">Đang gửi</span>
-            </label>
-            <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-            >
-              <input id="recived1"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="status"
-                      value="Đã nhận"
-              />
-              <span class="ml-2">Đã nhận</span>
-            </label>
-            <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-            >
-              <input  id="cancel1"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="status"
-                      value="Đã hủy"
-              />
-              <span class="ml-2">Đã hủy</span>
-            </label>
-            <%}else if(bill.getStatus().equals("Đã nhận")){%>
-            <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-            >
-              <input id="recived"
-                     type="radio"
-                     class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                     name="status"
-                     value="Đã nhận"
-              />
-              <span class="ml-2">Đã nhận</span>
-            </label>
-            <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-            >
-              <input  id="cancel"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="status"
-                      value="Đã hủy"
-              />
-              <span class="ml-2">Đã hủy</span>
-            <%}else{%>
-            </label>
-            <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-            >
-              <input  id="cancel"
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="status"
-                      value="Đã hủy"
-              />
-              <span class="ml-2">Đã hủy</span>
-            <%}%>
+                  <%for (int j=1;j<=ProductService.getStarByIdComment(s);j++){%>
+                  <small class="fa fa-star text-primary mr-1"></small>
+                  <%}%>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  <%=ProductService.getCommentByIdComment(s)%>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  <%=ProductService.getDateByIdComment(s)%>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  <a href="/Project_CuaHangMuBaoHiem_war/change-display-comment?id=<%=s%>&idpro=<%=id_product%>">
+                  <%if(ProductService.getDisplayByIdComment(s)==1){%>
+                  <i class="fa fa-eye" style="cursor: pointer"></i>
+                  <%}else{%>
+                  <i class="fa fa-eye-slash" style="cursor: pointer"></i>
+                  <%}%>
+                  </a>
+                </td>
+              </tr>
+              <%}%>
+              </tbody>
+            </table>
           </div>
-          <input type="submit" value="Lưu" class="button" style="background: #007bff; margin-right: 20px">
-          <a href="http://localhost:8080/Project_CuaHangMuBaoHiem_war/list-bill"><button type="button" class="button cancel" style="background: red">Hủy</button></a>
-        </form>
+        </div>
       </div>
-
     </main>
   </div>
 </div>
-<script>
-  document.getElementById("<%=status%>").checked = true;
-</script>
 </body>
 </html>
