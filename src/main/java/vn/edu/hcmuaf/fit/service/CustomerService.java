@@ -169,13 +169,6 @@ public class CustomerService {
     }
 
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-//        System.out.println(emailValidate("@tran.duyn.han@gm.ail.com"));
-//        System.out.println(pwValidate("nhandz", "nhandz"));
-//        System.out.println(checkEmail("20130346@st.hcmuaf.edu.vn"));
-//        addCustomer("nhandz", "123123", "iam", "123@gmail.com");
-//        System.out.println(toMD5("123456"));
-//        changePassword("tdn", "c4ca4238a0b923820dcc509a6f75849b", toMD5("nhandz"));
-//        resetPassword("20130346@st.hcmuaf.edu.vn");
-        System.out.println(checkActive("tdn"));
+        addCustomer("abcd","12345","Kim Anh","kimanh123@gmail.com");
     }
 }

@@ -1447,6 +1447,5 @@ public class ProductService {
 
 
     public static void main(String[] args) {
-        System.out.println(getIdCustomerByIdComment(123));
     }
 }
