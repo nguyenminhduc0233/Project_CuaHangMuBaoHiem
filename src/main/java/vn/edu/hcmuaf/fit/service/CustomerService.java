@@ -113,7 +113,19 @@ public class CustomerService {
         }
         return isLogin;
     }
-
+    public static boolean checkLoginLock(String username, String password) throws SQLException {
+        boolean isLogin = false;
+        DBConnect dbConnect = DBConnect.getInstance();
+        String sql = "select username, password from customer where username = ? and password = ?";
+        PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
+        pre.setString(1, username);
+        pre.setString(2, password);
+        ResultSet rs = pre.executeQuery();
+        if (rs.next()) {
+            isLogin = true;
+        }
+        return isLogin;
+    }
     public static boolean checkUsername(String username) throws SQLException {
         boolean isUsername = false;
         DBConnect dbConnect = DBConnect.getInstance();
@@ -167,8 +179,64 @@ public class CustomerService {
         }
         return isActive;
     }
+    public static void checkLock(String username){
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customer where username=?");
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                if(rs.getInt("countLock")>=4){
+                lock(username);
+                }
+            }
+        } catch (SQLException e) {
+        }
+    }
+    public static void lock(String username){
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set active=? where username=?");
+            ps.setString(1,"0");
+            ps.setString(2, username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+    public void countLock(String username){
 
+        int count= 0;
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customer where username=?");
+            ps.setString(1,username);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                count= rs.getInt("countLock");
+            }
+        } catch (SQLException e) {
+        }
+    }
+    public static void plusLock(String username){
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set countLock= countLock +1 where username=?");
+            ps.setString(1,username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+    public static void resetLock(String username){
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set countLock= ? where username=?");
+            ps.setInt(1,0);
+            ps.setString(2,username);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-        addCustomer("abcd","12345","Kim Anh","kimanh123@gmail.com");
+
     }
 }

@@ -6,8 +6,6 @@ Date: 11/6/2022
 Time: 9:13 PM
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html lang="en">
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -84,11 +82,11 @@ To change this template use File | Settings | File Templates.
                                                class="form-control"
                                                placeholder="Nhập Họ và tên"
                                                name="name"
-                                               value="<%= cus.getName()!=null? cus.getName():"" %>">
+                                               value="<%= cus.getName()!=null? cus.getName():"" %>" disabled>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Email *</label>
-                                        <div class="form-control no_text"><%= cus.getEmail() %>
+                                        <div class="form-control no_text" style="background-color: #e9ecef;"><%= cus.getEmail() %>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +98,7 @@ To change this template use File | Settings | File Templates.
                                                 class="form-control"
                                                 placeholder="Nhập Số điện thoại"
                                                 name="phone"
-                                                value="<%= cus.getPhone()!=null? cus.getPhone():"" %>">
+                                                value="<%= cus.getPhone()!=null? cus.getPhone():"" %>" disabled>
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Địa chỉ *</label>
@@ -109,19 +107,22 @@ To change this template use File | Settings | File Templates.
                                                 class="form-control"
                                                 placeholder="Nhập địa chỉ"
                                                 name="address"
-                                                value="<%= cus.getAddress()!=null? cus.getAddress():"" %>">
+                                                value="<%= cus.getAddress()!=null? cus.getAddress():"" %>" disabled>
                                     </div>
                                 </div>
                             </div>
-                            <span style="color: red; font-size: 18px; text-align: center;"><%=(error != null && error != "") ? error : ""%>
-                </span>
-                            <div class="form-group">
-                                <div class="f-btn">
-                                    <button type="submit"> Lưu</button>
-                                </div>
-                            </div>
+                            <span style="color: red; font-size: 18px; text-align: center;"><%=(error != null && error != "") ? error : ""%></span>
+
                         </form>
+                        <div class="form-group">
+                                <div class="f-btn">
+                                    <a href="/Project_CuaHangMuBaoHiem_war/edit-account.jsp">
+                                    <button type="button">Chỉnh sửa thông tin</button>
+                                    </a>
+                                </div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="tab-pane fade" id="v-pills-reset_pw" role="tabpanel" aria-labelledby="v-pills-reset_pw-tab">
                     <div class="form-account">

@@ -28,17 +28,33 @@ public class DoLogin extends HttpServlet {
             if (username == null || username == "" || password == null || password == "") {
                 request.setAttribute("error", "Người dùng không được để trống Tên đăng nhập hoặc Mật khẩu.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if(CustomerService.checkActive(username) == 0) {
+            } else if(CustomerService.checkActive(username) == 0 && CustomerService.checkUsername(username)) {
                 request.setAttribute("error", "Tài khoản đã bị khóa.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else if (CustomerService.checkLogin(username, CustomerService.toMD5(password)) == true) {
+                CustomerService.resetLock(username);
                 session.setAttribute("tendangnhap", username);
                 Customer customer = CustomerService.customer(username);
+<<<<<<< HEAD
                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
             } else {
+=======
+                if (customer.getPermission() == 0){
+                    response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                }else {
+                    response.sendRedirect("ManageProduct");
+                }
+            } else if(!CustomerService.checkLogin(username, CustomerService.toMD5(password)) && !CustomerService.checkUsername(username)){
+>>>>>>> origin
                 request.setAttribute("error", "Người dùng nhập không đúng Tên đăng nhập hoặc Mật khẩu.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-
+            }else{
+                if(!CustomerService.checkLogin(username, CustomerService.toMD5(password)) && CustomerService.checkUsername(username)){
+                    CustomerService.checkLock(username);
+                    CustomerService.plusLock(username);
+                    request.setAttribute("error", "Người dùng nhập không đúng Tên đăng nhập hoặc Mật khẩu.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

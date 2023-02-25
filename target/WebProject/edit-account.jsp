@@ -1,12 +1,12 @@
-<%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %><%--
-Created by IntelliJ IDEA.
-User: ACER
-Date: 11/6/2022
-Time: 9:13 PM
-To change this template use File | Settings | File Templates.
+<%--
+  Created by IntelliJ IDEA.
+  User: TranDangQuoc
+  Date: 24/02/2023
+  Time: 3:41 CH
+  To change this template use File | Settings | File Templates.
 --%>
-
+<%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 
@@ -71,7 +71,7 @@ To change this template use File | Settings | File Templates.
                      aria-labelledby="v-pills-info-tab">
                     <div class="form-account">
                         <form action="/Project_CuaHangMuBaoHiem_war/DoProfile" method="post">
-                            <div class="title">Thông tin cá nhân</div>
+                            <div class="title">Cập nhật thông tin cá nhân</div>
                             <span style="color: green; font-size: 18px; text-align: center;"><%=(success != null && success != "") ? success : ""%>
                 </span>
                             <div class="form-group">
@@ -82,11 +82,11 @@ To change this template use File | Settings | File Templates.
                                                class="form-control"
                                                placeholder="Nhập Họ và tên"
                                                name="name"
-                                               value="<%= cus.getName()!=null? cus.getName():"" %>" disabled>
+                                               value="<%= cus.getName()!=null? cus.getName():"" %>">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Email *</label>
-                                        <div class="form-control no_text" style="background-color: #e9ecef;"><%= cus.getEmail() %>
+                                        <div class="form-control no_text"><%= cus.getEmail() %>
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ To change this template use File | Settings | File Templates.
                                                 class="form-control"
                                                 placeholder="Nhập Số điện thoại"
                                                 name="phone"
-                                                value="<%= cus.getPhone()!=null? cus.getPhone():"" %>" disabled>
+                                                value="<%= cus.getPhone()!=null? cus.getPhone():"" %>">
                                     </div>
                                     <div class="col-6">
                                         <label class="form-label">Địa chỉ *</label>
@@ -107,22 +107,19 @@ To change this template use File | Settings | File Templates.
                                                 class="form-control"
                                                 placeholder="Nhập địa chỉ"
                                                 name="address"
-                                                value="<%= cus.getAddress()!=null? cus.getAddress():"" %>" disabled>
+                                                value="<%= cus.getAddress()!=null? cus.getAddress():"" %>">
                                     </div>
                                 </div>
                             </div>
-                            <span style="color: red; font-size: 18px; text-align: center;"><%=(error != null && error != "") ? error : ""%></span>
-
+                            <span style="color: red; font-size: 18px; text-align: center;"><%=(error != null && error != "") ? error : ""%>
+                </span>
+                   <div class="form-group">
+                       <div class="f-btn">
+                           <button type="submit"> Cập nhật</button>
+                       </div>
+                   </div>
                         </form>
-                        <div class="form-group">
-                                <div class="f-btn">
-                                    <a href="/Project_CuaHangMuBaoHiem_war/edit-account.jsp">
-                                    <button type="button">Chỉnh sửa thông tin</button>
-                                    </a>
-                                </div>
-                        </div>
                     </div>
-
                 </div>
                 <div class="tab-pane fade" id="v-pills-reset_pw" role="tabpanel" aria-labelledby="v-pills-reset_pw-tab">
                     <div class="form-account">
