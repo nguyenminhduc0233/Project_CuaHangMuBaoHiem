@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class CustomerBillToDetailBil extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_bill = request.getParameter("id");
+        int id_bill = Integer.parseInt(request.getParameter("id"));
         try {
             request.setAttribute("detail_bill", ProductService.getBill(id_bill));
         } catch (SQLException e) {

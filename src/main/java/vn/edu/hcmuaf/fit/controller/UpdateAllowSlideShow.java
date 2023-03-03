@@ -31,7 +31,7 @@ public class UpdateAllowSlideShow extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String allow = request.getParameter("allow");
             SlideShowService.getInstance().updateSlideShow(id, allow);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");

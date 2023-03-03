@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class DetailProduct {
-    private String id;
+    private int id;
     private String size;
     private String color;
     private int quantity;
 
 
-    public DetailProduct(String id, String size, String color, int quantity) {
+    public DetailProduct(int id, String size, String color, int quantity) {
         this.id = id;
         this.size = size;
         this.color = color;
@@ -41,11 +41,11 @@ public class DetailProduct {
         this.quantity = quantity;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
 

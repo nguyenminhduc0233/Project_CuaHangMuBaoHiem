@@ -18,7 +18,7 @@ public class ProductService {
         try {
             ResultSet rs = statement.executeQuery("select id_product from product");
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -32,7 +32,7 @@ public class ProductService {
         try {
             ResultSet rs = statement.executeQuery("select id_product from product where name like '%"+para+"%'");
             while (rs.next()) {
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -42,15 +42,15 @@ public class ProductService {
 
     public static List<Product> filterProduct(String[] price, String[] star) {
         List<Product> result = new ArrayList<Product>();
-        List<String> priceProduct = new ArrayList<String>();
-        List<String> starProduct = new ArrayList<String>();
+        List<Integer> priceProduct = new ArrayList<Integer>();
+        List<Integer> starProduct = new ArrayList<Integer>();
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         if(price == null){
             try {
                 ResultSet rs = statement.executeQuery("select id_product from product");
                 while (rs.next()) {
-                    priceProduct.add(rs.getString("id_product"));
+                    priceProduct.add(rs.getInt("id_product"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -62,7 +62,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=0 and (price-price*discount)<=500000");
                             while (rs.next()) {
-                                priceProduct.add(rs.getString("id_product"));
+                                priceProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -73,7 +73,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=500000 and (price-price*discount)<=1000000");
                             while (rs.next()) {
-                                priceProduct.add(rs.getString("id_product"));
+                                priceProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -84,7 +84,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=1000000 and (price-price*discount)<=2000000");
                             while (rs.next()) {
-                                priceProduct.add(rs.getString("id_product"));
+                                priceProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -95,7 +95,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=2000000 and (price-price*discount)<=5000000");
                             while (rs.next()) {
-                                priceProduct.add(rs.getString("id_product"));
+                                priceProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -106,7 +106,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=5000000");
                             while (rs.next()) {
-                                priceProduct.add(rs.getString("id_product"));
+                                priceProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -121,7 +121,7 @@ public class ProductService {
             try {
                 ResultSet rs = statement.executeQuery("select id_product from product");
                 while (rs.next()) {
-                    starProduct.add(rs.getString("id_product"));
+                    starProduct.add(rs.getInt("id_product"));
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -133,7 +133,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from star_vote where star>=0 and star<=1");
                             while (rs.next()) {
-                                starProduct.add(rs.getString("id_product"));
+                                starProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -144,7 +144,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from star_vote where star>1 and star<=2");
                             while (rs.next()) {
-                                starProduct.add(rs.getString("id_product"));
+                                starProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -155,7 +155,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from star_vote where star>2 and star<=3");
                             while (rs.next()) {
-                                starProduct.add(rs.getString("id_product"));
+                                starProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -166,7 +166,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from star_vote where star>3 and star<=4");
                             while (rs.next()) {
-                                starProduct.add(rs.getString("id_product"));
+                                starProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -177,7 +177,7 @@ public class ProductService {
                         try {
                             ResultSet rs = statement.executeQuery("select id_product from star_vote where star>4 and star<=5");
                             while (rs.next()) {
-                                starProduct.add(rs.getString("id_product"));
+                                starProduct.add(rs.getInt("id_product"));
                             }
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
@@ -188,7 +188,7 @@ public class ProductService {
                 }
             }
         }
-        for(String st:priceProduct){
+        for(int st:priceProduct){
             if (starProduct.contains(st)){
                 try {
                     result.add(getProduct(st));
@@ -200,7 +200,7 @@ public class ProductService {
         return result;
     }
 
-    public static Product getProduct(String idp) throws SQLException {
+    public static Product getProduct(int idp) throws SQLException {
         Product p = new Product();
         p.setId(idp);
         p.setName(getname(idp));
@@ -211,144 +211,111 @@ public class ProductService {
         p.setImg(getimg(idp));
         p.setStar(getstar(idp));
         p.setAmount(getamount(idp));
-        p.setComment(getcomment(idp));
         p.setRelease(getrelease(idp));
         p.setDecrispe(getdecrispe(idp));
-        p.setDetail(getdetail(idp));
+        p.setDetail(getfirst(idp));
         return p;
     }
 
-    public static Map<String, List<String>> getcomment(String id) throws SQLException {
-        Map<String,List<String>> comment = new HashMap<String,List<String>>();
-        DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_customer, comment from comment where id_product=?");
-        prs.setString(1,id);
-        ResultSet rs = prs.executeQuery();
-        while (rs.next()){
-            String id_cus = rs.getString("id_customer");
-            String com = rs.getString("comment");
-            if(comment.containsKey(id_cus)){
-                comment.get(id_cus).add(com);
-                comment.put(id_cus,comment.get(id_cus));
-            }else{
-                List<String> comm = new ArrayList<String>();
-                comm.add(com);
-                comment.put(id_cus,comm);
-            }
-        }
-        return comment;
-    }
-    public static List<DetailProduct> getdetail (String id) throws SQLException {
-        List<DetailProduct> detail = new ArrayList<DetailProduct>();
-        DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_product where id_product=?");
-        prs.setString(1,id);
-        ResultSet rs = prs.executeQuery();
-        while(rs.next()){
-
-            detail.add(new DetailProduct(rs.getString("id_dp"),rs.getString("size"),rs.getString("color"), rs.getInt("quantity")));
-        }
-        return detail;
-    }
-    public static List<ImageProduct> getimg (String id) throws SQLException {
+    public static List<ImageProduct> getimg (int id) throws SQLException {
         List<ImageProduct> img = new ArrayList<ImageProduct>();
         ImageProduct imgP = new ImageProduct();
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from image where id_product=? and allow=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         prs.setString(2,"1");
         ResultSet rs = prs.executeQuery();
         while(rs.next()){
-            imgP = new ImageProduct(rs.getString("id_img"),rs.getString("id_product"),rs.getString("link_image"),rs.getString("allow"));
+            imgP = new ImageProduct(rs.getInt("id_img"),rs.getInt("id_product"),rs.getString("link_image"),rs.getString("allow"));
             img.add(imgP);
         }
         return img;
     }
 
-    public static String getname (String id) throws SQLException {
+    public static String getname (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select name from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getString("name");
         }
         return null;
     }
-    public static long getprice (String id) throws SQLException {
+    public static long getprice (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select price from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getLong("price");
         }
         return 0;
     }
-    public static String getbrand (String id) throws SQLException {
+    public static String getbrand (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select brand from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getString("brand");
         }
         return null;
     }
-    public static String gettype (String id) throws SQLException {
+    public static String gettype (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select type from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getString("type");
         }
         return null;
     }
-    public static double getdiscount (String id) throws SQLException {
+    public static double getdiscount (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select discount from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getDouble("discount");
         }
         return 0;
     }
-    public static Double getstar (String id) throws SQLException {
+    public static Double getstar (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select star from star_vote where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
              return rs.getDouble("star");
         }
         return 0.0;
     }
-    public static int getamount (String id) throws SQLException {
+    public static int getamount (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select amount from star_vote where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getInt("amount");
         }
         return 0;
     }
-    public static String getdecrispe (String id) throws SQLException {
+    public static String getdecrispe (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select decrispe from product where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getString("decrispe");
         }
         return null;
     }
-    public static Date getrelease (String id) throws SQLException {
+    public static Date getrelease (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.release from product p where p.id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
             return rs.getDate("release");
@@ -356,7 +323,7 @@ public class ProductService {
         return null;
     }
 
-    public static void addComment(String id_Cus, String id_Pro, String mess, int star) {
+    public static void addComment(int id_Cus, int id_Pro, String mess, int star) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             Date date = new Date();
@@ -364,18 +331,19 @@ public class ProductService {
             if(resultSet.next()){
                 date = resultSet.getDate(1);
             }
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment values (?,?,?,?,?)");
-            prs.setString(1,id_Cus);
-            prs.setString(2,id_Pro);
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment(id_customer,id_product,comment,star,date,display) values (?,?,?,?,?,?)");
+            prs.setInt(1,id_Cus);
+            prs.setInt(2,id_Pro);
             prs.setString(3,mess);
             prs.setInt(4,star);
             prs.setDate(5, (java.sql.Date) date);
+            prs.setInt(6,1);
             prs.executeUpdate();
             Product p = getProduct(id_Pro);
             int newAmount = p.getAmount()+1;
             double newStar = (p.getStar()*p.getAmount()+star)/newAmount;
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update star_vote set amount =?, star =?  where id_product=?");
-            ps.setString(3,id_Pro);
+            ps.setInt(3,id_Pro);
             ps.setInt(1,newAmount);
             ps.setDouble(2,newStar);
             ps.executeUpdate();
@@ -392,21 +360,21 @@ public class ProductService {
                 case "new":{
                     ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p order by p.release desc ");
                     while (rs.next()){
-                        result.add(getProduct(rs.getString("id_product")));
+                        result.add(getProduct(rs.getInt("id_product")));
                     }
                     break;
                 }
                 case "popular":{
                     ResultSet rs = dbConnect.get().executeQuery("select dp.id_product, count(dp.id_product) from bill b join detail_bill db on b.id = db.id_bill join detail_product dp on db.id_dp = dp.id_dp group by dp.id_product order by count(dp.id_product) desc");
                     while (rs.next()){
-                        result.add(getProduct(rs.getString("id_product")));
+                        result.add(getProduct(rs.getInt("id_product")));
                     }
                     break;
                 }
                 case "rating":{
                     ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p join star_vote s on p.id_product = s.id_product order by s.star desc");
                     while (rs.next()){
-                        result.add(getProduct(rs.getString("id_product")));
+                        result.add(getProduct(rs.getInt("id_product")));
                     }
                     break;
                 }
@@ -417,7 +385,7 @@ public class ProductService {
         }
         return result;
     }
-    public static Product getDetailProduct(String idp) throws SQLException {
+    public static Product getDetailProduct(int idp) throws SQLException {
         Product p = new Product();
         p.setId(idp);
         p.setName(getname(idp));
@@ -428,26 +396,25 @@ public class ProductService {
         p.setImg(getimg(idp));
         p.setStar(getstar(idp));
         p.setAmount(getamount(idp));
-        p.setComment(getcomment(idp));
         p.setRelease(getrelease(idp));
         p.setDecrispe(getdecrispe(idp));
         p.setDetail(getfirst(idp));
         return p;
     }
-    public static List<DetailProduct> getfirst(String id) throws SQLException {
+    public static List<DetailProduct> getfirst(int id) throws SQLException {
         List<DetailProduct> detail = new ArrayList<DetailProduct>();
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_product where id_product=? and quantity>0");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         while(rs.next()){
 
-            detail.add(new DetailProduct(rs.getString("id_dp"),rs.getString("size"),rs.getString("color"), rs.getInt("quantity")));
+            detail.add(new DetailProduct(rs.getInt("id_dp"),rs.getString("size"),rs.getString("color"), rs.getInt("quantity")));
         break;
         }
         return detail;
     }
-    public static Product getDetailProduct(String idp,String size,String color) throws SQLException {
+    public static Product getDetailProduct(int idp,String size,String color) throws SQLException {
         Product p = new Product();
         p.setId(idp);
         p.setName(getname(idp));
@@ -458,54 +425,37 @@ public class ProductService {
         p.setImg(getimg(idp));
         p.setStar(getstar(idp));
         p.setAmount(getamount(idp));
-        p.setComment(getcomment(idp));
         p.setRelease(getrelease(idp));
         p.setDecrispe(getdecrispe(idp));
         p.setDetail(getDetail(idp, size, color));
         return p;
     }
-    public static List<DetailProduct> getDetail(String id,String size,String color) throws SQLException {
+    public static List<DetailProduct> getDetail(int id,String size,String color) throws SQLException {
         List<DetailProduct> detail = new ArrayList<DetailProduct>();
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_product where id_product=? and size =? and color = ?");
-        prs.setString(1, id);
+        prs.setInt(1, id);
         prs.setString(2, size);
         prs.setString(3, color);
         ResultSet rs = prs.executeQuery();
         while (rs.next()) {
-            detail.add(new DetailProduct(rs.getString("id_dp"), rs.getString("size"), rs.getString("color"), rs.getInt("quantity")));
+            detail.add(new DetailProduct(rs.getInt("id_dp"), rs.getString("size"), rs.getString("color"), rs.getInt("quantity")));
         }
         return detail;
     }
-    public static List<Bill> sales(int month, int year){
-        List<Bill> result = new ArrayList<Bill>();
-        try{
-            DBConnect dbConnect = DBConnect.getInstance();
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("select b.id from bill b where month(b.date)=? and year(b.date)=?");
-            prs.setInt(1,month);
-            prs.setInt(2,year);
-            ResultSet rs = prs.executeQuery();
-            while(rs.next()){
-                result.add(getBill(rs.getString("id")));
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return result;
-    }
-    public static Bill getBill(String id) throws SQLException {
+    public static Bill getBill(int id) throws SQLException {
         PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_dp from detail_bill where id_bill=?");
-        prs.setString(1,id);
-        List<String> list_product = new ArrayList<String>();
+        prs.setInt(1,id);
+        List<Integer> list_product = new ArrayList<Integer>();
         ResultSet rs = prs.executeQuery();
         while(rs.next()){
-            list_product.add(rs.getString("id_dp"));
+            list_product.add(rs.getInt("id_dp"));
         }
         PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone from bill where id=?");
-        ps.setString(1,id);
+        ps.setInt(1,id);
         ResultSet resultSet = ps.executeQuery();
         if(resultSet.next()){
-            return new Bill(id,resultSet.getDate("date"),list_product, resultSet.getString("status"),resultSet.getString("id_customer"), resultSet.getString("address"), resultSet.getString("phone"));
+            return new Bill(id,resultSet.getDate("date"),list_product, resultSet.getString("status"),resultSet.getInt("id_customer"), resultSet.getString("address"), resultSet.getString("phone"));
         }
         return null;
     }
@@ -516,17 +466,17 @@ public class ProductService {
         try {
             ResultSet rs = statement.executeQuery("select id_customer from customer where name like '%"+para+"%'");
             while (rs.next()) {
-                list.add(getCustomer(rs.getString("id_customer")));
+                list.add(getCustomer(rs.getInt("id_customer")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return list;
     }
-    public static Customer getCustomer(String idc) throws SQLException {
+    public static Customer getCustomer(int idc) throws SQLException {
         Customer c = new Customer();
         PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select name,email,phone,address,username,password,permission from customer where id_customer=?");
-        ps.setString(1,idc);
+        ps.setInt(1,idc);
         ResultSet rs = ps.executeQuery();
         if(rs.next()){
             c.setId_customer(idc);
@@ -540,7 +490,8 @@ public class ProductService {
         }
         return c;
     }
-    public static void addBill(String id,String id_Customer,String status, List<String> id_dp,String address, String phone){
+    public static int addBill(int id_Customer,String status, List<Integer> id_dp,String address, String phone){
+        int id_bill = 0;
         try {
 
             Date date = new Date();
@@ -548,30 +499,35 @@ public class ProductService {
             if(resultSet.next()){
                 date = resultSet.getDate(1);
             }
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bill values(?,?,?,?,?,?)");
-            prs.setString(1, id);
-            prs.setString(2,id_Customer);
-            prs.setDate(3, (java.sql.Date) date);
-            prs.setString(4,status);
-            prs.setString(5,address);
-            prs.setString(6,phone);
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bill(id_customer,date,status,address,phone) values(?,?,?,?,?)");
+            prs.setInt(1,id_Customer);
+            prs.setDate(2, (java.sql.Date) date);
+            prs.setString(3,status);
+            prs.setString(4,address);
+            prs.setString(5,phone);
             prs.executeUpdate();
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bill values(?,?)");
-            for (String i:id_dp){
-                ps.setString(1,id);
-                ps.setString(2,i);
+
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bill");
+            rs.last();
+            id_bill = rs.getInt("id");
+
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bill(id_bill,id_dp) values(?,?)");
+            for (int i:id_dp){
+                ps.setInt(1,id_bill);
+                ps.setInt(2,i);
                 ps.executeUpdate();
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
+        return id_bill;
     }
-    public static void cancel_bill(String id_bill){
+    public static void cancel_bill(int id_bill){
         try{
             String status = "Đã hủy";
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE bill set status = ? where id =?");
             ps.setString(1,status);
-            ps.setString(2,id_bill);
+            ps.setInt(2,id_bill);
             ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -588,7 +544,7 @@ public class ProductService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
 
             }
 
@@ -604,7 +560,7 @@ public class ProductService {
         try {
             ResultSet rs = statement.executeQuery("select id_customer from customer");
             while (rs.next()){
-                list.add(getCustomer(rs.getString("id_customer")));
+                list.add(getCustomer(rs.getInt("id_customer")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -622,7 +578,7 @@ public class ProductService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -640,7 +596,7 @@ public class ProductService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -658,7 +614,7 @@ public class ProductService {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -692,7 +648,8 @@ public class ProductService {
         }
         return count;
     }
-    public static String insertProduct(String name, String price, String brand, String type, String discount, String decrispe){
+    public static int insertProduct(String name, String price, String brand, String type, String discount, String decrispe){
+        int id = 0;
         String typeDB = type;
         if(type.equals("3_4")){
         typeDB = "3/4";
@@ -700,15 +657,8 @@ public class ProductService {
         int priceDB = Integer.parseInt(price);
         double discounta = Double.parseDouble(discount);
         double discountDB = discounta/100;
-        String id = "pdhm"+(countProduct()+1);
         int count = countProduct();
-        while(true){
-            count +=1;
-            id="pdhm"+(count);
-            if(!idProduct(id)){
-                break;
-            }
-        }
+
         LocalDate localDate = LocalDate.now();
         int year = localDate.getYear();
         int mont = localDate.getMonthValue();
@@ -717,54 +667,48 @@ public class ProductService {
         String date  = year+"-"+mont+"-"+day;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product values (?,?,?,?,?,?,?,?)");
-            ps.setString(1,id);
-            ps.setString(2,name);
-            ps.setInt(3,priceDB);
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product(name,price,brand,type,discount,decrispe,release) values (?,?,?,?,?,?,?)");
+            ps.setString(1,name);
+            ps.setInt(2,priceDB);
 
-            ps.setString(4,brand);
-            ps.setString(5,typeDB);
-            ps.setDouble(6,discountDB);
-            ps.setString(7,decrispe);
-            ps.setString(8,date);
+            ps.setString(3,brand);
+            ps.setString(4,typeDB);
+            ps.setDouble(5,discountDB);
+            ps.setString(6,decrispe);
+            ps.setString(7,date);
             ps.executeUpdate();
+
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id_product from product");
+            rs.last();
+            id = rs.getInt("id_product");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return id;
     }
-    public static void insertDetailProduct(String id, String size, String color, String quantity){
+    public static void insertDetailProduct(int id, String size, String color, String quantity){
         int quantityDB = Integer.parseInt(quantity);
-        String iddt = "dtpd"+(countDetailProduct()+1);
-        int count = countDetailProduct();
-        while(true){
-            count +=1;
-            iddt="dtpd"+(count);
-            if(!idDetaiProduct(iddt)){
-                break;
-            }
-        }
+
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into detail_product values (?,?,?,?,?)");
-            ps.setString(1,iddt);
-            ps.setString(2,id);
-            ps.setString(3,size.toUpperCase());
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into detail_product(id_product,size,color,quantity) values (?,?,?,?)");
+            ps.setInt(1,id);
+            ps.setString(2,size.toUpperCase());
 
-            ps.setString(4,color.toLowerCase());
-            ps.setInt(5,quantityDB);
+            ps.setString(3,color.toLowerCase());
+            ps.setInt(4,quantityDB);
 
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public static boolean checkDBContainSizeColor(String id, String size, String color){
+    public static boolean checkDBContainSizeColor(int id, String size, String color){
         boolean result = false;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select size, color from detail_product where id_product=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if(rs.getString(1).equalsIgnoreCase(size) && rs.getString(2).equalsIgnoreCase(color)){
@@ -775,72 +719,48 @@ public class ProductService {
         }
         return result;
     }
-    public static String getIdDetailProductByCS(String id, String size, String color){
-        String result = null;
+    public static int getIdDetailProductByCS(int id, String size, String color){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp, size, color from detail_product where id_product=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 if(rs.getString(2).equalsIgnoreCase(size) && rs.getString(3).equalsIgnoreCase(color)){
-                    return rs.getString(1);
+                    return rs.getInt(1);
                 }
             }
         } catch (SQLException e) {
         }
-        return result;
+        return 0;
     }
-    public static void updateSizeColorById(String id, String quantity){
+    public static void updateSizeColorById(int id, String quantity){
         int quantityDB = Integer.parseInt(quantity);
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_product set quantity = quantity+? where id_dp=?");
             ps.setInt(1,quantityDB);
-            ps.setString(2,id);
+            ps.setInt(2,id);
             ps.executeUpdate();
         } catch (SQLException e) {
             System.out.println("errp");
         }
     }
-    public static int countImg(){
-        int count =0;
-        DBConnect dbConnect = DBConnect.getInstance();
+    public static void insertImg(int id,String img){
 
-        try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_img from image");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                count++;
-            }
-        } catch (SQLException e) {
-        }
-        return count;
-    }
-    public static void insertImg(String id,String img){
-        String id_img = "img"+(countImg()+1);
-        int count = countImg();
-        while(true){
-            count +=1;
-            id_img="img"+(count);
-            if(!idImg(id_img)){
-                break;
-            }
-        }
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into image values (?,?,?,?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into image(id_product,link_image,allow) values (?,?,?)");
 
-            ps.setString(1,id_img);
-            ps.setString(2,id);
-            ps.setString(3,img);
-            ps.setString(4,"1");
+            ps.setInt(1,id);
+            ps.setString(2,img);
+            ps.setString(3,"1");
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void updateProduct(String id,String name, String price, String brand, String type, String discount, String decrispe){
+    public static void updateProduct(int id,String name, String price, String brand, String type, String discount, String decrispe){
         String typeDB = type;
         if(type.equals("3_4")){
             typeDB = "3/4";
@@ -860,38 +780,38 @@ public class ProductService {
             ps.setString(4,typeDB);
             ps.setDouble(5,discountDB);
             ps.setString(6,decrispe);
-            ps.setString(7,id);
+            ps.setInt(7,id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public static void removeProduct(String id){
+    public static void removeProduct(int id){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from product where id_product=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public static void removeImage(String id){
+    public static void removeImage(int id){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from image where id_img=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public static void updateImage(String id, String allow){
+    public static void updateImage(int id, String allow){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update image set allow = ? where id_img= ?");
 
             ps.setString(1,allow);
 
-            ps.setString(2,id);
+            ps.setInt(2,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -915,7 +835,7 @@ public class ProductService {
             ps.setString(1,brand);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                result.add(getProduct(rs.getString("id_product")));
+                result.add(getProduct(rs.getInt("id_product")));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -970,7 +890,7 @@ public class ProductService {
         return result;
     }
 
-    public static Product getProductFullImage(String idp) throws SQLException {
+    public static Product getProductFullImage(int idp) throws SQLException {
         Product p = new Product();
         p.setId(idp);
         p.setName(getname(idp));
@@ -981,41 +901,39 @@ public class ProductService {
         p.setImg(getimgAll(idp));
         p.setStar(getstar(idp));
         p.setAmount(getamount(idp));
-        p.setComment(getcomment(idp));
         p.setRelease(getrelease(idp));
         p.setDecrispe(getdecrispe(idp));
-        p.setDetail(getdetail(idp));
         return p;
     }
-    public static List<ImageProduct> getimgAll (String id) throws SQLException {
+    public static List<ImageProduct> getimgAll (int id) throws SQLException {
         List<ImageProduct> img = new ArrayList<ImageProduct>();
         ImageProduct imgP = new ImageProduct();
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from image where id_product=?");
-        prs.setString(1,id);
+        prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         while(rs.next()){
-            imgP = new ImageProduct(rs.getString("id_img"),rs.getString("id_product"),rs.getString("link_image"),rs.getString("allow"));
+            imgP = new ImageProduct(rs.getInt("id_img"),rs.getInt("id_product"),rs.getString("link_image"),rs.getString("allow"));
             img.add(imgP);
         }
         return img;
     }
-    public static void removeDetailProduct(String id){
+    public static void removeDetailProduct(int id){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from detail_product where id_dp=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public static void updateDetailPQuantity(String id, String quantity){
+    public static void updateDetailPQuantity(int id, String quantity){
         int quantityDB = Integer.parseInt(quantity);
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_product set quantity = ? where id_dp=?");
             ps.setInt(1,quantityDB);
-            ps.setString(2,id);
+            ps.setInt(2,id);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -1032,7 +950,7 @@ public class ProductService {
             ps.setInt(2,b);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -1059,30 +977,30 @@ public class ProductService {
             ps.setDouble(1,discountDB);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return list;
     }
-        public static void delete_customer (String id){
+        public static void delete_customer (int id){
             try {
                 PreparedStatement preparedStatement = DBConnect.getInstance().getConnection().prepareStatement("delete from customer where id_customer=?");
-                preparedStatement.setString(1, id);
+                preparedStatement.setInt(1, id);
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        public static void fix_customer (String id, String name, String phone, String email, String address){
+        public static void fix_customer (int id, String name, String phone, String email, String address){
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update customer set name=?,phone=?,email=?,address=? where id_customer=?");
                 ps.setString(1, name);
                 ps.setString(2, phone);
                 ps.setString(3, email);
                 ps.setString(4, address);
-                ps.setString(5, id);
+                ps.setInt(5, id);
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1096,30 +1014,30 @@ public class ProductService {
                 ps.setInt(2, year);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    result.add(getBill(rs.getString("id")));
+                    result.add(getBill(rs.getInt("id")));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return result;
         }
-        public static String getIdProduct (String id_dp){
+        public static int getIdProduct (int id_dp){
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select p.id_product from product p join detail_product dp on p.id_product = dp.id_product where dp.id_dp=?");
-                ps.setString(1, id_dp);
+                ps.setInt(1, id_dp);
                 ResultSet rs = ps.executeQuery();
-                if (rs.next()) return rs.getString("id_product");
+                if (rs.next()) return rs.getInt("id_product");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return null;
+            return 0;
         }
         public static List<Bill> getListBill () {
             List<Bill> result = new ArrayList<Bill>();
             try {
                 ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bill");
                 while (rs.next()) {
-                    result.add(getBill(rs.getString("id")));
+                    result.add(getBill(rs.getInt("id")));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1133,21 +1051,21 @@ public class ProductService {
         try {
             ResultSet rs = statement.executeQuery("select id from bill where id like '%"+para+"%'");
             while (rs.next()) {
-                list.add(getBill(rs.getString("id")));
+                list.add(getBill(rs.getInt("id")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return list;
     }
-    public static List<Bill> getListBillByIdCustomer (String id_cus) {
+    public static List<Bill> getListBillByIdCustomer (int id_cus) {
         List<Bill> result = new ArrayList<Bill>();
         try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id from bill where id_customer=?");
-            ps.setString(1,id_cus);
+            ps.setInt(1,id_cus);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                result.add(getBill(rs.getString("id")));
+                result.add(getBill(rs.getInt("id")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1158,7 +1076,7 @@ public class ProductService {
             List<Product> list_product = new ArrayList<Product>();
             List<Bill> list = getBillByDate(month, year);
             for (Bill b : list) {
-                for (String s : b.getProductList()) {
+                for (int s : b.getProductList()) {
                     list_product.add(getProduct(getIdProduct(s)));
                 }
             }
@@ -1177,11 +1095,11 @@ public class ProductService {
             }
             return result;
         }
-        public static String getSize (String id_dp){
+        public static String getSize (int id_dp){
             String result = "";
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select size from detail_product where id_dp=?");
-                ps.setString(1, id_dp);
+                ps.setInt(1, id_dp);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     result += rs.getString("size");
@@ -1191,11 +1109,11 @@ public class ProductService {
             }
             return result;
         }
-        public static String getColor (String id_dp){
+        public static String getColor (int id_dp){
             String result = "";
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select color from detail_product where id_dp=?");
-                ps.setString(1, id_dp);
+                ps.setInt(1, id_dp);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     result += rs.getString("color");
@@ -1205,12 +1123,12 @@ public class ProductService {
             }
             return result;
         }
-        public static int getQuantity (String id_bill, String id_dp){
+        public static int getQuantity (int id_bill, int id_dp){
             int result = 0;
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_bill,count(id_dp) as quantity from detail_bill where id_dp=? and id_bill=? group by id_bill");
-                ps.setString(1, id_dp);
-                ps.setString(2, id_bill);
+                ps.setInt(1, id_dp);
+                ps.setInt(2, id_bill);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) result += rs.getInt("quantity");
             } catch (SQLException e) {
@@ -1218,41 +1136,41 @@ public class ProductService {
             }
             return result;
         }
-        public static void updateBill (String id, String address, String phone, String status){
+        public static void updateBill (int id, String address, String phone, String status){
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bill set address=?,phone=?, status=? where id=? ");
                 ps.setString(1, address);
                 ps.setString(2, phone);
                 ps.setString(3, status);
-                ps.setString(4, id);
+                ps.setInt(4, id);
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        public static void updateStatus (String id, String status){
+        public static void updateStatus (int id, String status){
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bill set status=? where id=? ");
                 ps.setString(1, status);
-                ps.setString(2, id);
+                ps.setInt(2, id);
                 ps.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        public static void deleteBill (String id_bill){
+        public static void deleteBill (int id_bill){
             try {
                 PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("delete from bill where id=?");
-                ps.setString(1, id_bill);
+                ps.setInt(1, id_bill);
                 ps.executeUpdate();
                 PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("delete from detail_bill where id_bill=?");
-                prs.setString(1, id_bill);
+                prs.setInt(1, id_bill);
                 prs.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-    public static List<Product> listType(String type, String id) {
+    public static List<Product> listType(String type, int id) {
         List<Product> list = new ArrayList<Product>();
 
         DBConnect dbConnect = DBConnect.getInstance();
@@ -1260,11 +1178,11 @@ public class ProductService {
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =? and id_product not in(?)");
             ps.setString(1, type);
-            ps.setString(2, id);
+            ps.setInt(2, id);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(getProduct(rs.getString("id_product")));
+                list.add(getProduct(rs.getInt("id_product")));
             }
 
         } catch (SQLException e) {
@@ -1272,12 +1190,12 @@ public class ProductService {
         }
         return list;
     }
-    public static boolean idProduct(String id){
+    public static boolean idProduct(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where id_product=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;
@@ -1287,12 +1205,12 @@ public class ProductService {
         }
         return result;
     }
-    public static boolean idDetaiProduct(String id){
+    public static boolean idDetaiProduct(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp from detail_product where id_dp=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;
@@ -1302,12 +1220,12 @@ public class ProductService {
         }
         return result;
     }
-    public static boolean idImg(String id){
+    public static boolean idImg(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_img from image where id_img=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;
@@ -1317,39 +1235,39 @@ public class ProductService {
         }
         return result;
     }
-    public static String getIdProductByIddp(String id_dp){
-        String result="";
+    public static int getIdProductByIddp(int id_dp){
+        int result=0;
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from detail_product where id_dp=?");
-            ps.setString(1,id_dp);
+            ps.setInt(1,id_dp);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                result+=rs.getString(1);
+                result+=rs.getInt(1);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
         return result;
     }
-    public static String getIdCusByUserName(String username){
-        String result="";
+    public static int getIdCusByUserName(String username){
+        int result=0;
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from customer where username=?");
             ps.setString(1,username);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                result+=rs.getString(1);
+                result+=rs.getInt(1);
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
         return result;
     }
-    public static List<Integer> getListIDCommentByProduct(String idpro){
+    public static List<Integer> getListIDCommentByProduct(int idpro){
         List<Integer> list = new ArrayList<Integer>();
         try{
             PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from comment where id_product=?");
-            prs.setString(1,idpro);
+            prs.setInt(1,idpro);
             ResultSet rs = prs.executeQuery();
             while(rs.next()){
                 list.add(rs.getInt("id"));
@@ -1359,14 +1277,14 @@ public class ProductService {
         }
         return list;
     }
-    public static String getIdCustomerByIdComment(int id){
-        String result = "";
+    public static int getIdCustomerByIdComment(int id){
+        int result = 0;
         try{
             PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from comment where id=?");
             prs.setInt(1,id);
             ResultSet rs = prs.executeQuery();
             while(rs.next()){
-                result +=rs.getString("id_customer");
+                result +=rs.getInt("id_customer");
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -1446,6 +1364,8 @@ public class ProductService {
     }
 
     public static void main(String[] args) throws SQLException {
-
+        for(Product p:getData()){
+            System.out.println(p);
+        }
     }
 }

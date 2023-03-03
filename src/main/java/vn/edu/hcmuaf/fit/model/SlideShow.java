@@ -1,25 +1,25 @@
 package vn.edu.hcmuaf.fit.model;
 
 public class SlideShow {
-    private String id;
+    private int id;
     private String img;
     private String allow;
     private double discount;
     private String content;
     private String name;
-    public SlideShow(String id, String img, String allow) {
+    public SlideShow(int id, String img, String allow) {
         this.id = id;
         this.img = img;
         this.allow = allow;
     }
-    public SlideShow(String id, String img, String allow,String name) {
+    public SlideShow(int id, String img, String allow,String name) {
         this.id = id;
         this.img = img;
         this.allow = allow;
         this.name = name;
     }
 
-    public SlideShow(String id, String img, String allow, double discount, String content) {
+    public SlideShow(int id, String img, String allow, double discount, String content) {
         this.id = id;
         this.img = img;
         this.allow = allow;
@@ -30,11 +30,11 @@ public class SlideShow {
     public SlideShow() {
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

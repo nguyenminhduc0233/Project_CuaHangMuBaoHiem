@@ -15,8 +15,8 @@ import java.sql.SQLException;
 public class ProductDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if(id != null) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        if(id != 0) {
             Product product = null;
             try {
                 product = ProductService.getProduct(id);

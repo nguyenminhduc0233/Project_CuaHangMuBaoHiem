@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class Plus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("plus");
+        int id = Integer.parseInt(request.getParameter("plus"));
         String size = request.getParameter("size");
         String color = request.getParameter("color");
         Product p = null;

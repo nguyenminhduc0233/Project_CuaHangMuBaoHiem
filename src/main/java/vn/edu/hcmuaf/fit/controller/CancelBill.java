@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class CancelBill extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_bill = request.getParameter("id");
+        int id_bill = Integer.parseInt(request.getParameter("id"));
         ProductService.cancel_bill(id_bill);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
     }

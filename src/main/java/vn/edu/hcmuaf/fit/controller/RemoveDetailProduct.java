@@ -28,7 +28,7 @@ public class RemoveDetailProduct extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id_dp= request.getParameter("id_dp");
+        int id_dp= Integer.parseInt(request.getParameter("id_dp"));
         String id_product = request.getParameter("id");
         ProductService.removeDetailProduct(id_dp);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);

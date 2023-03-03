@@ -28,7 +28,7 @@ public class RemoveImage extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id_img= request.getParameter("id_img");
+        int id_img= Integer.parseInt(request.getParameter("id_img"));
         String id_product = request.getParameter("id");
         ProductService.removeImage(id_img);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);

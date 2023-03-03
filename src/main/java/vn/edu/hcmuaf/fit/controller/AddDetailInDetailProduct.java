@@ -31,11 +31,11 @@ public class AddDetailInDetailProduct extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String size = request.getParameter("size");
             String color = request.getParameter("color");
             String quantity = request.getParameter("quantity");
-            String iddp = null;
+            int iddp = 0;
             if (ProductService.checkDBContainSizeColor(id, size, color)) {
                 iddp = ProductService.getIdDetailProductByCS(id, size, color);
                 ProductService.updateSizeColorById(iddp, quantity);
