@@ -32,9 +32,9 @@ public class DetailContact extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String pages = request.getParameter("pages");
-            if (id != null) {
+            if (id != 0) {
                 Contact contact = ContactService.getInstance().getContact(id);
                 request.setAttribute("contact", contact);
                 request.setAttribute("pages", pages);

@@ -31,7 +31,7 @@ public class UpdateProduct extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String name = request.getParameter("name");
             String price = request.getParameter("price");
             String type = request.getParameter("type");

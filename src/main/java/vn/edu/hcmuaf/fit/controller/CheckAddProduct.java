@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class CheckAddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         String size = request.getParameter("size");
         String color = request.getParameter("color");
         String quantity = request.getParameter("quantity");
@@ -29,7 +29,7 @@ public class CheckAddProduct extends HttpServlet {
         }
         String x = "";
         for(DetailProduct d : p.getDetail()){
-            if(d.getId().equals(color)){
+            if((""+d.getId()).equals(color)){
             x = d.getColor();
             }
         }

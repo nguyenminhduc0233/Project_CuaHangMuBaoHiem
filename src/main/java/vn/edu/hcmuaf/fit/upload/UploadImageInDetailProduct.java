@@ -59,7 +59,7 @@ public class UploadImageInDetailProduct extends HttpServlet {
         if(!ServletFileUpload.isMultipartContent(request)){
             throw new ServletException("Content type is not multipart/form-data");
         }
-        String id =  request.getParameter("id");
+        int id =  Integer.parseInt(request.getParameter("id"));
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

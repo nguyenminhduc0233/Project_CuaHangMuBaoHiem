@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class Product{
-    private String id;
+    private int id;
     private String name;
     private String brand;
     private long price;
@@ -17,8 +17,6 @@ public class Product{
     private List<ImageProduct> img;
     private double star;
     private int amount;
-    private Map<String, List<String>> comment;
-
     private String decrispe;
     private Date release;
     private List<DetailProduct> detail;
@@ -27,7 +25,7 @@ public class Product{
     public Product() {
     }
 
-    public Product(String id, String name, long price, String brand, String type, double discount, double star, int amount, String decrispe, Date release) {
+    public Product(int id, String name, long price, String brand, String type, double discount, double star, int amount, String decrispe, Date release) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -37,18 +35,17 @@ public class Product{
         this.img = new ArrayList<ImageProduct>();
         this.star = star;
         this.amount = amount;
-        this.comment = new HashMap<String, List<String>>();
         this.decrispe =decrispe;
         this.release = release;
         this.detail = new ArrayList<DetailProduct>();
     }
 
-    public String getId() {
+    public int getId() {
         return this.id;
 
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -116,14 +113,6 @@ public class Product{
         this.amount = amount;
     }
 
-    public Map<String, List<String>> getComment() {
-        return comment;
-    }
-
-    public void setComment(Map<String,List<String>> comment) {
-        this.comment = comment;
-    }
-
     public String getDecrispe() {
         return decrispe;
     }
@@ -168,7 +157,6 @@ public class Product{
                 ", img=" + img +
                 ", star=" + star +
                 ", amount=" + amount +
-                ", comment=" + comment +
                 ", decrispe='" + decrispe + '\'' +
                 ", release=" + release +
                 ", detail=" + detail +

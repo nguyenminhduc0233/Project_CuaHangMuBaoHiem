@@ -28,7 +28,7 @@ public class FixCustomer extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id = request.getParameter("id_Cus");
+        int id = Integer.parseInt(request.getParameter("id_Cus"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");

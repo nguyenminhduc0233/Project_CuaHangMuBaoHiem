@@ -32,9 +32,9 @@ public class DetailProduct extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String pages = request.getParameter("pages");
-            if (id != null) {
+            if (id != 0) {
                 Product product = null;
                 try {
                     product = ProductService.getProductFullImage(id);

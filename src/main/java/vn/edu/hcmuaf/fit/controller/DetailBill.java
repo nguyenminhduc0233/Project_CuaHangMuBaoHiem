@@ -28,7 +28,7 @@ public class DetailBill extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id_bill = request.getParameter("id");
+        int id_bill = Integer.parseInt(request.getParameter("id"));
         try {
             request.setAttribute("detail_bill", ProductService.getBill(id_bill));
         } catch (SQLException e) {

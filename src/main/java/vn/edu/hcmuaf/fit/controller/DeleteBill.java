@@ -31,7 +31,7 @@ public class DeleteBill extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             ProductService.deleteBill(id);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");
         } catch (SQLException e) {

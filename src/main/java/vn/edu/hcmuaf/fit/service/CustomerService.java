@@ -27,11 +27,6 @@ public class CustomerService {
         return DigestUtils.md5Hex(password).toLowerCase();
     }
 
-    public static String GetKey() {
-        StringBuilder sb = new StringBuilder("ct_");
-        sb.append(LocalDateTime.now());
-        return sb.toString();
-    }
 
     public static String GetRandom() {
         StringBuilder sb = new StringBuilder();
@@ -61,7 +56,7 @@ public class CustomerService {
     public static void addCustomer(String username, String password, String name, String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
 //        String sql = "insert into customer values ('" + GetKey() + "'," + "'" + name + "'," + "'" + email + "', null," + "null,'" + username + "'," + "'" + password + "',0,1," + "'" + LocalDateTime.now() + "')";
-        String sql = "insert into customer values ('" + GetKey() + "','" + name + "','" + email + "', null,null,'" + username + "','" + password + "',0,1,'" + LocalDateTime.now() + "')";
+        String sql = "insert into customer values ('"  + name + "','" + email + "', null,null,'" + username + "','" + password + "',0,1,'" + LocalDateTime.now() + "')";
         dbConnect.get().executeUpdate(sql);
     }
 
@@ -89,7 +84,7 @@ public class CustomerService {
     public static Customer customer(String username) throws SQLException {
         Customer customer = null;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select * from customer where username = ?";
+        String sql = "select name, email, phone, address, permission from customer where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
@@ -98,7 +93,6 @@ public class CustomerService {
         }
         return customer;
     }
-
 
     public static boolean checkLogin(String username, String password) throws SQLException {
         boolean isLogin = false;
@@ -237,15 +231,6 @@ public class CustomerService {
         }
     }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-        CustomerService c = new CustomerService();
-//        System.out.println(emailValidate("@tran.duyn.han@gm.ail.com"));
-//        System.out.println(pwValidate("nhandz", "nhandz"));
-//        System.out.println(checkEmail("20130346@st.hcmuaf.edu.vn"));
-//        addCustomer("nhandz", "123123", "iam", "123@gmail.com");
-//        System.out.println(toMD5("123456"));
-//        changePassword("tdn", "c4ca4238a0b923820dcc509a6f75849b", toMD5("nhandz"));
-//        resetPassword("20130346@st.hcmuaf.edu.vn");
-//        System.out.println(checkActive("tdn"));
 
     }
 }

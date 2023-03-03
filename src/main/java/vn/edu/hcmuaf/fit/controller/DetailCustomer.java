@@ -31,7 +31,7 @@ public class DetailCustomer extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id_Cus = request.getParameter("id");
+            int id_Cus = Integer.parseInt(request.getParameter("id"));
             try {
                 Customer customer = ProductService.getCustomer(id_Cus);
                 request.setAttribute("customer", customer);

@@ -28,7 +28,7 @@ public class RemoveSlideShow extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         SlideShowService.getInstance().removeSlideShow(id);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");
         } catch (SQLException e) {

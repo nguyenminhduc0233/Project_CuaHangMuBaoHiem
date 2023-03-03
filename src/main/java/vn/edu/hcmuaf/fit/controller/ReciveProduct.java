@@ -11,7 +11,7 @@ import java.io.IOException;
 public class ReciveProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_bill = request.getParameter("id_bill");
+        int id_bill = Integer.parseInt(request.getParameter("id_bill"));
         ProductService.updateStatus(id_bill,"Đã nhận");
         request.setAttribute("id_bill",id_bill);
         request.getRequestDispatcher("notification.jsp").forward(request,response);

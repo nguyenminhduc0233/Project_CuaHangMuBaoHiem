@@ -31,7 +31,7 @@ public class UpdateLogo extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String allow = request.getParameter("allow");
             String name = request.getParameter("name");
             SlideShowService.getInstance().updateLogo(id, allow, name);
