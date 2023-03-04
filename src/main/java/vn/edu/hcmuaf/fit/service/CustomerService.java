@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -60,9 +61,16 @@ public class CustomerService {
 
     public static void addCustomer(String username, String password, String name, String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-//        String sql = "insert into customer values ('" + GetKey() + "'," + "'" + name + "'," + "'" + email + "', null," + "null,'" + username + "'," + "'" + password + "',0,1," + "'" + LocalDateTime.now() + "')";
-        String sql = "insert into customer values ('" + GetKey() + "','" + name + "','" + email + "', null,null,'" + username + "','" + password + "',0,1,'" + LocalDateTime.now() + "')";
-        dbConnect.get().executeUpdate(sql);
+        Date date = new Date();
+        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0)");
+        ps.setString(1,name);
+        ps.setString(2,email);
+        ps.setString(3,"");
+        ps.setString(4,"");
+        ps.setString(5,username);
+        ps.setString(6,password);
+        ps.setString(7,LocalDateTime.now().toString());
+        ps.executeUpdate();
     }
 
     public static void resetPassword(String email) throws SQLException {
@@ -237,15 +245,5 @@ public class CustomerService {
         }
     }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-        CustomerService c = new CustomerService();
-//        System.out.println(emailValidate("@tran.duyn.han@gm.ail.com"));
-//        System.out.println(pwValidate("nhandz", "nhandz"));
-//        System.out.println(checkEmail("20130346@st.hcmuaf.edu.vn"));
-//        addCustomer("nhandz", "123123", "iam", "123@gmail.com");
-//        System.out.println(toMD5("123456"));
-//        changePassword("tdn", "c4ca4238a0b923820dcc509a6f75849b", toMD5("nhandz"));
-//        resetPassword("20130346@st.hcmuaf.edu.vn");
-//        System.out.println(checkActive("tdn"));
-
     }
 }
