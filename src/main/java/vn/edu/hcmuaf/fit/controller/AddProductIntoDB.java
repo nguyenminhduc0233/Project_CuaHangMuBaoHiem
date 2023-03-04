@@ -37,7 +37,7 @@ public class AddProductIntoDB extends HttpServlet {
             String brand = request.getParameter("brand");
             String discount = request.getParameter("discount");
             String decrispe = request.getParameter("decrispe");
-            String id = ProductService.insertProduct(name, price, brand, type, discount, decrispe);
+            int id = ProductService.insertProduct(name, price, brand, type, discount, decrispe);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/AddDetailProductIntoDB?id=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);

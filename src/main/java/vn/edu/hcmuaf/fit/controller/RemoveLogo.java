@@ -28,7 +28,7 @@ public class RemoveLogo extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         SlideShowService.getInstance().removeLogo(id);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");
     } catch (

@@ -43,7 +43,7 @@ public class DoRegister extends HttpServlet {
             } else {
                 CustomerService.addCustomer(username, CustomerService.toMD5(password), name, email);
                 request.setAttribute("success", "Đăng ký thành công.");
-                request.getRequestDispatcher("register.jsp").forward(request, response);
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/login.jsp");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

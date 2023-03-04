@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 
 public class Customer implements Serializable {
-    private String id_customer;
+    private int id_customer;
     private String name;
     private String email;
     private String phone;
@@ -18,7 +18,7 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String id_customer, String name, String email, String phone, String address, String username, String password, int permission, boolean active, Date create_date) {
+    public Customer(int id_customer, String name, String email, String phone, String address, String username, String password, int permission, boolean active, Date create_date) {
         this.id_customer = id_customer;
         this.name = name;
         this.email = email;
@@ -40,11 +40,11 @@ public class Customer implements Serializable {
         this.permission = permission;
     }
 
-    public String getId_customer() {
+    public int getId_customer() {
         return id_customer;
     }
 
-    public void setId_customer(String id_customer) {
+    public void setId_customer(int id_customer) {
         this.id_customer = id_customer;
     }
 

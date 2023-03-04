@@ -28,7 +28,7 @@ public class FormFixBill extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         try {
             request.setAttribute("bill", ProductService.getBill(id));
         } catch (SQLException e) {

@@ -31,7 +31,7 @@ public class UpdateImage extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id_img = request.getParameter("id_img");
+            int id_img = Integer.parseInt(request.getParameter("id_img"));
             String id_pd = request.getParameter("id");
             String allow = request.getParameter("allow");
             ProductService.updateImage(id_img, allow);

@@ -16,11 +16,6 @@ import java.sql.SQLException;
 public class DoLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username").toLowerCase().trim();
         String password = request.getParameter("password").trim();
         HttpSession session = request.getSession();
@@ -35,14 +30,7 @@ public class DoLogin extends HttpServlet {
                 CustomerService.resetLock(username);
                 session.setAttribute("tendangnhap", username);
                 Customer customer = CustomerService.customer(username);
-                if (customer.getPermission() == 0){
-                    response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
-                }else {
-                    response.sendRedirect("ManageProduct");
-                }
-            } else if(!CustomerService.checkLogin(username, CustomerService.toMD5(password)) && !CustomerService.checkUsername(username)){
-                request.setAttribute("error", "Người dùng nhập không đúng Tên đăng nhập hoặc Mật khẩu.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
             }else{
                 if(!CustomerService.checkLogin(username, CustomerService.toMD5(password)) && CustomerService.checkUsername(username)){
                     CustomerService.checkLock(username);
@@ -54,5 +42,10 @@ public class DoLogin extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }

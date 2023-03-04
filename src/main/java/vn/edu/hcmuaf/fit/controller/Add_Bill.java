@@ -26,7 +26,7 @@ public class Add_Bill extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         Cart cart = (Cart) request.getSession().getAttribute("cart");
-        List<String> id_dp = new ArrayList<String>();
+        List<Integer> id_dp = new ArrayList<Integer>();
         for(Product p: cart.getListProduct()){
             id_dp.add(p.getDetail().get(0).getId());
         }
@@ -35,15 +35,14 @@ public class Add_Bill extends HttpServlet {
             request.getRequestDispatcher("checkout.jsp").forward(request,response);
         }else{
             LocalDateTime date = LocalDateTime.now();
-            String id_bill = date.getSecond()+"-"+date.getMinute()+"-"+date.getHour()+"-"+date.getDayOfMonth()+"-"+date.getMonth()+"-"+date.getYear();
             String username = (String) request.getSession().getAttribute("tendangnhap");
-            String id_cus = "";
+            int id_cus = 0;
             try {
                 id_cus += ProductService.getCustomer(ProductService.getIdCusByUserName(username)).getId_customer();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            ProductService.addBill(id_bill,id_cus,"Đang gửi",id_dp,address,phone);
+            int id_bill = ProductService.addBill(id_cus,"Đang gửi",id_dp,address,phone);
             cart.getCart().clear();
             cart.setTotal(0);
             cart.setQuantity(0);

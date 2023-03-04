@@ -31,7 +31,7 @@ public class FindBill extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id_bill = request.getParameter("text");
+            int id_bill = Integer.parseInt(request.getParameter("text"));
             List<Bill> list = new ArrayList<Bill>();
             try {
                 list.add(ProductService.getBill(id_bill));

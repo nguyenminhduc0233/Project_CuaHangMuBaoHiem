@@ -30,7 +30,7 @@ public class SlideShowService {
             ps.setString(1,"1");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3));
                 list.add(s);
             }
 
@@ -48,7 +48,7 @@ public class SlideShowService {
             PreparedStatement ps =dbConnect.getConnection().prepareStatement("select id_slideshow, img, allow from slideshow");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3));
                 list.add(s);
             }
 
@@ -67,7 +67,7 @@ public class SlideShowService {
             ps.setString(1,"1");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getString(5));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getString(5));
                 list.add(s);
             }
 
@@ -85,7 +85,7 @@ public class SlideShowService {
             PreparedStatement ps =dbConnect.getConnection().prepareStatement("select id_banner, img, allow, discount, content from banner");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getString(5));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getString(5));
                 list.add(s);
             }
 
@@ -104,7 +104,7 @@ public class SlideShowService {
             ps.setString(1,"1");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
                 list.add(s);
             }
 
@@ -122,7 +122,7 @@ public class SlideShowService {
             PreparedStatement ps =dbConnect.getConnection().prepareStatement("select id_logo, img, allow, name from logo");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                s = new SlideShow(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
+                s = new SlideShow(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4));
                 list.add(s);
             }
 
@@ -131,34 +131,34 @@ public class SlideShowService {
         return list;
     }
 
-        public void removeSlideShow(String id)  {
+        public void removeSlideShow(int id)  {
             DBConnect dbConnect = DBConnect.getInstance();
             try {
                 PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from slideshow where id_slideshow=?");
-                ps.setString(1,id);
+                ps.setInt(1,id);
                 ps.executeUpdate();
             } catch (SQLException e) {
             }
     }
-    public void removeBanner(String id)  {
+    public void removeBanner(int id)  {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from banner where id_banner=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public void removeLogo(String id)  {
+    public void removeLogo(int id)  {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from logo where id_logo=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public void updateBanner(String id, String allow, String discount,String content){
+    public void updateBanner(int id, String allow, String discount,String content){
         DBConnect dbConnect = DBConnect.getInstance();
         double x= Double.parseDouble(discount);
         double discountDB = x/100;
@@ -168,93 +168,62 @@ public class SlideShowService {
             ps.setString(1,allow);
             ps.setDouble(2,discountDB);
             ps.setString(3,content);
-            ps.setString(4,id);
+            ps.setInt(4,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public void updateLogo(String id, String allow, String name){
+    public void updateLogo(int id, String allow, String name){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update logo set allow = ?, name=? where id_logo= ?");
 
             ps.setString(1,allow);
             ps.setString(2,name);
-            ps.setString(3,id);
+            ps.setInt(3,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
-    public void updateSlideShow(String id, String allow){
+    public void updateSlideShow(int id, String allow){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("update slideshow set allow = ? where id_slideshow= ?");
 
             ps.setString(1,allow);
 
-            ps.setString(2,id);
+            ps.setInt(2,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
     public void insertSlideShow(String image){
         DBConnect dbConnect = DBConnect.getInstance();
-        String id = "ssimg"+(quantitySlideShow()+1);
-        int count = quantitySlideShow();
-        while(true){
-            count +=1;
-            id="ssimg"+(count);
-            if(!idSlideShow(id)){
-                break;
-            }
-        }
-
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into slideshow values (?,?,?)");
-            ps.setString(1,id);
-            ps.setString(2,image);
-            ps.setString(3,"1");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into slideshow(img,allow) values (?,?)");
+            ps.setString(1,image);
+            ps.setString(2,"1");
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
     public void insertBanner(String image){
         DBConnect dbConnect = DBConnect.getInstance();
-        String id = "bnimg"+(quantityBanner()+1);
-        int count = quantityBanner();
-        while(true){
-            count +=1;
-            id="bnimg"+(count);
-            if(!idBanner(id)){
-                break;
-            }
-        }
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into banner(id_banner,img,allow) values (?,?,?)");
-            ps.setString(1,id);
-            ps.setString(2,image);
-            ps.setString(3,"1");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into banner(img,allow) values (?,?)");
+            ps.setString(1,image);
+            ps.setString(2,"1");
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
     public void insertLogo(String image){
         DBConnect dbConnect = DBConnect.getInstance();
-        String id = "logo"+(quantityLogo()+1);
-        int count = quantityLogo();
-        while(true){
-            count +=1;
-            id="logo"+(count);
-            if(!idLogo(id)){
-                break;
-            }
-        }
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into logo values (?,?,?,?)");
-            ps.setString(1,id);
-            ps.setString(2,image);
-            ps.setString(3,"1");
-            ps.setString(4,"Tên thương hiệu");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into logo(img,allow,name) values (?,?,?)");
+            ps.setString(1,image);
+            ps.setString(2,"1");
+            ps.setString(3,"Tên thương hiệu");
             ps.executeUpdate();
         } catch (SQLException e) {
         }
@@ -313,12 +282,12 @@ public class SlideShowService {
         }
         return result;
     }
-    public boolean idSlideShow(String id){
+    public boolean idSlideShow(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_slideshow from slideshow where id_slideshow=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;
@@ -328,12 +297,12 @@ public class SlideShowService {
         }
         return result;
     }
-    public boolean idBanner(String id){
+    public boolean idBanner(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_banner from banner where id_banner=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;
@@ -343,12 +312,12 @@ public class SlideShowService {
         }
         return result;
     }
-    public boolean idLogo(String id){
+    public boolean idLogo(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_logo from logo where id_logo=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;

@@ -117,7 +117,7 @@ public void put(Product p){
     }
 
     public static void main(String[] args) throws SQLException {
-        Product p = ProductService.getDetailProduct("1","M","đỏ");
+        Product p = ProductService.getDetailProduct(1,"M","đỏ");
         Cart c = new Cart();
         p.setQuantity(1);
         c.put(p);

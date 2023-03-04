@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class CancelProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_bill = request.getParameter("id_bill");
+        int id_bill = Integer.parseInt(request.getParameter("id_bill"));
         try {
             request.setAttribute("id_bill",id_bill);
             if(ProductService.getBill(id_bill).getStatus().equals("Đã Nhận")){

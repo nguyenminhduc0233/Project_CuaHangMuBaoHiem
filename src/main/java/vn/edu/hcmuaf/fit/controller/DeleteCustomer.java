@@ -31,7 +31,7 @@ public class DeleteCustomer extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id_Cus = request.getParameter("id");
+            int id_Cus = Integer.parseInt(request.getParameter("id"));
             ProductService.delete_customer(id_Cus);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
         } catch (SQLException e) {

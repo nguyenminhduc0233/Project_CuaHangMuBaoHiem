@@ -1,34 +1,34 @@
 package vn.edu.hcmuaf.fit.model;
 
 public class ImageProduct {
-    private String id_dp;
-    private String id_product;
+    private int id_dp;
+    private int id_product;
     private String img;
     private String isAllow;
 
     public ImageProduct() {
     }
 
-    public ImageProduct(String id_dp, String id_product, String img, String isAllow) {
+    public ImageProduct(int id_dp, int id_product, String img, String isAllow) {
         this.id_dp = id_dp;
         this.id_product = id_product;
         this.img = img;
         this.isAllow = isAllow;
     }
 
-    public String getId_dp() {
+    public int getId_dp() {
         return id_dp;
     }
 
-    public void setId_dp(String id_dp) {
+    public void setId_dp(int id_dp) {
         this.id_dp = id_dp;
     }
 
-    public String getId_product() {
+    public int getId_product() {
         return id_product;
     }
 
-    public void setId_product(String id_product) {
+    public void setId_product(int id_product) {
         this.id_product = id_product;
     }
 

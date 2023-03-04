@@ -32,7 +32,7 @@ public class UpdateDetailProduct extends HttpServlet {
                 return;
             }
             String id_product = request.getParameter("id");
-            String id_dp = request.getParameter("id_dp");
+            int id_dp = Integer.parseInt(request.getParameter("id_dp"));
             String quantity = request.getParameter("quantity");
             ProductService.updateDetailPQuantity(id_dp, quantity);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);

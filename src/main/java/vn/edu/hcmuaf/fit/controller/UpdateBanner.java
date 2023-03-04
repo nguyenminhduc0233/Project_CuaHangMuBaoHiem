@@ -31,7 +31,7 @@ public class UpdateBanner extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String allow = request.getParameter("allow");
             String discount = request.getParameter("discount");
             String content = request.getParameter("content");

@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class DetailComment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_product = request.getParameter("id");
+        int id_product = Integer.parseInt(request.getParameter("id"));
         request.setAttribute("detail_comment", ProductService.getListIDCommentByProduct(id_product));
         request.setAttribute("id_product", id_product);
         request.getRequestDispatcher("detail_comment_manager.jsp").forward(request,response);

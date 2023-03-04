@@ -11,7 +11,7 @@ import java.io.IOException;
 public class FixBill extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
         String status = request.getParameter("status");

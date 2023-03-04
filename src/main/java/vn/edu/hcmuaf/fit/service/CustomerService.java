@@ -28,11 +28,6 @@ public class CustomerService {
         return DigestUtils.md5Hex(password).toLowerCase();
     }
 
-    public static String GetKey() {
-        StringBuilder sb = new StringBuilder("ct_");
-        sb.append(LocalDateTime.now());
-        return sb.toString();
-    }
 
     public static String GetRandom() {
         StringBuilder sb = new StringBuilder();
@@ -61,7 +56,6 @@ public class CustomerService {
 
     public static void addCustomer(String username, String password, String name, String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        Date date = new Date();
         PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0)");
         ps.setString(1,name);
         ps.setString(2,email);
@@ -71,6 +65,7 @@ public class CustomerService {
         ps.setString(6,password);
         ps.setString(7,LocalDateTime.now().toString());
         ps.executeUpdate();
+
     }
 
     public static void resetPassword(String email) throws SQLException {
@@ -97,7 +92,7 @@ public class CustomerService {
     public static Customer customer(String username) throws SQLException {
         Customer customer = null;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select * from customer where username = ?";
+        String sql = "select name, email, phone, address, permission from customer where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
@@ -106,7 +101,6 @@ public class CustomerService {
         }
         return customer;
     }
-
 
     public static boolean checkLogin(String username, String password) throws SQLException {
         boolean isLogin = false;
@@ -245,5 +239,6 @@ public class CustomerService {
         }
     }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
+        System.out.print(toMD5("712498390342654"));
     }
 }
