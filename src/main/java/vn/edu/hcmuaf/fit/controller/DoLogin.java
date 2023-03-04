@@ -16,11 +16,6 @@ import java.sql.SQLException;
 public class DoLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username").toLowerCase().trim();
         String password = request.getParameter("password").trim();
         HttpSession session = request.getSession();
@@ -47,5 +42,10 @@ public class DoLogin extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }

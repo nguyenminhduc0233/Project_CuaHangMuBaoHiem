@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -55,9 +56,16 @@ public class CustomerService {
 
     public static void addCustomer(String username, String password, String name, String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-//        String sql = "insert into customer values ('" + GetKey() + "'," + "'" + name + "'," + "'" + email + "', null," + "null,'" + username + "'," + "'" + password + "',0,1," + "'" + LocalDateTime.now() + "')";
-        String sql = "insert into customer values ('"  + name + "','" + email + "', null,null,'" + username + "','" + password + "',0,1,'" + LocalDateTime.now() + "')";
-        dbConnect.get().executeUpdate(sql);
+        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0)");
+        ps.setString(1,name);
+        ps.setString(2,email);
+        ps.setString(3,"");
+        ps.setString(4,"");
+        ps.setString(5,username);
+        ps.setString(6,password);
+        ps.setString(7,LocalDateTime.now().toString());
+        ps.executeUpdate();
+
     }
 
     public static void resetPassword(String email) throws SQLException {
@@ -231,6 +239,6 @@ public class CustomerService {
         }
     }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-
+        System.out.print(toMD5("712498390342654"));
     }
 }

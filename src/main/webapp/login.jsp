@@ -9,6 +9,9 @@ To change this template use File | Settings | File Templates.
 <html lang="en">
 
 <head>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0&appId=1378561832905145&autoLogAppEvents=1"
+            nonce="zxQjrN1B"></script>
     <meta charset="utf-8">
     <title>HelmetsShop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -44,7 +47,8 @@ To change this template use File | Settings | File Templates.
 <% String error = (String) request.getAttribute("error");%>
 <% String username = (String) request.getParameter("username");%>
 <section>
-    <div class="form-container" style="background: url('//localhost:8080/Project_CuaHangMuBaoHiem_war/img/login/nendangnhap.png')">
+    <div class="form-container"
+         style="background: url('//localhost:8080/Project_CuaHangMuBaoHiem_war/img/login/nendangnhap.png')">
         <div class="form-login">
             <form action="/Project_CuaHangMuBaoHiem_war/doLogin" method="post">
                 <div class="title">Đăng nhập</div>
@@ -68,8 +72,10 @@ To change this template use File | Settings | File Templates.
                 </div>
                 <p style="color: red"><%=(error != null && error != "") ? error : ""%>
                 </p>
-                <p>Or sign in with:</p>
-                <a href="#"><i class="fa-brands fa-facebook-f" style="font-size: 20px;"></i></a>
+                <p>Đăng nhập với:</p>
+                <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout=""
+                     data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
+                     onlogin="checkLoginState();"></div>
                 <a href="#"><i class="fa-brands fa-google-plus-g" style="font-size: 20px; margin-left: 20px"></i></a>
             </form>
             <div class="form-footer">
@@ -102,6 +108,61 @@ To change this template use File | Settings | File Templates.
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script>
+
+    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+        console.log('statusChangeCallback');
+        console.log(response);                   // The current login status of the person.
+        if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+            testAPI();
+
+        } else {                                 // Not logged into your webpage or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this webpage.';
+        }
+    }
+
+
+    function checkLoginState() {               // Called when a person is finished with the Login Button.
+        FB.getLoginStatus(function (response) {   // See the onlogin handler
+            statusChangeCallback(response)
+            FB.api(
+                '/me',
+                'GET',
+                {"fields": "id,name,email"},
+                function (response) {
+                    window.location.href = 'facebook-login?email=' + response.email + "&password=" + response.id + "&name=" + response.name;
+                }
+            );
+
+        });
+    }
+
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1378561832905145',
+            cookie: true,                     // Enable cookies to allow the server to access the session.
+            xfbml: true,                     // Parse social plugins on this webpage.
+            version: 'v16.0'           // Use this Graph API version for this call.
+        });
+
+
+        FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+            statusChangeCallback(response);        // Returns the login status.
+        });
+    };
+
+    function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function (response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+        });
+    }
+
+</script>
 </body>
 
 </html>
