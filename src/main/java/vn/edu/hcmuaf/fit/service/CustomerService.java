@@ -56,21 +56,16 @@ public class CustomerService {
 
     public static void addCustomer(String username, String password, String name, String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        Date date = new Date();
-        ResultSet resultSet = dbConnect.get().executeQuery("select current_date()");
-        if(resultSet.next()){
-            date = resultSet.getDate(1);
-        }
-//        String sql = "insert into customer values ('" + GetKey() + "'," + "'" + name + "'," + "'" + email + "', null," + "null,'" + username + "'," + "'" + password + "',0,1," + "'" + LocalDateTime.now() + "')";
-        PreparedStatement sql = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0 )");
-        sql.setString(1,name);
-        sql.setString(2,email);
-        sql.setString(3,"");
-        sql.setString(4,"");
-        sql.setString(5,username);
-        sql.setString(6,password);
-        sql.setDate(7,(java.sql.Date)date);
-        sql.executeUpdate();
+        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0)");
+        ps.setString(1,name);
+        ps.setString(2,email);
+        ps.setString(3,"");
+        ps.setString(4,"");
+        ps.setString(5,username);
+        ps.setString(6,password);
+        ps.setString(7,LocalDateTime.now().toString());
+        ps.executeUpdate();
+
     }
 
     public static void resetPassword(String email) throws SQLException {
