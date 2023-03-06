@@ -77,9 +77,9 @@
           </div>
           <h6 class="mb-3">Các sản phẩm</h6>
           <%
-            List<String> list = (List<String>)request.getAttribute("list");
+            List<Integer> list = (List<Integer>)request.getAttribute("list");
             NumberFormat nf = new NumberFormat();
-            for(String s: list){
+            for(Integer s: list){
               Product p = ProductService.getProduct(ProductService.getIdProductByIddp(s));
           %>
           <div class="d-flex justify-content-between">
@@ -94,7 +94,7 @@
             <h6>Tổng tiền hàng</h6>
             <%
               long price = 0;
-              for(String s:list){
+              for(Integer s:list){
                 Product p = ProductService.getProduct(ProductService.getIdProductByIddp(s));
                 price += p.getPrice()-p.getPrice()*(long)p.getDiscount();
               }%>
