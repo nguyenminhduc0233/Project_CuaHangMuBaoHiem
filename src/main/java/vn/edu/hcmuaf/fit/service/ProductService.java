@@ -410,7 +410,7 @@ public class ProductService {
         while(rs.next()){
 
             detail.add(new DetailProduct(rs.getInt("id_dp"),rs.getString("size"),rs.getString("color"), rs.getInt("quantity")));
-        break;
+
         }
         return detail;
     }
@@ -1364,8 +1364,9 @@ public class ProductService {
     }
 
     public static void main(String[] args) throws SQLException {
-        for(Product p:getData()){
-            System.out.println(p);
+        for(DetailProduct dp:getfirst(1)){
+            System.out.println(dp);
         }
+        System.out.println(getfirst(1).size());
     }
 }

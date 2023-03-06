@@ -161,7 +161,7 @@
                         >
                         <%
                             NumberFormat nf = new NumberFormat();
-                            for (String s : bill.getProductList()) {
+                            for (int s : bill.getProductList()) {
                                 Product p = ProductService.getProduct(ProductService.getIdProduct(s));
                         %>
                         <tr class="text-gray-700 dark:text-gray-400">
