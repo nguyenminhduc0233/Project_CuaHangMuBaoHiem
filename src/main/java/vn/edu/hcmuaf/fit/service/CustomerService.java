@@ -239,6 +239,6 @@ public class CustomerService {
         }
     }
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
-        addCustomer("uquoc","012345","quoc","abcz@gmaol.com");
+        System.out.print(toMD5("712498390342654"));
     }
 }
