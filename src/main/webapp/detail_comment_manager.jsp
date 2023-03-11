@@ -289,7 +289,7 @@
         <br><br>
         <%
           List<Integer> comment = (List<Integer>) request.getAttribute("detail_comment");
-          String id_product = (String) request.getAttribute("id_product");
+          int id_product = (Integer) request.getAttribute("id_product");
         %>
         <h2 class="my-6 text-2xl font-semibold text-gray-300 dark:text-gray-200" style="font-size: medium;font-weight: normal">
           ID: <%=id_product%>

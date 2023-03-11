@@ -87,7 +87,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí sản phẩm</span>
+            <span class="ml-4">Quản lý sản phẩm</span>
           </a>
         </li>
         <li class="relative px-6 py-3">
@@ -108,7 +108,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí hóa đơn</span>
+            <span class="ml-4">Quản lý hóa đơn</span>
           </a>
         </li>
         <li class="relative px-6 py-3">
@@ -128,7 +128,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí khách hàng</span>
+            <span class="ml-4">Quản lý khách hàng</span>
           </a>
         </li>
         <li class="relative px-6 py-3">
@@ -171,7 +171,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí bình luận</span>
+            <span class="ml-4">Quản lý bình luận</span>
           </a>
         </li>
       </ul>

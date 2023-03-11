@@ -71,6 +71,20 @@ public class ContactService {
         }
         return list;
     }
+    public int quantity(){
+        int count =0;
+        DBConnect dbConnect = DBConnect.getInstance();
+
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_contact from contacts");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                count++;
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
 
     public Contact getContact(int id){
         Contact contact = new Contact();
