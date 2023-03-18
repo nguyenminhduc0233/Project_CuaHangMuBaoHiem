@@ -1,12 +1,12 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
-import vn.edu.hcmuaf.fit.service.ProductService;
 
-
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -18,7 +18,7 @@ public class GetComment extends HttpServlet {
         String mess = request.getParameter("mess");
         int star = Integer.parseInt(request.getParameter("star"));
         Customer customer = (Customer) request.getSession().getAttribute("tendangnhap");
-        ProductService.addComment(customer.getId_customer(),idPro,mess,star);
+//        ProductService.addComment(customer.getId_customer(),idPro,mess,star);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail?id="+idPro);
 
     }

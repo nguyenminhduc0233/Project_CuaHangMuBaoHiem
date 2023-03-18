@@ -1,3 +1,5 @@
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
 
@@ -5,7 +7,8 @@
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %><%--
+<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Comment" %><%--
 Created by IntelliJ IDEA.
 User: ACER
 Date: 11/6/2022
@@ -79,8 +82,8 @@ To change this template use File | Settings | File Templates.
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/Home">Trang chủ</a>
-                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/list-product">Sản phẩm</a>
+                <a class="breadcrumb-item text-dark" href="#">Trang chủ</a>
+                <a class="breadcrumb-item text-dark" href="#">Sản phẩm</a>
                 <span class="breadcrumb-item active">Chi tiết sản phẩm</span>
             </nav>
         </div>
@@ -89,9 +92,12 @@ To change this template use File | Settings | File Templates.
 <!-- Breadcrumb End -->
 
 <% NumberFormat nf = new NumberFormat();
-    Product p= (Product) request.getAttribute("product"); %>
+    Product p= (Product) request.getAttribute("product");
+    %>
+
 <!-- Shop Detail Start -->
-<%Map<String,String> listComment = ProductService.getListComment(p.getId());%>
+<%--<%Map<String,String> listComment = ProductService.getListComment(p.getId());%>--%>
+<%List<Comment> listComment = ProductService.getListCommentById(p.getId());%>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
@@ -215,160 +221,40 @@ To change this template use File | Settings | File Templates.
                     </div>
 
                     <div class="tab-pane fade" id="tab-pane-3">
+
                         <div class="row" style="overflow: auto">
 
                             <div style="float:left;width:680px; padding-right:0px;">
 
-                                <section style="background-color: #f7f6f6;">
-                                    <div class="container my-5 py-5 text-dark">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col-md-12 col-lg-10 col-xl-8">
-                                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                                    <h4 class="text-dark mb-0">Unread comments (4)</h4>
-                                                    <div class="card">
+<%--                                <%for(String key:listComment.keySet()){%>--%>
+<%--                                <div class="col-md-6">--%>
+<%--                                    <div class="media mb-4" style="width: 600px;">--%>
+<%--                                        <div class="media-body" >--%>
+<%--                                            <h6><%=ProductService.getCustomer(key).getName()%><small> - <i><%=ProductService.getDateComment(key,p.getId(),listComment.get(key))%></i></small></h6>--%>
+<%--                                            <div class="text-primary mb-2">--%>
+<%--                                                <%int star = ProductService.getStarComment(key,p.getId(),listComment.get(key));--%>
+<%--                                                    for(int a=0;a<star;a++){%>--%>
+<%--                                                <i class="fas fa-star"></i>--%>
+<%--                                                <%}%>--%>
+<%--                                            </div>--%>
+<%--                                            <p><%=listComment.get(key)%></p>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <%}%>--%>
 
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex flex-start">
-                                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="40"
-                                                                 height="40" />
-                                                            <div class="w-100">
-                                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                                    <h6 class="text-primary fw-bold mb-0">
-                                                                        lara_stewart
-                                                                        <span class="text-dark ms-2">Hmm, This poster looks cool</span>
-                                                                    </h6>
-                                                                    <p class="mb-0">2 days ago</p>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <p class="small mb-0" style="color: #aaa;">
-                                                                        <a href="#!" class="link-grey">Remove</a> •
-                                                                        <a href="#!" class="link-grey">Reply</a> •
-                                                                        <a href="#!" class="link-grey">Translate</a>
-                                                                    </p>
-                                                                    <div class="d-flex flex-row">
-                                                                        <i class="fas fa-star text-warning me-2"></i>
-                                                                        <i class="far fa-check-circle" style="color: #aaa;"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex flex-start">
-                                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar" width="40"
-                                                                 height="40" />
-                                                            <div class="w-100">
-                                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                                    <h6 class="text-primary fw-bold mb-0">
-                                                                        the_sylvester_cat
-                                                                        <span class="text-dark ms-2">Loving your work and profile! </span>
-                                                                    </h6>
-                                                                    <p class="mb-0">3 days ago</p>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <p class="small mb-0" style="color: #aaa;">
-                                                                        <a href="#!" class="link-grey">Remove</a> •
-                                                                        <a href="#!" class="link-grey">Reply</a> •
-                                                                        <a href="#!" class="link-grey">Translate</a>
-                                                                    </p>
-                                                                    <div class="d-flex flex-row">
-                                                                        <i class="far fa-check-circle text-primary"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex flex-start">
-                                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(20).webp" alt="avatar" width="40"
-                                                                 height="40" />
-                                                            <div class="w-100">
-                                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                                    <h6 class="text-primary fw-bold mb-0">
-                                                                        mindyy_def
-                                                                        <span class="text-dark ms-2">Really cool Which filter are you using?
-                                                                        </span>
-                                                                    </h6>
-                                                                    <p class="mb-0">3 days ago</p>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <p class="small mb-0" style="color: #aaa;">
-                                                                        <a href="#!" class="link-grey">Remove</a> •
-                                                                        <a href="#!" class="link-grey">Reply</a> •
-                                                                        <a href="#!" class="link-grey">Translate</a>
-                                                                    </p>
-                                                                    <div class="d-flex flex-row">
-                                                                        <i class="fas fa-user-plus" style="color: #aaa;"></i>
-                                                                        <i class="far fa-star mx-2" style="color: #aaa;"></i>
-                                                                        <i class="far fa-check-circle text-primary"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <div class="d-flex flex-start">
-                                                            <img class="rounded-circle shadow-1-strong me-3"
-                                                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(14).webp" alt="avatar" width="40"
-                                                                 height="40" />
-                                                            <div class="w-100">
-                                                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                                                    <h6 class="text-primary fw-bold mb-0">
-                                                                        t_anya
-                                                                        <span class="text-dark ms-2"><span class="text-primary">@macky_lones</span>
-                                                                        <span class="text-primary">@rashida_jones</span> Thanks
-                                                                        </span>
-                                                                    </h6>
-                                                                    <p class="mb-0">4 days ago</p>
-                                                                </div>
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <p class="small mb-0" style="color: #aaa;">
-                                                                        <a href="#!" class="link-grey">Remove</a> •
-                                                                        <a href="#!" class="link-grey">Reply</a> •
-                                                                        <a href="#!" class="link-grey">Translate</a>
-                                                                    </p>
-                                                                    <div class="d-flex flex-row">
-                                                                        <i class="far fa-check-circle text-primary"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-
-
-                                <%for(String key:listComment.keySet()){%>
+                                <%for(Comment com:listComment){%>
                                 <div class="col-md-6">
                                     <div class="media mb-4" style="width: 600px;">
                                         <div class="media-body" >
-                                            <h6><%=ProductService.getCustomer(key).getName()%><small> - <i><%=ProductService.getDateComment(key,p.getId(),listComment.get(key))%></i></small></h6>
+                                            <h6><%=ProductService.getCustomer(com.getId_customer()).getName()%><small> - <i><%=ProductService.getDateComment(com.getId_comt())%></i></small></h6>
                                             <div class="text-primary mb-2">
-                                                <%int star = ProductService.getStarComment(key,p.getId(),listComment.get(key));
+                                                <%int star = ProductService.getStarComment(com.getId_comt());
                                                     for(int a=0;a<star;a++){%>
                                                 <i class="fas fa-star"></i>
                                                 <%}%>
                                             </div>
-                                            <p><%=listComment.get(key)%></p>
+                                            <p><%=com.getContent()%></p>
                                         </div>
                                     </div>
                                 </div>
@@ -376,9 +262,9 @@ To change this template use File | Settings | File Templates.
                             </div>
 
                             <div class="col-md-6" style="float: right; width: 500px;">
-
                                 <h4 class="mb-4">Viết đánh giá</h4>
-                                <form action="/Project_CuaHangMuBaoHiem_war/get-comment" method="get">
+                                <form id="comment_form" action="/Project_CuaHangMuBaoHiem_war/CommentServlet" method="get">
+                                    <input type="hidden" name="id" value="<%= p.getId() %>">
                                     <div class="d-flex my-3">
                                         <p class="mb-0 mr-2">Đánh giá * :</p>
                                         <div class="text-primary">
@@ -402,9 +288,10 @@ To change this template use File | Settings | File Templates.
                                         <input type="hidden" name="id_Pro" value="1" class="form-control" id="email">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Gửi" class="btn btn-primary px-3">
+                                        <input onclick="addComment()" type="submit" value="Gửi" class="btn btn-primary px-3">
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -416,6 +303,31 @@ To change this template use File | Settings | File Templates.
 </div>
 <!-- Shop Detail End -->
 
+<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>--%>
+
+<%--<script>--%>
+
+<%--    function addComment(){--%>
+<%--        if($("comment_form").valid()){--%>
+<%--            var star = document.getElementById()--%>
+<%--            var url = 'DisplayComment.jsp';--%>
+<%--            var data = $("#comment_form").serialize();--%>
+<%--            var method = 'POST';--%>
+
+<%--            $.ajax({--%>
+<%--                type: method,--%>
+<%--                url:url,--%>
+<%--                dataType: "JSON",--%>
+<%--                data: data,--%>
+
+<%--                success:function(data){--%>
+<%--                    $('#star').val();--%>
+<%--                    $('#content').val();--%>
+<%--                }--%>
+<%--            });--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
 
 <!-- Products Start -->
 <div class="container-fluid py-5">
