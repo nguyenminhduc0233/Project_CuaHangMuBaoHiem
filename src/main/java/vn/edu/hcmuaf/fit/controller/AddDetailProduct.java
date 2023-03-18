@@ -35,18 +35,22 @@ public class AddDetailProduct extends HttpServlet {
             String size = request.getParameter("size");
             String color = request.getParameter("color");
             String quantity = request.getParameter("quantity");
+            String price = request.getParameter("price");
             int iddp = 0;
             if (ProductService.checkDBContainSizeColor(id, size, color)) {
                 iddp = ProductService.getIdDetailProductByCS(id, size, color);
+                ProductService.insertImportProduct(id,size,color,quantity,price);
                 ProductService.updateSizeColorById(iddp, quantity);
+                ProductService.updatePriceMax((request.getParameter("id")));
             } else {
                 ProductService.insertDetailProduct(id, size, color, quantity);
+                ProductService.insertImportProduct(id,size,color,quantity,price);
+                ProductService.updatePriceMax((request.getParameter("id")));
             }
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

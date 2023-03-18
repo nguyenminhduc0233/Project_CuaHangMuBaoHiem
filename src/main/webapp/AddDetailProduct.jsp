@@ -375,6 +375,13 @@
                                     placeholder="Số lượng"/>
                         </label>
                         <div style="margin-top: 10px; color: red;" id="warning_quantity"></div>
+                        <label style="margin-top: 20px;" class="block text-sm">
+                            <span class="text-gray-700 dark:text-gray-400">Giá nhập</span>
+                            <input  type="number" id="price" name="price" required="required"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    placeholder="Giá nhập"/>
+                        </label>
+                        <div style="margin-top: 10px; color: red;" id="warning_price"></div>
                         <a href="<%="/Project_CuaHangMuBaoHiem_war/AddImageProduct?id="+ id %>">
                             <button type="button" style="margin-top: 20px;margin-left: 10px; float: right; background: #1c7430;" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 <i class="fa fa-image"></i> Thêm Ảnh

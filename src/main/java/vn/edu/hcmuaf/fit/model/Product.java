@@ -11,7 +11,6 @@ public class Product{
     private String name;
     private String brand;
     private long price;
-
     private String type;
     private double discount;
     private List<ImageProduct> img;
