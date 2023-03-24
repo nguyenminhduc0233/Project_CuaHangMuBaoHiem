@@ -19,7 +19,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -72,7 +72,9 @@
                             for(Product p: cart.getListProduct()){
                         %>
                         <tr>
-                            <td class="align-middle"><div style="float: left"><img <%if(p.getImg().size()<=0){%>src="img/noimage.jpg" <%}else{%>src="<%= p.getImg().get(0).getImg() %>"<%}%> alt="" style="width: 50px;"> <%= p.getName() %></div></td>
+                            <td class="align-middle"><a href="<%="/Project_CuaHangMuBaoHiem_war/detail?id=" +p.getId()%>" style="color: #6c757d;">
+                                <div style="float: left"><img <%if(p.getImg().size()<=0){%>src="img/noimage.jpg" <%}else{%>src="<%= p.getImg().get(0).getImg() %>"<%}%> alt="" style="width: 50px"> <%= p.getName() %></div>
+                            </a></td>
                             <td class="align-middle"><%=p.getDetail().get(0).getSize()%></td>
                             <td class="align-middle"><%=p.getDetail().get(0).getColor()%></td>
                             <td class="align-middle"><%=nf.numberFormat((long) (p.getPrice()-p.getPrice()*p.getDiscount()))%>đ</td>
