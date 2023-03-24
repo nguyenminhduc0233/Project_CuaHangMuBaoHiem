@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -238,6 +239,180 @@ public class CustomerService {
         } catch (SQLException e) {
         }
     }
+    public static boolean allow_service(int id){
+        boolean check = false;
+        int allows = 0;
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("select allow from manager_permissions where id = ?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            if(rs.next()){
+                allows = rs.getInt("allow");
+            }
+            if(allows == 0){
+                check = false;
+            }else{
+                check = true;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    public static List<Integer> find_service(String name){
+        List<Integer> list = new ArrayList<Integer>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Statement statement = dbConnect.get();
+        try {
+            ResultSet rs = statement.executeQuery("select id from manager_permissions where service like '%"+name+"%'");
+            while (rs.next()) {
+                list.add(rs.getInt("id"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
+    public static String addPermissionManager(String service){
+        if(checkContainService(service)){
+            return "Dịch vụ đã tồn tại";
+        }
+        try {
+            DBConnect dbConnect = DBConnect.getInstance();
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into manager_permissions (permission, service, allow) values (?,?,?)");
+            prs.setInt(1,1);
+            prs.setString(2, service);
+            prs.setInt(3, 1);
+            prs.executeUpdate();
+
+            prs.setInt(1,0);
+            prs.setString(2, service);
+            prs.setInt(3, 0);
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "Thêm dịch vụ thành công";
+    }
+    public static String deletePermissionManager(String service){
+        if(!checkContainService(service)){
+            return "Không tìm thấy dịch vụ";
+        }
+        try{
+            DBConnect dbConnect = DBConnect.getInstance();
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("delete from manager_permissions where service = ?");
+            prs.setString(1, service);
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return "Xóa dịch vụ thành công";
+    }
+
+    public static void changeAllow(int id){
+        try{
+            int allow = 0;
+            if(allow_service(id)){allow=0;}
+            else{allow=1;}
+            DBConnect dbConnect = DBConnect.getInstance();
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("update manager_permissions set allow = ? where id = ?");
+            prs.setInt(1, allow);
+            prs.setInt(2,id);
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static List<String> getListService(){
+        List<String> list = new ArrayList<String>();
+        try {
+            DBConnect dbConnect = DBConnect.getInstance();
+            Statement statement = dbConnect.get();
+            ResultSet rs = statement.executeQuery("select distinct service from manager_permissions");
+            while (rs.next()){
+                list.add(rs.getString("service"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static String getServiceById(int id){
+        String result = "";
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select service from manager_permissions where id = ?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while (rs.next()){
+                result = rs.getString("service");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static int getPermissionById(int id){
+        int result = 0;
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select permission from manager_permissions where id = ?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while (rs.next()){
+                result = rs.getInt("permission");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static boolean checkContainService(String service){
+        if(getListService().contains(service)){return true;}
+        else{return false;}
+    }
+    public static String checkPermission(int permission){
+        String result = "";
+        if(permission==1){
+            result+="Quản lý";
+        }else if(permission==0){
+            result+="Khách hàng";
+        }
+        return result;
+    }
+    public static List<Integer> getListIdPermission(){
+        List<Integer> list = new ArrayList<Integer>();
+        try {
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from manager_permissions");
+            while (rs.next()){
+                list.add(rs.getInt(1));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static boolean allow_access(String service, int permission){
+        int result = 0;
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select allow from manager_permissions where service=? and permission=?");
+            prs.setString(1,service);
+            prs.setInt(2,permission);
+            ResultSet rs = prs.executeQuery();
+            while (rs.next()){
+                result = rs.getInt("permission");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        if(result==0){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
         System.out.print(toMD5("712498390342654"));
     }

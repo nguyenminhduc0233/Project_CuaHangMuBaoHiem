@@ -314,11 +314,11 @@ public class ProductService {
     }
     public static Date getrelease (int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.release from product p where p.id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.date from product p where p.id_product=?");
         prs.setInt(1,id);
         ResultSet rs = prs.executeQuery();
         if(rs.next()){
-            return rs.getDate("release");
+            return rs.getDate("date");
         }
         return null;
     }
@@ -358,7 +358,7 @@ public class ProductService {
             DBConnect dbConnect = DBConnect.getInstance();
             switch (s){
                 case "new":{
-                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p order by p.release desc ");
+                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p order by p.date desc ");
                     while (rs.next()){
                         result.add(getProduct(rs.getInt("id_product")));
                     }
@@ -667,7 +667,7 @@ public class ProductService {
         String date  = year+"-"+mont+"-"+day;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product(name,price,brand,type,discount,decrispe,release) values (?,?,?,?,?,?,?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product(name,price,brand,type,discount,decrispe,date) values (?,?,?,?,?,?,?)");
             ps.setString(1,name);
             ps.setInt(2,priceDB);
 
