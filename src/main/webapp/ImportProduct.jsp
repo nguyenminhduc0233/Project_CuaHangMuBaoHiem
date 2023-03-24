@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Quản lý sản phẩm</title>
+    <title>Quản lý nhập hàng</title>
     <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
@@ -179,6 +179,23 @@
                             <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                         </svg>
                         <span class="ml-4">Quản lý nhập hàng</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                       href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="ml-4">Kiểm tra hàng tồn kho</span>
                     </a>
                 </li>
             </ul>
@@ -370,26 +387,6 @@
                                                 </svg>
                                             </button>
                                         </a>
-                                        <form method="get" action="/Project_CuaHangMuBaoHiem_war/Remove">
-                                            <input type="hidden" name="id" value="<%= p.getId_product() %>">
-                                            <button
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Delete"
-                                            >
-                                                <svg
-                                                        class="w-5 h-5"
-                                                        aria-hidden="true"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 20 20"
-                                                >
-                                                    <path
-                                                            fill-rule="evenodd"
-                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                            clip-rule="evenodd"
-                                                    ></path>
-                                                </svg>
-                                            </button>
-                                        </form>
                                     </div>
                                 </td>
                             </tr>

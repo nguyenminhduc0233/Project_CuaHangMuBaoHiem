@@ -17,20 +17,20 @@ import java.sql.SQLException;
 public class AddSCQ extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        String username = (String) session.getAttribute("tendangnhap");
-//        Customer customer = null;
-//        try {
-//            customer = CustomerService.customer(username);
-//            if (customer == null || customer.getPermission() == 0) {
-//                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-//                request.getRequestDispatcher("login.jsp").forward(request, response);
-//                return;
-//            } else if (customer.getPermission() > 1) {
-//                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
-//                request.getRequestDispatcher("login.jsp").forward(request, response);
-//                return;
-//            }
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Customer customer = null;
+        try {
+            customer = CustomerService.customer(username);
+            if (customer == null || customer.getPermission() == 0) {
+                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            } else if (customer.getPermission() > 1) {
+                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
             int id = Integer.parseInt(request.getParameter("id"));
             String size = request.getParameter("size");
             String color = request.getParameter("color");
@@ -48,9 +48,9 @@ public class AddSCQ extends HttpServlet {
                 ProductService.updatePriceMax((request.getParameter("id")));
             }
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/AddDetailProductIntoDB?id=" + id);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

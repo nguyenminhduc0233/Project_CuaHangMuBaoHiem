@@ -12,6 +12,8 @@ public class ImportProduct {
     private long totalQuantity;
     private long totalPrice;
     private String img;
+    private String size;
+    private String color;
     public ImportProduct(int id, int id_product, long quantity, long price, Date date) {
         this.id = id;
         this.id_product = id_product;
@@ -28,6 +30,29 @@ public class ImportProduct {
         this.img = img;
     }
 
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public ImportProduct(String size, String color, long price, long quantity, Date date) {
+        this.date =date;
+        this.size =size;
+        this.color = color;
+        this.price = price;
+        this.quantity = quantity;
+    }
     public ImportProduct() {
     }
 

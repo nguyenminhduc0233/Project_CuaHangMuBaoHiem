@@ -21,6 +21,15 @@ public class Product{
     private List<DetailProduct> detail;
     private int quantity;
 
+    public long getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(long inventory) {
+        this.inventory = inventory;
+    }
+
+    private long inventory;
     public Product() {
     }
 
@@ -38,7 +47,12 @@ public class Product{
         this.release = release;
         this.detail = new ArrayList<DetailProduct>();
     }
-
+    public Product(int id, String name,long inventory) {
+        this.id = id;
+        this.name = name;
+        this.inventory = inventory;
+        this.img = new ArrayList<ImageProduct>();
+    }
     public int getId() {
         return this.id;
 
