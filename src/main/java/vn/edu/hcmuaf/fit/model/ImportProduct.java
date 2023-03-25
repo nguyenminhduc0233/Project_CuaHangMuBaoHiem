@@ -21,7 +21,6 @@ public class ImportProduct {
         this.price = price;
         this.date = date;
     }
-
     public ImportProduct(int id_product, String name, long totalQuantity, long totalPrice, String img) {
         this.id_product = id_product;
         this.name = name;
@@ -51,6 +50,11 @@ public class ImportProduct {
         this.size =size;
         this.color = color;
         this.price = price;
+        this.quantity = quantity;
+    }
+    public ImportProduct(String size, String color, long quantity) {
+        this.size =size;
+        this.color = color;
         this.quantity = quantity;
     }
     public ImportProduct() {
