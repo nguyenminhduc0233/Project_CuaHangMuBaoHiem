@@ -1498,7 +1498,7 @@ public class ProductService {
         long total = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  detail_product where id_product= ?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total += rs.getInt(1);
@@ -1513,7 +1513,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(price*quantity) from  importproducts where id_product=?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 result = rs.getLong(1);
@@ -1528,7 +1528,7 @@ public class ProductService {
         long total = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  importproducts where id_product= ?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total += rs.getInt(1);

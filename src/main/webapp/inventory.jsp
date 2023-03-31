@@ -276,12 +276,10 @@
                                 </svg>
                             </template>
                             <template x-if="dark">
-                                <svg
-                                        class="w-5 h-5"
+                                <svg class="w-5 h-5"
                                         aria-hidden="true"
                                         fill="currentColor"
-                                        viewBox="0 0 20 20"
-                                >
+                                        viewBox="0 0 20 20">
                                     <path
                                             fill-rule="evenodd"
                                             d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
@@ -293,7 +291,6 @@
                     </li>
                     <!-- Notifications menu -->
                     <li class="relative">
-
                         <a href="/Project_CuaHangMuBaoHiem_war/ManageContact">
                             <button class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
                                     @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
@@ -309,7 +306,6 @@
             </div>
         </header>
         <main class="h-full pb-16 overflow-y-auto">
-
             <div class="container grid px-6 mx-auto">
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Kiểm tra hàng tồn kho
@@ -323,11 +319,10 @@
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                 <th class="px-4 py-3">Tên sản phẩm</th>
                                 <th class="px-4 py-3">Hàng tồn kho</th>
-<%--                                <th class="px-4 py-3">Chỉnh sửa</th>--%>
+                                <th class="px-4 py-3">Chỉnh sửa</th>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-
                             <%
                                 List<Product> data = (List<Product>) request.getAttribute("list");
                                 NumberFormat nf = new NumberFormat();

@@ -20,6 +20,7 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
             rel="stylesheet"
     />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin/assets/css/tailwind.output.css" />
     <link rel="stylesheet" href="admin/assets/css/filter.css" />
     <script

@@ -17,7 +17,6 @@ To change this template use File | Settings | File Templates.
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -36,6 +35,8 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 </head>
 
 <body>
@@ -77,6 +78,23 @@ To change this template use File | Settings | File Templates.
                      data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
                      onlogin="checkLoginState();"></div>
                 <a href="#"><i class="fa-brands fa-google-plus-g" style="font-size: 20px; margin-left: 20px"></i></a>
+                <div id="g_id_onload"
+                     data-client_id="180450926532-ft3cbb74kv9j0v1q3e236dsn4ehkkhg9.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-login_uri="http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin"
+                     data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-locale="vi"
+                     data-logo_alignment="left">
+                </div>
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
@@ -163,6 +181,7 @@ To change this template use File | Settings | File Templates.
     }
 
 </script>
+
 </body>
 
 </html>
