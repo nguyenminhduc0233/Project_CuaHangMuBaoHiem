@@ -36,6 +36,8 @@ To change this template use File | Settings | File Templates.
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
 
 </head>
 
@@ -77,24 +79,14 @@ To change this template use File | Settings | File Templates.
                 <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout=""
                      data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
                      onlogin="checkLoginState();"></div>
-                <a href="#"><i class="fa-brands fa-google-plus-g" style="font-size: 20px; margin-left: 20px"></i></a>
-                <div id="g_id_onload"
-                     data-client_id="180450926532-ft3cbb74kv9j0v1q3e236dsn4ehkkhg9.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-login_uri="http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin"
-                     data-auto_prompt="false">
-                </div>
 
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-locale="vi"
-                     data-logo_alignment="left">
-                </div>
+                <button onclick="getToken();"  data-callback="handleCredentialResponse">Get access token</button>
+                <br><br>
+                <button onclick="loadCalendar();">Load Calendar</button>
+                <br><br>
+                <button onclick="revokeToken();">Revoke token</button>
+
+                <div id="demo"></div>
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
@@ -180,6 +172,58 @@ To change this template use File | Settings | File Templates.
         });
     }
 
+</script>
+
+<script>
+    var client;
+    var access_token;
+
+    function initClient() {
+        client = google.accounts.oauth2.initTokenClient({
+            client_id: '293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/calendar.readonly \
+                  https://www.googleapis.com/auth/contacts.readonly',
+            callback: (tokenResponse) => {
+                access_token = tokenResponse.access_token;
+            },
+        });
+
+    }
+
+    function getToken() {
+        client.requestAccessToken();
+    }
+
+    function revokeToken() {
+        google.accounts.oauth2.revoke(access_token, () => {
+            console.log('access token revoked')
+        });
+    }
+
+    function loadCalendar() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.send();
+    }
+
+    function decodeJwtResponse(credential) {
+// document.getElementById("demo").innerHTML =
+        return undefined;
+    }
+
+    function handleCredentialResponse(response) {
+        // decodeJwtResponse() is a custom function defined by you
+        // to decode the credential response.
+        const responsePayload = decodeJwtResponse(response.credential);
+
+        console.log("ID: " + responsePayload.sub);
+        console.log('Full Name: ' + responsePayload.name);
+        console.log('Given Name: ' + responsePayload.given_name);
+        console.log('Family Name: ' + responsePayload.family_name);
+        console.log("Image URL: " + responsePayload.picture);
+        console.log("Email: " + responsePayload.email);
+    }
 </script>
 
 </body>
