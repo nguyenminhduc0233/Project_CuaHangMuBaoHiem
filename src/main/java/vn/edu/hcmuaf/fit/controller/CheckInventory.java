@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -14,8 +15,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "list_customer", value = "/list-customer")
-public class ListCustomer extends HttpServlet {
+@WebServlet(name = "CheckInventory", value = "/CheckInventory")
+public class CheckInventory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -38,7 +39,7 @@ public class ListCustomer extends HttpServlet {
             int pre = index - 1;
             int next = index + 1;
 
-            List<Customer> list = ProductService.onePageCustomer(index);
+            List<Product> list = ProductService.onePageInventory(index);
 
             int n = ProductService.getTotalCustomer();
             int endPage = n/8;
@@ -50,14 +51,14 @@ public class ListCustomer extends HttpServlet {
             request.setAttribute("pre", pre);
             request.setAttribute("next", next);
             request.setAttribute("endP", endPage);
-//            request.setAttribute("list",list);
 
-//            List<Customer> list = ProductService.getData_Customer();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("customer_manager.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        List<Product> list = ProductService.checkInventory();
+        request.setAttribute("list",list);
+        request.getRequestDispatcher("inventory.jsp").forward(request,response);
+    } catch (
+    SQLException e) {
+        throw new RuntimeException(e);
+    }
     }
 
     @Override

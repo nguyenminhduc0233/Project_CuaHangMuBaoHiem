@@ -157,6 +157,10 @@
                     </div>
                 </div>
                 <% NumberFormat nf = new NumberFormat();
+                    int index = (int) request.getAttribute("index");
+                    int endPage = (int) request.getAttribute("endP");
+                    int pre = (int) request.getAttribute("pre");
+                    int next = (int) request.getAttribute("next");
                     List<Product> list =(List<Product>)request.getAttribute("list");
                     for(Product p : list){
                 %>
@@ -191,11 +195,11 @@
                 <div class="col-12">
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            <li class="page-item <%=index==1? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/list-product?index=" + pre%>">Previous</a></li>
+                            <%for(int i = 1; i <= endPage; i++){%>
+                            <li class="page-item <%=index==i? "active":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/list-product?index=" + i%>"><%=i%></a></li>
+                            <%}%>
+                            <li class="page-item <%=index==endPage? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/list-product?index=" + next%>">Next</a></li>
                         </ul>
                     </nav>
                 </div>

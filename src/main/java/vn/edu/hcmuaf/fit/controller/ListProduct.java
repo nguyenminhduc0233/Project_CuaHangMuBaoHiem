@@ -13,7 +13,23 @@ import java.util.List;
 public class ListProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> list = ProductService.getData();
+        String indexPage = request.getParameter("index");
+        int index = Integer.parseInt(indexPage);
+        int pre = index - 1;
+        int next = index + 1;
+
+        List<Product> list = ProductService.onePageProduct(index);
+
+        int n = ProductService.getTotalProduct();
+        int endPage = n/24;
+        if(n % 24 != 0){
+            endPage++;
+        }
+
+        request.setAttribute("index", index);
+        request.setAttribute("pre", pre);
+        request.setAttribute("next", next);
+        request.setAttribute("endP", endPage);
         request.setAttribute("list",list);
         request.getRequestDispatcher("shop.jsp").forward(request,response);
     }

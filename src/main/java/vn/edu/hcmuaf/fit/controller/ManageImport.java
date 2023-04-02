@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.ImportProduct;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -14,8 +15,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "list_customer", value = "/list-customer")
-public class ListCustomer extends HttpServlet {
+@WebServlet(name = "ManageImport", value = "/ManageImport")
+public class ManageImport extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -38,9 +39,9 @@ public class ListCustomer extends HttpServlet {
             int pre = index - 1;
             int next = index + 1;
 
-            List<Customer> list = ProductService.onePageCustomer(index);
+//            List<Customer> list = ProductService.onePageImport(index);
 
-            int n = ProductService.getTotalCustomer();
+            int n = ProductService.getTotalImport();
             int endPage = n/8;
             if(n % 8 != 0){
                 endPage++;
@@ -50,14 +51,14 @@ public class ListCustomer extends HttpServlet {
             request.setAttribute("pre", pre);
             request.setAttribute("next", next);
             request.setAttribute("endP", endPage);
-//            request.setAttribute("list",list);
 
-//            List<Customer> list = ProductService.getData_Customer();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("customer_manager.jsp").forward(request, response);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<ImportProduct> list = ProductService.onePageImport(index);
+        request.setAttribute("list",list);
+        request.getRequestDispatcher("ImportProduct.jsp").forward(request,response);
+    } catch (
+    SQLException e) {
+        throw new RuntimeException(e);
+    }
     }
 
     @Override
