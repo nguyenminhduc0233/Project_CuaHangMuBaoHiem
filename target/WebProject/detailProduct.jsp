@@ -532,6 +532,8 @@
               <div style="margin-top: 10px; color: red;" id="warning_color"></div>
               <input id="quantity" name="quantity" type="number" placeholder="Số lượng" required="required">
               <div style="margin-top: 10px; color: red;" id="warning_quantity"></div>
+              <input id="price_import" name="price" type="number" placeholder="Giá" required="required">
+              <div style="margin-top: 10px; color: red;" id="warning_price_import"></div>
               <button  type="submit" onclick="checkSCQ()" style="margin-top: 20px; background: #1c7430;" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Thêm
               </button>

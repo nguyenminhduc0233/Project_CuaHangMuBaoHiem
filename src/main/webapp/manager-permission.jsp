@@ -170,13 +170,47 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                       href="/Project_CuaHangMuBaoHiem_war/ManageImport">
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="ml-4">Quản lý nhập hàng</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                       href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor">
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="ml-4">Kiểm tra hàng tồn kho</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
               <span
                       class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                       aria-hidden="true"
               ></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/ManageProduct"
+                            href="/Project_CuaHangMuBaoHiem_war/manager-permission"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -201,7 +235,7 @@
     <!-- Backdrop -->
     <div class="flex flex-col flex-1 w-full">
         <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
-            <div
+            <div style="height: 30%"
                     class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
             >
                 <!-- Mobile hamburger -->
@@ -228,7 +262,6 @@
                     <div
                             class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
                     >
-                        <form action="/Project_CuaHangMuBaoHiem_war/find-service" method="post">
                             <input
                                     class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                                     id="search"
@@ -236,8 +269,7 @@
                                     placeholder="Nhập tên chức năng"
                                     aria-label="Search"
                                     name="search"
-                            />
-                        </form>
+                            >
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -290,12 +322,10 @@
                     <!-- Profile menu -->
                 </ul>
             </div>
-        </header>
-        <main class="h-full pb-16 overflow-y-auto">
             <%String notification = (String)request.getAttribute("notification");
-             String color = (String)request.getAttribute("color");
-             notification = notification == null?"":notification;%>
-            <div class="px-6 my-6" style="width: 640px; margin-top:30px;margin-bottom: 16px;margin-left: 192px; display: flex">
+                String color = (String)request.getAttribute("color");
+                notification = notification == null?"":notification;%>
+            <div class="px-6 my-6" style="width: 640px; margin-top:24px;margin-bottom: 0px;margin-left: 192px; display: flex">
                 <a id="add" onclick="add()" href="">
                     <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="width: 200px;margin-right: 20px">
                         Thêm chức năng
@@ -322,6 +352,9 @@
                     style="width: 576px;margin-left: 254px;margin-top: 10px;background-color: #F9FAFB; text-align: center;color: <%=color%>"
                     value="<%=notification%>"
             />
+        </header>
+        <main class="h-full pb-16 overflow-y-auto">
+
             <div class="container grid px-6 mx-auto">
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                     Danh sách các chức năng
@@ -424,9 +457,9 @@
         let value = document.getElementById('search').value;
         document.getElementById('remove').href = "/Project_CuaHangMuBaoHiem_war/delete-service?service="+value;
     }
-    function find(){
+    function find() {
         let value = document.getElementById('search').value;
-        document.getElementById('find').href = "/Project_CuaHangMuBaoHiem_war/find-service?service="+value;
+        document.getElementById('find').href = "/Project_CuaHangMuBaoHiem_war/find-service?service=" + value;
     }
 </script>
 </body>

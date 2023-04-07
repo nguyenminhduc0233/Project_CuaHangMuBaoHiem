@@ -294,11 +294,11 @@ public class CustomerService {
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return "Thêm dịch vụ thành công";
+        return "Thêm chức năng thành công";
     }
     public static String deletePermissionManager(String service){
         if(!checkContainService(service)){
-            return "Không tìm thấy dịch vụ";
+            return "Không tìm thấy chức năng";
         }
         try{
             DBConnect dbConnect = DBConnect.getInstance();
@@ -308,7 +308,7 @@ public class CustomerService {
         }catch (SQLException e){
             e.printStackTrace();
         }
-        return "Xóa dịch vụ thành công";
+        return "Xóa chức năng thành công";
     }
 
     public static void changeAllow(int id){
@@ -368,8 +368,14 @@ public class CustomerService {
         return result;
     }
     public static boolean checkContainService(String service){
-        if(getListService().contains(service)){return true;}
-        else{return false;}
+        boolean result = false;
+        for(String s:getListService()){
+            if(s.equalsIgnoreCase(service)){
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
     public static String checkPermission(int permission){
         String result = "";
@@ -394,6 +400,7 @@ public class CustomerService {
     }
 
     public static boolean allow_access(String service, int permission){
+        if(permission==2){return true;}
         int result = 0;
         try {
             PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select allow from manager_permissions where service=? and permission=?");
@@ -401,7 +408,7 @@ public class CustomerService {
             prs.setInt(2,permission);
             ResultSet rs = prs.executeQuery();
             while (rs.next()){
-                result = rs.getInt("permission");
+                result = rs.getInt("allow");
             }
         }catch (SQLException e){
             e.printStackTrace();

@@ -87,6 +87,4 @@ public class UploadDownloadFileServlet extends HttpServlet {
         }
         out.write("</body></html>");
     }
-
-
 }

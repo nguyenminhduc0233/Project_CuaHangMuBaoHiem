@@ -159,7 +159,7 @@ To change this template use File | Settings | File Templates.
 
                 </div>
                 <p id="color1234" class="help-block text-danger"></p>
-
+                <% if(ProductService.totalQuantity(p.getId())<=0) {%>Hết hàng<%}%>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
@@ -167,7 +167,6 @@ To change this template use File | Settings | File Templates.
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-
                         <input type="text" class="form-control bg-secondary border-0 text-center" name="quantity" style="height: 30px" value="1">
 
                         <div class="input-group-btn">
@@ -176,8 +175,13 @@ To change this template use File | Settings | File Templates.
                             </button>
                         </div>
                     </div>
+                    <% if(ProductService.totalQuantity(p.getId())<=0) {%>
+                    <button type="button" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Hết hàng</button>
+                    <%}else{%>
                     <button type="submit" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào
                         giỏ hàng</button>
+                    <%}%>
+
                 </div>
                 </form>
                 <div class="d-flex pt-2">

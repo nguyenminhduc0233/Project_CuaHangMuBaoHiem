@@ -173,7 +173,7 @@
                             <div class="d-flex align-items-center justify-content-center mt-2">
                                 <h5><%=nf.numberFormat((long)(p.getPrice()-p.getPrice()*p.getDiscount()))%>đ</h5><h6 class="text-muted ml-2"><del><%=nf.numberFormat(p.getPrice())%>đ</del></h6>
                             </div>
-                            <% if(p.sumQuantity()<=0) {%>Hết hàng<%}else{%> Còn: <%=p.sumQuantity()%><%}%>
+                            <% if(ProductService.totalQuantity(p.getId())<=0) {%>Hết hàng<%}else{%> Còn: <%=ProductService.totalQuantity(p.getId())%><%}%>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <%for (int j=1;j<=p.getStar();j++){%>
                                 <small class="fa fa-star text-primary mr-1"></small>
