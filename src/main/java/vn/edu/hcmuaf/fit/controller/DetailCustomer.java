@@ -26,9 +26,8 @@ public class DetailCustomer extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
-            } else if (cus.getPermission() > 1) {
-                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else if (!CustomerService.allow_access("Chỉnh sửa thông tin khách hàng",cus.getPermission())) {
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
                 return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));

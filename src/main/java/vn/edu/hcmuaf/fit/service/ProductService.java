@@ -327,6 +327,7 @@ public class ProductService {
     public static Date getrelease(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.date from product p where p.id_product=?");
+
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -697,6 +698,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product(name,price,brand,type,discount,decrispe,date) values (?,?,?,?,?,?,?)");
+
             ps.setString(1, name);
             ps.setInt(2, priceDB);
             ps.setString(3, brand);

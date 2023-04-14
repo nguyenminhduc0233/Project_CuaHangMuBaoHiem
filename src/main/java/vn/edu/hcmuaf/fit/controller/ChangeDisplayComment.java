@@ -11,6 +11,7 @@ import java.io.IOException;
 public class ChangeDisplayComment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         int id = Integer.parseInt(request.getParameter("id"));
         String idpro = request.getParameter("idpro");
         ProductService.changeDisplayComment(id);

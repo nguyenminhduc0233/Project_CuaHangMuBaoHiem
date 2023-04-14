@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.Cart" %>
-<%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %><%--
+<%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %><%--
   Created by IntelliJ IDEA.
   User: ACER
   Date: 11/6/2022
@@ -118,7 +119,7 @@
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>
                                     <%
-                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==1){
+                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()!=0){
                                     %>
                                     <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct" class="dropdown-item text-primary">Trang quản lý</a>
                                     <%}%>
@@ -145,6 +146,5 @@
 <!-- Navbar End -->
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 </body>
 </html>

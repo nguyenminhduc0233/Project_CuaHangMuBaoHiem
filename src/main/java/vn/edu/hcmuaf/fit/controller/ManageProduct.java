@@ -38,6 +38,7 @@ public class ManageProduct extends HttpServlet {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
+
     }
 
     @Override
