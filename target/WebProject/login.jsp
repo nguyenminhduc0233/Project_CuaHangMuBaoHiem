@@ -80,11 +80,13 @@ To change this template use File | Settings | File Templates.
                      data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
                      onlogin="checkLoginState();"></div>
 
-                <button onclick="decodeJwtResponse();"  >Get access token</button>
+                <button onclick="getToken();"  data-callback="handleCredentialResponse">Get access token</button>
                 <br><br>
                 <button onclick="loadCalendar();">Load Calendar</button>
                 <br><br>
                 <button onclick="revokeToken();">Revoke token</button>
+
+                <div id="demo"></div>
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
@@ -205,9 +207,9 @@ To change this template use File | Settings | File Templates.
         xhr.send();
     }
 
-    function decodeJwtResponse() {
-        console("asahhhhhhh");
-        // return undefined;
+    function decodeJwtResponse(credential) {
+// document.getElementById("demo").innerHTML =
+        return undefined;
     }
 
     function handleCredentialResponse(response) {
