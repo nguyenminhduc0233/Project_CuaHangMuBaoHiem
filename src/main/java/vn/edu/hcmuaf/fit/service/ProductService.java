@@ -1524,6 +1524,7 @@ public class ProductService {
         }
         return result;
     }
+
     public static long totalQuantityImport(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
         long total = 0;
@@ -1538,6 +1539,7 @@ public class ProductService {
         }
         return total;
     }
+
     public static List<ImportProduct> getProductInImport() {
         List<ImportProduct> list = new ArrayList<ImportProduct>();
         ImportProduct im = new ImportProduct();
@@ -1548,13 +1550,14 @@ public class ProductService {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                im = new ImportProduct(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")), totalPriceImport(rs.getInt("id_product")),getimgFirst(rs.getInt("id_product")));
+                im = new ImportProduct(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")), totalPriceImport(rs.getInt("id_product")), getimgFirst(rs.getInt("id_product")));
                 list.add(im);
             }
         } catch (SQLException e) {
         }
         return list;
     }
+
     public static String getimgFirst(int id) throws SQLException {
         String img = "";
         DBConnect dbConnect = DBConnect.getInstance();
@@ -1562,12 +1565,13 @@ public class ProductService {
         prs.setInt(1, id);
         prs.setString(2, "1");
         ResultSet rs = prs.executeQuery();
-        if(rs.next()) {
-           img = rs.getString("link_image");
+        if (rs.next()) {
+            img = rs.getString("link_image");
         }
         return img;
     }
-    public static List<ImportProduct> getDetailImport(int id){
+
+    public static List<ImportProduct> getDetailImport(int id) {
         List<ImportProduct> list = new ArrayList<ImportProduct>();
 
         ImportProduct im = new ImportProduct();
@@ -1577,14 +1581,15 @@ public class ProductService {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                im = new ImportProduct(rs.getString("size"),rs.getString("color"),rs.getLong("price"),rs.getLong("quantity"),rs.getDate("date"));
+                im = new ImportProduct(rs.getString("size"), rs.getString("color"), rs.getLong("price"), rs.getLong("quantity"), rs.getDate("date"));
                 list.add(im);
             }
         } catch (SQLException e) {
         }
         return list;
     }
-    public static List<Product> checkInventory(){
+
+    public static List<Product> checkInventory() {
         List<Product> list = new ArrayList<Product>();
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
@@ -1593,31 +1598,84 @@ public class ProductService {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-            p = new Product(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product"))-amountSold(rs.getInt("id_product")));
-            p.setImg(getimg(rs.getInt("id_product")));
-            list.add(p);
+                p = new Product(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")) - amountSold(rs.getInt("id_product")));
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
             }
         } catch (SQLException e) {
         }
         return list;
     }
-    public static long amountSold(int id){
+
+    public static long amountSold(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
-        long count =0;
+        long count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().
-                    prepareStatement("select  COUNT(db.quantitySold) count from detail_product dp join detail_bill db on dp.id_dp = db.id_dp where dp.id_product=?");
-                    ps.setInt(1, id);
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp where dp.id_product=?");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
-                count = rs.getInt("count");
+            if (rs.next()) {
+                count = rs.getInt("sum");
             }
         } catch (SQLException e) {
         }
         return count;
     }
-    public static void main(String[] args) throws SQLException {
-        System.out.println(amountSold(1));
-    }
 
+    public static long amountSoldDetail(int id_product, String size, String color) {
+        DBConnect dbConnect = DBConnect.getInstance();
+        long count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp where dp.id_product=? and dp.size=? and dp.color=?");
+            ps.setInt(1, id_product);
+            ps.setString(2, size);
+            ps.setString(3, color);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                count = rs.getInt("sum");
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
+    public static long amountImportDetail(int id_product, String size, String color) {
+        DBConnect dbConnect = DBConnect.getInstance();
+        long count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().
+                    prepareStatement("select  SUM(quantity) sum from importproducts  where id_product=? and size=? and color=?");
+            ps.setInt(1, id_product);
+            ps.setString(2, size);
+            ps.setString(3, color);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                count = rs.getInt("sum");
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
+    public static List<ImportProduct> listInventoryDetail(String id_product){
+        List<ImportProduct> list = new ArrayList<ImportProduct>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        ImportProduct i = new ImportProduct();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().
+                    prepareStatement("select distinct id_product, size, color from importproducts where id_product=? ");
+            ps.setString(1,id_product);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                i = new ImportProduct(rs.getString("size"), rs.getString("color"), amountImportDetail(Integer.parseInt(rs.getString("id_product")),rs.getString("size"),rs.getString("color"))
+                        -amountSoldDetail(Integer.parseInt(rs.getString("id_product")),rs.getString("size"),rs.getString("color")));
+                list.add(i);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+    public static void main(String[] args) throws SQLException {
+
+    }
 }

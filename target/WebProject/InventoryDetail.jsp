@@ -198,23 +198,6 @@
                         <span class="ml-4">Kiểm tra hàng tồn kho</span>
                     </a>
                 </li>
-                <li class="relative px-6 py-3">
-                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/manager-permission">
-                        <svg
-                                class="w-5 h-5"
-                                aria-hidden="true"
-                                fill="none"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor">
-                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                        </svg>
-                        <span class="ml-4">Quản lý quyền hạn</span>
-                    </a>
-                </li>
             </ul>
 
         </div>
@@ -338,70 +321,47 @@
                         <table class="w-full whitespace-no-wrap">
                             <thead>
                             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                <th class="px-4 py-3">Tên sản phẩm</th>
-                                <th class="px-4 py-3">Hàng tồn kho</th>
+                                <th class="px-4 py-3">Kích thước</th>
+                                <th class="px-4 py-3">Màu sắc</th>
+                                <th class="px-4 py-3">Số lượng tồn kho</th>
 <%--                                <th class="px-4 py-3">Chỉnh sửa</th>--%>
                             </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
                             <%
-                                List<Product> data = (List<Product>) request.getAttribute("list");
+                                List<ImportProduct> data = (List<ImportProduct>) request.getAttribute("list");
                                 NumberFormat nf = new NumberFormat();
-
-                                for (Product p : data) {
+                                for (ImportProduct p : data) {
                             %>
                             <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3">
-
-                                    <div class="flex items-center text-sm">
-                                        <!-- Avatar with inset shadow -->
-                                        <div
-                                                class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
-                                        >
-                                            <img
-                                                    class="object-cover w-full h-full rounded-full"
-                                                    <%if(p.getImg().size()<=0){%>src="img/noimage.jpg"
-                                                    <%}else{%>src="<%= p.getImg().get(0).getImg()%>"<%}%>
-                                                    alt=""
-                                                    loading="lazy"
-                                            />
-                                            <div
-                                                    class="absolute inset-0 rounded-full shadow-inner"
-                                                    aria-hidden="true"
-                                            ></div>
-                                        </div>
-                                        <div>
-                                            <p class="font-semibold"><%= p.getName()%>
-                                            </p>
-                                            <p class="text-xs text-gray-600 dark:text-gray-400">
-                                                <%= p.getId()%>
-                                            </p>
-                                        </div>
-                                    </div>
-
+                                <td class="px-4 py-3 text-sm">
+                                    <%= p.getSize()%>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <%= p.getInventory()%>
+                                    <%= p.getColor()%>
                                 </td>
-                                <td class="px-4 py-3">
-                                    <div class="flex items-center space-x-4 text-sm">
+                                <td class="px-4 py-3 text-sm">
+                                    <%= p.getQuantity()%>
+                                </td>
+<%--                                <td class="px-4 py-3">--%>
+<%--                                    <div class="flex items-center space-x-4 text-sm">--%>
 
-                                        <a href="<%= "/Project_CuaHangMuBaoHiem_war/InventoryDetail?id=" + p.getId()%>">
-                                            <button
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Edit">
-                                                <svg
-                                                        class="w-5 h-5"
-                                                        aria-hidden="true"
-                                                        fill="currentColor"
-                                                        viewBox="0 0 20 20">
-                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                                                </svg>
-                                            </button>
-                                        </a>
-                                    </div>
-                                </td>
+<%--                                        <a href="<%= "/Project_CuaHangMuBaoHiem_war/ImportDetail?id=" + p.getId_product()%>">--%>
+<%--                                            <button--%>
+<%--                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"--%>
+<%--                                                    aria-label="Edit">--%>
+<%--                                                <svg--%>
+<%--                                                        class="w-5 h-5"--%>
+<%--                                                        aria-hidden="true"--%>
+<%--                                                        fill="currentColor"--%>
+<%--                                                        viewBox="0 0 20 20">--%>
+<%--                                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>--%>
+<%--                                                </svg>--%>
+<%--                                            </button>--%>
+<%--                                        </a>--%>
+<%--                                    </div>--%>
+<%--                                </td>--%>
                             </tr>
                             <%}%>
                             </tbody>
