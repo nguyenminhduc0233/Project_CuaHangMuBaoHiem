@@ -6,7 +6,7 @@ import java.security.Key;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Product{
+public class Product {
     private int id;
     private String name;
     private String brand;
@@ -20,7 +20,7 @@ public class Product{
     private Date release;
     private List<DetailProduct> detail;
     private int quantity;
-
+    private double rate;
     public long getInventory() {
         return inventory;
     }
@@ -56,6 +56,14 @@ public class Product{
     public int getId() {
         return this.id;
 
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
     public void setId(int id) {
@@ -221,4 +229,5 @@ public class Product{
         }
         return sum;
     }
+
 }

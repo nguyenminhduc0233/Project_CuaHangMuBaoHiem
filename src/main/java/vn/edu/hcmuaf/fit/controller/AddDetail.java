@@ -34,7 +34,7 @@ public class AddDetail extends HttpServlet {
         int key = 0;
 
         if (p.getDetail().isEmpty()) {
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id=null"+"&size="+size+"&color="+key+"&quantity="+quantity+"&quantityDB=0");
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id="+id+"&size="+size+"&color="+key+"&quantity="+quantity+"&quantityDB=0");
         }else {
             if (!p.getDetail().isEmpty()) {
 
