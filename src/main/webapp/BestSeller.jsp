@@ -1,3 +1,6 @@
+<%@ page import="java.util.List" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
+<%@ page import="java.time.LocalDate" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
@@ -23,9 +26,9 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
       defer
     ></script>
-    <script src="admin/assets/js/charts-lines.js" defer></script>
-    <script src="admin/assets/js/charts-pie.js" defer></script>
-    <script src="admin/assets/js/charts-bars.js" defer></script>
+
+    <script src="admin/assets/js/pie.js" defer></script>
+    <script src="admin/assets/js/pie2.js" defer></script>
   </head>
   <body>
     <div
@@ -798,7 +801,7 @@
                 class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
               >
                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                  Doughnut/Pie
+                  3 sản phẩm bán nhiều nhất trong tháng
                 </h4>
                 <canvas id="pie"></canvas>
                 <div
@@ -825,59 +828,129 @@
                   </div>
                 </div>
               </div>
-              <!-- Lines chart -->
               <div
-                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+                      class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
               >
                 <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                  Lines
+                  3 sản phẩm bán nhiều nhất trong năm
                 </h4>
-                <canvas id="line"></canvas>
+                <canvas id="pie2"></canvas>
                 <div
-                  class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
+                        class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
                 >
                   <!-- Chart legend -->
                   <div class="flex items-center">
                     <span
-                      class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"
+                            class="inline-block w-3 h-3 mr-1 bg-blue-600 rounded-full"
                     ></span>
-                    <span>Organic</span>
+                    <span>Shirts</span>
                   </div>
                   <div class="flex items-center">
                     <span
-                      class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
-                    ></span>
-                    <span>Paid</span>
-                  </div>
-                </div>
-              </div>
-              <!-- Bars chart -->
-              <div
-                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
-              >
-                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                  Bars
-                </h4>
-                <canvas id="bars"></canvas>
-                <div
-                  class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
-                >
-                  <!-- Chart legend -->
-                  <div class="flex items-center">
-                    <span
-                      class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"
+                            class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"
                     ></span>
                     <span>Shoes</span>
                   </div>
                   <div class="flex items-center">
                     <span
-                      class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
+                            class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
                     ></span>
                     <span>Bags</span>
                   </div>
                 </div>
               </div>
             </div>
+            <% List<Product> list1= (List<Product>) request.getAttribute("list1");
+              List<Product> list2= (List<Product>) request.getAttribute("list2");%>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+              Sản phẩm có doanh số cao nhất trong tháng <%= LocalDate.now().getMonthValue() %>
+            </h4>
+            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                  <thead>
+                  <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <th class="px-4 py-3">Tên sản phẩm</th>
+                    <th class="px-4 py-3">Số lượng bán ra</th>
+                  </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  <%for(Product p1: list1){ %>
+                  <tr class="text-gray-700 dark:text-gray-400">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center text-sm">
+                        <!-- Avatar with inset shadow -->
+                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                          <img
+                                  class="object-cover w-full h-full rounded-full"
+                                  <%if(p1.getImg().size()<=0){%>src="img/noimage.jpg"
+                                  <%}else{%>src="<%= p1.getImg().get(0).getImg()%>"<%}%>
+                                  alt=""
+                                  loading="lazy"
+                          />
+                          <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                        </div>
+                        <div>
+                          <p class="font-semibold"><%=p1.getName() %></p>
+                          <p class="text-xs text-gray-600 dark:text-gray-400">
+                            <%=p1.getId() %>
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-sm">
+                      <%=p1.getQuantity() %>
+                    </td>
+                  </tr>
+                  <%}%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+              Sản phẩm có doanh số cao nhất trong năm <%= LocalDate.now().getYear() %>
+            </h4>
+            <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                  <thead>
+                  <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                    <th class="px-4 py-3">Tên sản phẩm</th>
+                    <th class="px-4 py-3">Số lượng bán ra</th>
+                  </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  <%for(Product p2: list2){ %>
+                  <tr class="text-gray-700 dark:text-gray-400">
+                    <td class="px-4 py-3">
+                      <div class="flex items-center text-sm">
+                        <!-- Avatar with inset shadow -->
+                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                          <img
+                                  class="object-cover w-full h-full rounded-full"
+                                  <%if(p2.getImg().size()<=0){%>src="img/noimage.jpg"
+                                  <%}else{%>src="<%= p2.getImg().get(0).getImg()%>"<%}%>
+                                  alt=""
+                                  loading="lazy"
+                          />
+                          <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                        </div>
+                        <div>
+                          <p class="font-semibold"><%=p2.getName() %></p>
+                          <p class="text-xs text-gray-600 dark:text-gray-400">
+                            <%=p2.getId() %>
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-4 py-3 text-sm">
+                      <%=p2.getQuantity() %>
+                    </td>
+                  </tr>
+                  <%}%>
+                  </tbody>
+                </table>
+              </div>
           </div>
         </main>
       </div>

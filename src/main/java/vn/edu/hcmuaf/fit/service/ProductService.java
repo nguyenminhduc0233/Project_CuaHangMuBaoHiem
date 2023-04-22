@@ -1745,7 +1745,7 @@ public class ProductService {
                 if (totalQuantityImport(rs.getInt("id_product")) == 0) {
                     p.setRate(totalQuantityImport(rs.getInt("id_product")));
                 } else {
-                    p.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product")))*100);
+                    p.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
                 }
                 p.setImg(getimg(rs.getInt("id_product")));
                 list.add(p);
@@ -1754,6 +1754,7 @@ public class ProductService {
         }
         return list;
     }
+
     public static int paidRate(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
         int count = 0;
@@ -1768,7 +1769,7 @@ public class ProductService {
             }
         } catch (SQLException e) {
         }
-        return  count;
+        return count;
     }
 
     public static List<Product> productReturn() {
@@ -1786,7 +1787,7 @@ public class ProductService {
                 if (paidRate(rs.getInt("id_product")) == 0) {
                     p.setRate(0);
                 } else {
-                    p.setRate(((double)paidRate(rs.getInt("id_product"))/(double) amountSold(rs.getInt("id_product")))*100);
+                    p.setRate(((double) paidRate(rs.getInt("id_product")) / (double) amountSold(rs.getInt("id_product"))) * 100);
                 }
                 p.setImg(getimg(rs.getInt("id_product")));
                 list.add(p);
@@ -1796,6 +1797,116 @@ public class ProductService {
         return list;
     }
 
+    public static List<Product> productIsNotForSale() {
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                p.setLatestSale(latestSale(rs.getInt("id_product")));
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static String latestSale(int id) {
+        String date = "";
+        DBConnect dbConnect = DBConnect.getInstance();
+
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select MAX(b.date) d from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where dp.id_product = ? and b.status = ?");
+            ps.setInt(1, id);
+            ps.setString(2, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                date += rs.getDate("d");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static long[] chartLine() {
+        long[] result = new long[12];
+        LocalDate localDate = LocalDate.now();
+        long res = 0;
+        for (int i = 1; i < 13; i++) {
+            List<Product> list = new ArrayList<Product>();
+            try {
+                list = totalProductBill(i, localDate.getYear());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            for (Product p : list) {
+                res += (p.getPrice() * (1 - (long) p.getDiscount()));
+            }
+            result[i - 1] = res;
+            res = 0;
+        }
+        return result;
+    }
+
+    public static List<Product> topThreeByYear() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        int count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
+            ps.setString(1, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(2, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (count == 3) break;
+                product = getProduct(rs.getInt("id_product"));
+                System.out.println(rs.getInt(1) + " " + rs.getInt("c"));
+                product.setQuantity(rs.getInt("c"));
+                list.add(product);
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static List<Product> topThreeByMonth() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        int count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
+
+            ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
+            ps.setString(2, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(3, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (count == 3) break;
+                product = getProduct(rs.getInt("id_product"));
+                System.out.println(rs.getInt(1) + " " + rs.getInt("c"));
+                product.setQuantity(rs.getInt("c"));
+                list.add(product);
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public static void main(String[] args) throws SQLException {
+        topThreeByMonth();
+
+        System.out.println(LocalDate.now().getMonthValue());
     }
 }
