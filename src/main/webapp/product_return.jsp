@@ -228,17 +228,26 @@
                     </button>
                     <template x-if="isPagesMenuOpen">
                         <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu">
-                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="BestSeller.jsp">Bán nhiều nhất</a>
+                            <li class="px-2 py-1 transition-colors duration-150 ">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/BestSeller">Bán nhiều nhất</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="revenue.jsp">Doanh thu</a>
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/Stattistic">Doanh thu</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/SalesRate">Tỉ lệ bán được</a>
                             </li>
-                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" style="background-color: #7e3af2; color: white; border-radius: 5px">
+                            <li class="px-2 py-1 transition-colors duration-150"  style="background-color: #7e3af2; color: white; border-radius: 5px">
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductReturn">Tỉ lệ trả hàng</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="#">Sản phẩm cần nhập kho</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
                             </li>
                         </ul>
                     </template>
