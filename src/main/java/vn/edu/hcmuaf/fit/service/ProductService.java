@@ -1500,7 +1500,7 @@ public class ProductService {
         long total = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  detail_product where id_product= ?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total += rs.getInt(1);
@@ -1515,7 +1515,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(price*quantity) from  importproducts where id_product=?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 result = rs.getLong(1);
@@ -1530,7 +1530,7 @@ public class ProductService {
         long total = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  importproducts where id_product= ?");
-            ps.setString(1, id + "");
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 total += rs.getInt(1);
@@ -1674,6 +1674,50 @@ public class ProductService {
         } catch (SQLException e) {
         }
         return list;
+    }
+    public static List<Product> getRecords(int start,int total){
+        List<Product> list=new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        try{
+            PreparedStatement ps=dbConnect.getConnection().prepareStatement(
+                    "select id_product from product limit "+(start-1)+","+total);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                list.add(getProduct(rs.getInt("id_product")));
+            }
+
+        }catch(Exception e){System.out.println(e);}
+        return list;
+    }
+    public static List<Product> getRecords(int start,int total, String text){
+        List<Product> list=new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        try{
+            PreparedStatement ps=dbConnect.getConnection().prepareStatement(
+                    "select id_product from product  where name like '%" + text + "%' limit ?,?");
+            ps.setInt(1,start-1);
+            ps.setInt(2, total);
+            ResultSet rs=ps.executeQuery();
+            while(rs.next()){
+                list.add(getProduct(rs.getInt("id_product")));
+            }
+
+        }catch(Exception e){System.out.println(e);}
+        return list;
+    }
+    public static int quantityFindProduct(String para) {
+        int result=  0;
+        DBConnect dbConnect = DBConnect.getInstance();
+        Statement statement = dbConnect.get();
+        try {
+            ResultSet rs = statement.executeQuery("select  count(id_product) count from product where name like '%" + para + "%'");
+            while (rs.next()) {
+                result+=rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result;
     }
     public static void main(String[] args) throws SQLException {
 

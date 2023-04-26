@@ -246,9 +246,7 @@
                 </button>
                 <!-- Search input -->
                 <div class="flex justify-center flex-1 lg:mr-32">
-                    <div
-                            class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-                    >
+                    <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                         <div class="absolute inset-y-0 flex items-center pl-2">
                             <svg
                                     class="w-4 h-4"
@@ -263,12 +261,13 @@
                                 ></path>
                             </svg>
                         </div>
-                        <input
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                type="text"
-                                placeholder="Tìm kiếm"
-                                aria-label="Search"
-                        />
+                        <form action="/Project_CuaHangMuBaoHiem_war/SearchProduct" method="get">
+                            <input class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                   type="text"
+                                   name="text"
+                                   placeholder="Tìm kiếm"
+                                   aria-label="Search"/>
+                        </form>
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -361,22 +360,39 @@
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
                             <%
-                                List<Product> data = (List<Product>) request.getAttribute("list");
+                                int a = (int) request.getAttribute("a");
+                                String t = (String) request.getAttribute("t");
                                 NumberFormat nf = new NumberFormat();
-                                int first = 0, last = 0, pages = 1;
+                                int first = 1, last = 0, pages = 1;
 
                                 if (request.getParameter("pages") != null) {
                                     pages = (int) Integer.parseInt(request.getParameter("pages"));
                                 }
-                                int total = new ProductService().countProduct();
+                                int total = 0;
+                                if(a==1){
+                                    total = ProductService.quantityFindProduct(t);
+                                }
+                                if(a==0){
+                                    total = ProductService.countProduct();
+                                }
                                 if (total <= 10) {
-                                    first = 0;
+                                    first = 1;
                                     last = total;
                                 } else {
-                                    first = (pages - 1) * 10;
+                                    if(pages==1){
+                                        first =1;
+                                    }else{
+                                        first = (pages - 1) * 10;
+                                    }
                                     last = 10;
                                 }
-                                List<Product> list = new ProductService().pagination(first, last, data);
+                                List<Product> list =null;
+                                if(a==0){
+                                    list =  (List<Product>) ProductService.getRecords(first,last);
+                                }
+                                if(a==1){
+                                    list = (List<Product>)ProductService.getRecords(first,last, t);
+                                }
                                 for (Product p : list) {
                             %>
                             <tr class="text-gray-700 dark:text-gray-400">
@@ -471,7 +487,7 @@
                          f = first + last;
                      }
                  %>
-                  Hiển thị <%= first + 1%>-<%=f%> của <%=total%>
+                  Hiển thị <%= first%>-<%=f%> của <%=total%>
                 </span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
@@ -488,7 +504,11 @@
                       %>
 
                       <li>
-                        <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=back%>">
+                        <%
+                            if (a == 0) {
+                        %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=back%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=back%>&<%="text="+t%>"><%}%>
                             <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
                                     aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
@@ -524,7 +544,11 @@
                 <% if (pages == i) {%>
 
                       <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=i%>&<%="text="+t%>"><%}%>
                         <button
                                 class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
                         >
@@ -535,7 +559,11 @@
                         <%} else {%>
 
                         <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>"><%}%>
+                                <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=i%>&<%="text="+t%>"><%}%>
                         <button
                                 class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                           <%= i %>
@@ -577,7 +605,11 @@
                             }
                         %>
                       <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=next%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=next%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=next%>&<%="text="+t%>"><%}%>
                         <button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
                                 aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
