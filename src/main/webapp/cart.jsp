@@ -86,7 +86,7 @@
                                             <button type="submit" class="btn btn-sm btn-primary btn"> <i class="fa fa-minus"></i></button>
                                         </form>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<%= p.getQuantity() %>">
+                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center " value="<%= p.getQuantity() %>">
                                     <div class="input-group-btn">
                                         <form method="get" action="/Project_CuaHangMuBaoHiem_war/Plus">
                                             <input type="hidden" name="plus" value="<%= p.getId() %>">
