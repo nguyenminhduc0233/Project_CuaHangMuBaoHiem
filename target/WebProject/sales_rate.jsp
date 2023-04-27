@@ -244,7 +244,7 @@
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="#">Sản phẩm cần nhập kho</a>
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported">Sản phẩm cần nhập kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
@@ -363,7 +363,7 @@
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
                 <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                    Tỉ lệ tồn kho so với tỉ lệ bán ra
+                    Tỉ lệ bán ra so với tỉ lệ bán ra
                 </h2>
                 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
                 </h4>

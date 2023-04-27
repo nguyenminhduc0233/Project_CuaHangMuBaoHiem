@@ -26,9 +26,11 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
       defer
     ></script>
+    <% List<Product> listMonth= (List<Product>) request.getAttribute("list1");
+      List<Product> listYear= (List<Product>) request.getAttribute("list2");%>
+    <script src="admin/assets/js/pie_best.js" onload="getData([<%=listMonth.get(0).getQuantity()%>,<%=listMonth.get(1).getQuantity()%>,<%=listMonth.get(2).getQuantity()%>])" defer></script>
+    <script src="admin/assets/js/pie_best2.js" onload="getData([<%=listYear.get(0).getQuantity()%>,<%=listYear.get(1).getQuantity()%>,<%=listYear.get(2).getQuantity()%>])" defer></script>
 
-    <script src="admin/assets/js/pie.js" defer></script>
-    <script src="admin/assets/js/pie2.js" defer></script>
   </head>
   <body>
     <div
@@ -254,7 +256,7 @@
                     <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
                   </li>
                   <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                    <a class="w-full" href="#">Sản phẩm cần nhập kho</a>
+                    <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported">Sản phẩm cần nhập kho</a>
                   </li>
                   <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                     <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
@@ -830,19 +832,19 @@
                     <span
                       class="inline-block w-3 h-3 mr-1 bg-blue-600 rounded-full"
                     ></span>
-                    <span>Shirts</span>
+                    <span><%= listMonth.get(0).getName()%></span>
                   </div>
                   <div class="flex items-center">
                     <span
                       class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"
                     ></span>
-                    <span>Shoes</span>
+                    <span><%= listMonth.get(1).getName()%></span>
                   </div>
                   <div class="flex items-center">
                     <span
                       class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
                     ></span>
-                    <span>Bags</span>
+                    <span><%= listMonth.get(2).getName()%></span>
                   </div>
                 </div>
               </div>
@@ -861,19 +863,19 @@
                     <span
                             class="inline-block w-3 h-3 mr-1 bg-blue-600 rounded-full"
                     ></span>
-                    <span>Shirts</span>
+                    <span><%= listYear.get(0).getName()%></span>
                   </div>
                   <div class="flex items-center">
                     <span
                             class="inline-block w-3 h-3 mr-1 bg-teal-500 rounded-full"
                     ></span>
-                    <span>Shoes</span>
+                    <span><%= listYear.get(1).getName()%></span>
                   </div>
                   <div class="flex items-center">
                     <span
                             class="inline-block w-3 h-3 mr-1 bg-purple-600 rounded-full"
                     ></span>
-                    <span>Bags</span>
+                    <span><%= listYear.get(2).getName()%></span>
                   </div>
                 </div>
               </div>

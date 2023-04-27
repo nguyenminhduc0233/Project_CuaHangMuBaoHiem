@@ -4,7 +4,7 @@
 
 function getData(d){
     var dat=[];
-dat = d;
+    dat = d;
     const lineConfig = {
         type: 'line',
         data: {

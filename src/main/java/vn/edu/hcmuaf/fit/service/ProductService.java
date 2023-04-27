@@ -1879,6 +1879,7 @@ public class ProductService {
         }
         return list;
     }
+
     public static List<Product> topThreeByMonth() {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
@@ -1904,9 +1905,33 @@ public class ProductService {
         }
         return list;
     }
-    public static void main(String[] args) throws SQLException {
-        topThreeByMonth();
 
-        System.out.println(LocalDate.now().getMonthValue());
+    public static List<Product> productsToBeImported() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from product p join detail_product dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                product = getProduct(rs.getInt("id_product"));
+                product.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
+                if(product.getRate()>=60){
+
+                    product.setImg(getimg(rs.getInt("id_product")));
+                    product.setQuantity(rs.getInt("s"));
+                    list.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static void main(String[] args) throws SQLException {
+       for(Product p : productsToBeImported()){
+           System.out.println(p);
+       }
     }
 }
