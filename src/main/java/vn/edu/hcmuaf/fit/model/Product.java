@@ -6,7 +6,7 @@ import java.security.Key;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Product{
+public class Product {
     private int id;
     private String name;
     private String brand;
@@ -20,15 +20,8 @@ public class Product{
     private Date release;
     private List<DetailProduct> detail;
     private int quantity;
-
-    public long getInventory() {
-        return inventory;
-    }
-
-    public void setInventory(long inventory) {
-        this.inventory = inventory;
-    }
-
+    private double rate;
+    private String latestSale;
     private long inventory;
     public Product() {
     }
@@ -56,6 +49,14 @@ public class Product{
     public int getId() {
         return this.id;
 
+    }
+
+    public double getRate() {
+        return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
     public void setId(int id) {
@@ -157,7 +158,21 @@ public class Product{
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public String getLatestSale() {
+        return latestSale;
+    }
 
+    public void setLatestSale(String latestSale) {
+        this.latestSale = latestSale;
+    }
+
+    public long getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(long inventory) {
+        this.inventory = inventory;
+    }
     @Override
     public String toString() {
         return "Product{" +
@@ -221,4 +236,5 @@ public class Product{
         }
         return sum;
     }
+
 }

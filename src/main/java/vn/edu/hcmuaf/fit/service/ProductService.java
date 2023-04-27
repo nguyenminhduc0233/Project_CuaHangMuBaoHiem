@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
+
 public class ProductService {
     public static List<Product> getData() {
         List<Product> list = new ArrayList<Product>();
@@ -1633,13 +1634,14 @@ public class ProductService {
             ps.setString(2, size);
             ps.setString(3, color);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 count = rs.getInt("sum");
             }
         } catch (SQLException e) {
         }
         return count;
     }
+
     public static long amountImportDetail(int id_product, String size, String color) {
         DBConnect dbConnect = DBConnect.getInstance();
         long count = 0;
@@ -1650,76 +1652,286 @@ public class ProductService {
             ps.setString(2, size);
             ps.setString(3, color);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 count = rs.getInt("sum");
             }
         } catch (SQLException e) {
         }
         return count;
     }
-    public static List<ImportProduct> listInventoryDetail(String id_product){
+
+    public static List<ImportProduct> listInventoryDetail(String id_product) {
         List<ImportProduct> list = new ArrayList<ImportProduct>();
         DBConnect dbConnect = DBConnect.getInstance();
         ImportProduct i = new ImportProduct();
         try {
             PreparedStatement ps = dbConnect.getConnection().
                     prepareStatement("select distinct id_product, size, color from importproducts where id_product=? ");
-            ps.setString(1,id_product);
+            ps.setString(1, id_product);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                i = new ImportProduct(rs.getString("size"), rs.getString("color"), amountImportDetail(Integer.parseInt(rs.getString("id_product")),rs.getString("size"),rs.getString("color"))
-                        -amountSoldDetail(Integer.parseInt(rs.getString("id_product")),rs.getString("size"),rs.getString("color")));
+                i = new ImportProduct(rs.getString("size"), rs.getString("color"), amountImportDetail(Integer.parseInt(rs.getString("id_product")), rs.getString("size"), rs.getString("color"))
+                        - amountSoldDetail(Integer.parseInt(rs.getString("id_product")), rs.getString("size"), rs.getString("color")));
                 list.add(i);
             }
         } catch (SQLException e) {
         }
         return list;
     }
-    public static List<Product> getRecords(int start,int total){
-        List<Product> list=new ArrayList<Product>();
+
+    public static List<Product> getRecords(int start, int total) {
+        List<Product> list = new ArrayList<Product>();
         DBConnect dbConnect = DBConnect.getInstance();
-        try{
-            PreparedStatement ps=dbConnect.getConnection().prepareStatement(
-                    "select id_product from product limit "+(start-1)+","+total);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
+                    "select id_product from product limit " + (start - 1) + "," + total);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
             }
 
-        }catch(Exception e){System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return list;
     }
-    public static List<Product> getRecords(int start,int total, String text){
-        List<Product> list=new ArrayList<Product>();
+
+    public static List<Product> getRecords(int start, int total, String text) {
+        List<Product> list = new ArrayList<Product>();
         DBConnect dbConnect = DBConnect.getInstance();
-        try{
-            PreparedStatement ps=dbConnect.getConnection().prepareStatement(
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement(
                     "select id_product from product  where name like '%" + text + "%' limit ?,?");
-            ps.setInt(1,start-1);
+            ps.setInt(1, start - 1);
             ps.setInt(2, total);
-            ResultSet rs=ps.executeQuery();
-            while(rs.next()){
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
             }
 
-        }catch(Exception e){System.out.println(e);}
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return list;
     }
+
     public static int quantityFindProduct(String para) {
-        int result=  0;
+        int result = 0;
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
             ResultSet rs = statement.executeQuery("select  count(id_product) count from product where name like '%" + para + "%'");
             while (rs.next()) {
-                result+=rs.getInt("count");
+                result += rs.getInt("count");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return result;
     }
-    public static void main(String[] args) throws SQLException {
 
+    public static List<Product> salesRate() {
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                if (totalQuantityImport(rs.getInt("id_product")) == 0) {
+                    p.setRate(totalQuantityImport(rs.getInt("id_product")));
+                } else {
+                    p.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
+                }
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static int paidRate(int id) {
+        DBConnect dbConnect = DBConnect.getInstance();
+        int count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp join bill b on b.id= db.id_bill where dp.id_product=? and b.status=?");
+            ps.setInt(1, id);
+            ps.setString(2, "Đã hủy");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("sum");
+            }
+        } catch (SQLException e) {
+        }
+        return count;
+    }
+
+    public static List<Product> productReturn() {
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                if (paidRate(rs.getInt("id_product")) == 0) {
+                    p.setRate(0);
+                } else {
+                    p.setRate(((double) paidRate(rs.getInt("id_product")) / (double) amountSold(rs.getInt("id_product"))) * 100);
+                }
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static List<Product> productIsNotForSale() {
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                p.setLatestSale(latestSale(rs.getInt("id_product")));
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static String latestSale(int id) {
+        String date = "";
+        DBConnect dbConnect = DBConnect.getInstance();
+
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select MAX(b.date) d from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where dp.id_product = ? and b.status = ?");
+            ps.setInt(1, id);
+            ps.setString(2, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                date += rs.getDate("d");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    public static long[] chartLine() {
+        long[] result = new long[12];
+        LocalDate localDate = LocalDate.now();
+        long res = 0;
+        for (int i = 1; i < 13; i++) {
+            List<Product> list = new ArrayList<Product>();
+            try {
+                list = totalProductBill(i, localDate.getYear());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            for (Product p : list) {
+                res += (p.getPrice() * (1 - (long) p.getDiscount()));
+            }
+            result[i - 1] = res;
+            res = 0;
+        }
+        return result;
+    }
+
+    public static List<Product> topThreeByYear() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        int count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
+            ps.setString(1, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(2, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (count == 3) break;
+                product = getProduct(rs.getInt("id_product"));
+                System.out.println(rs.getInt(1) + " " + rs.getInt("c"));
+                product.setQuantity(rs.getInt("c"));
+                list.add(product);
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<Product> topThreeByMonth() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        int count = 0;
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
+
+            ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
+            ps.setString(2, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(3, "Đã nhận");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                if (count == 3) break;
+                product = getProduct(rs.getInt("id_product"));
+                System.out.println(rs.getInt(1) + " " + rs.getInt("c"));
+                product.setQuantity(rs.getInt("c"));
+                list.add(product);
+                count++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<Product> productsToBeImported() {
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from product p join detail_product dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                product = getProduct(rs.getInt("id_product"));
+                product.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
+                if(product.getRate()>=60){
+
+                    product.setImg(getimg(rs.getInt("id_product")));
+                    product.setQuantity(rs.getInt("s"));
+                    list.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static void main(String[] args) throws SQLException {
+       for(Product p : productsToBeImported()){
+           System.out.println(p);
+       }
     }
 }
