@@ -14,7 +14,7 @@ public class Customer implements Serializable {
     private int permission;
     private boolean active;
     private Date create_date;
-
+    private int typeAccount;
     public Customer() {
     }
 
@@ -38,6 +38,21 @@ public class Customer implements Serializable {
         this.phone = phone;
         this.address = address;
         this.permission = permission;
+    }
+    public Customer(String name, String email, String phone, String address, int permission, int typeAccount) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.permission = permission;
+        this.typeAccount = typeAccount;
+    }
+    public int getTypeAccount() {
+        return typeAccount;
+    }
+
+    public void setTypeAccount(int typeAccount) {
+        this.typeAccount = typeAccount;
     }
 
     public int getId_customer() {

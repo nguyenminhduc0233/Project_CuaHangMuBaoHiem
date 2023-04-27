@@ -93,12 +93,12 @@ public class CustomerService {
     public static Customer customer(String username) throws SQLException {
         Customer customer = null;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select name, email, phone, address, permission from customer where username = ?";
+        String sql = "select name, email, phone, address, permission, typeAccount from customer where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
         if (rs.next()) {
-            customer = new Customer(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("address"), Integer.parseInt(rs.getString("permission")));
+            customer = new Customer(rs.getString("name"), rs.getString("email"), rs.getString("phone"), rs.getString("address"), Integer.parseInt(rs.getString("permission")), Integer.parseInt(rs.getString("typeAccount")));
         }
         return customer;
     }
