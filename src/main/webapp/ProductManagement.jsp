@@ -326,7 +326,7 @@
         </header>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="px-6 my-6" style="width: 300px">
-                <a href="forms.jsp">
+                <a href="/Project_CuaHangMuBaoHiem_war/createProduct">
                     <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                         Tạo mới sản phẩm
                         <span class="ml-2" aria-hidden="true">+</span>

@@ -262,14 +262,23 @@
                     <div
                             class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
                     >
-                            <input
-                                    class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                    id="search"
-                                    type="text"
-                                    placeholder="Nhập tên chức năng"
-                                    aria-label="Search"
-                                    name="search"
+                        <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+
+                </span>
+                            <%List<Integer> list = (List<Integer>) request.getAttribute("list");
+                            List<String> listService = (List<String>)request.getAttribute("listService");
+                            String name = (String)request.getAttribute("name");%>
+                            <select
+                                    class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                                    onchange="genderChanged(this)"
                             >
+                                <option><%=name%></option>
+                                <%for(String service:listService){%>
+                                <option><%=service%></option>
+                                <%}%>
+                            </select>
+                        </label>
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -325,33 +334,13 @@
             <%String notification = (String)request.getAttribute("notification");
                 String color = (String)request.getAttribute("color");
                 notification = notification == null?"":notification;%>
-            <div class="px-6 my-6" style="width: 640px; margin-top:24px;margin-bottom: 0px;margin-left: 192px; display: flex">
+            <div class="px-6 my-6" style="width: 108px; margin-top:-21px;margin-bottom: 0px;margin-left: 884px; display: flex">
                 <a id="add" onclick="add()" href="">
-                    <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="width: 200px;margin-right: 20px">
-                        Thêm chức năng
+                    <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="width: 60px;margin-right: 20px">
                         <span class="ml-2" aria-hidden="true">+</span>
                     </button>
                 </a>
-                <a id="remove" onclick="remove()" href="">
-                    <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="width: 200px;margin-right: 20px">
-                        Xóa chức năng
-                        <span class="ml-2" aria-hidden="true">-</span>
-                    </button>
-                </a>
-                <a id="find" onclick="find()" href="">
-                    <button class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" style="width: 200px">
-                        Tìm kiếm chức năng
-                    </button>
-                </a>
             </div>
-            <input
-                    class=" pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                    id="notification"
-                    type="text"
-                    aria-label="Search"
-                    style="width: 576px;margin-left: 254px;margin-top: 10px;background-color: #F9FAFB; text-align: center;color: <%=color%>"
-                    value="<%=notification%>"
-            />
         </header>
         <main class="h-full pb-16 overflow-y-auto">
 
@@ -384,7 +373,6 @@
 
                             <%
                                 int index = 0;
-                                List<Integer> list = (List<Integer>) request.getAttribute("list");
                                 for(int id: list){
                                     index++;
                             %>
@@ -453,13 +441,15 @@
         let value = document.getElementById('search').value;
         document.getElementById('add').href = "/Project_CuaHangMuBaoHiem_war/add-service?service="+value;
     }
-    function remove(){
-        let value = document.getElementById('search').value;
-        document.getElementById('remove').href = "/Project_CuaHangMuBaoHiem_war/delete-service?service="+value;
-    }
-    function find() {
-        let value = document.getElementById('search').value;
-        document.getElementById('find').href = "/Project_CuaHangMuBaoHiem_war/find-service?service=" + value;
+    function genderChanged(obj)
+    {
+        let value = obj.value;
+        if (value === 'Tất cả'){
+            window.location = "/Project_CuaHangMuBaoHiem_war/manager-permission"
+        }
+        else {
+            window.location = "/Project_CuaHangMuBaoHiem_war/permission?name=" + value;
+        }
     }
 </script>
 </body>
