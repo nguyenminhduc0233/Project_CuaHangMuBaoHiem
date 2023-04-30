@@ -99,7 +99,6 @@
                     <%}%>
                 </select>
                 <%}%>
-
                 <% boolean res2 = false;
                     boolean res3 = false;
                     List<Address> district = new ArrayList<Address>();
@@ -119,7 +118,6 @@
                     </option>
                     <%}%>
                 </select>
-
                 <%}%>
                 <%
                     if (res2 == true) {
@@ -158,7 +156,6 @@
                     </option>
                     <%}%>
                 </select>
-
                 <%}%>
                 <%
                     if (res3 == true) {
@@ -177,7 +174,6 @@
                     </option>
                     <%}%>
                 </select>
-
                 <%}%>
                 <%}%>
                 <%if(res3==true){%>
@@ -215,7 +211,6 @@
                     </div>
                 </div>
                 <div class="pt-2">
-
                 </div>
             </div>
         </div>
