@@ -213,10 +213,6 @@
                             }%>
                         <h6><%=nf.numberFormat(price)%>đ</h6>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                        <h6 class="font-weight-medium">50.000đ</h6>
-                    </div>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">

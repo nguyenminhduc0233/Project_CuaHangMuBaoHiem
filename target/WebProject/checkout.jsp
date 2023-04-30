@@ -147,7 +147,7 @@
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Tổng tiền hàng</h6>
 
-                            <h6><%=nf.numberFormat(price)%>đ</h6>
+                            <h6><%=nf.numberFormat(cart.getTotal())%>đ</h6>
                         </div>
                         <div class="d-flex justify-content-between  mb-3">
                             <h6 class="font-weight-medium">Phí vận chuyển</h6>
@@ -162,7 +162,7 @@
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Tổng thanh toán</h5>
-                            <h5><%=nf.numberFormat(price+fee)%>đ</h5>
+                            <h5><%=nf.numberFormat(cart.getTotal()+fee)%>đ</h5>
                         </div>
                     </div>
                 </div>
