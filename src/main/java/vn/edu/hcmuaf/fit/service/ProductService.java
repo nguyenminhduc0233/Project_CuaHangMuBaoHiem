@@ -1846,17 +1846,7 @@ public class ProductService {
         LocalDate localDate = LocalDate.now();
         long res = 0;
         for (int i = 1; i < 13; i++) {
-            List<Product> list = new ArrayList<Product>();
-            try {
-                list = totalProductBill(i, localDate.getYear());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            for (Product p : list) {
-                res += (p.getPrice() * (1 - (long) p.getDiscount()));
-            }
-            result[i - 1] = res;
-            res = 0;
+            result[i-1] = getRevenueByMonthYear(i, localDate.getYear());
         }
         return result;
     }
@@ -1933,11 +1923,33 @@ public class ProductService {
         }
         return list;
     }
+    public static long getRevenueByMonthYear(int month, int year){
+        long total = 0;
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(total_cost - fee) s from bill where status=? and month(date)=? and year(date) = ?");
+            ps.setString(1, "Đã nhận");
+            ps.setString(2, String.valueOf(month));
+            ps.setString(3, String.valueOf(year));
+            ResultSet rs = ps.executeQuery();
 
-    public static void main(String[] args) throws SQLException {
-        List<BillDetail> list = new ArrayList<>();
-        list.add(new BillDetail(1,1,400000));
-        list.add(new BillDetail(2,1,50000));
-       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
+            if (rs.next()) {
+            total = rs.getInt("s");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
     }
+    public static void main(String[] args) throws SQLException {
+//        List<BillDetail> list = new ArrayList<>();
+//        list.add(new BillDetail(1,1,400000));
+//        list.add(new BillDetail(2,1,50000));
+//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
+        System.out.print(getRevenueByMonthYear( 4,  2023));
+        for(long l : chartLine()){
+            System.out.println(l);
+        }
+
+        }
 }
