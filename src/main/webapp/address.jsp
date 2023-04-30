@@ -215,10 +215,7 @@
                     </div>
                 </div>
                 <div class="pt-2">
-                    <div class="d-flex justify-content-between mt-2">
-                        <h5>Tổng thanh toán</h5>
-                        <h5><%=nf.numberFormat(price + 50000)%>đ</h5>
-                    </div>
+
                 </div>
             </div>
         </div>
