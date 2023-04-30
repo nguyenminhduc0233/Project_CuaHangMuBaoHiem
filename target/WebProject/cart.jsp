@@ -126,23 +126,11 @@
                             <h6>Tổng tiền hàng</h6>
                             <h6><%=  nf.numberFormat(cart.getTotal()) %>đ</h6>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                            <% if(cart.getQuanlity()==0){%>
-                            <h6 class="font-weight-medium">0đ</h6>
-                            <%}else{%>
-                            <h6 class="font-weight-medium">50.000đ</h6>
-                            <%}%>
-                        </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Tổng thanh toán</h5>
-                            <%if(cart.getQuanlity()==0){%>
                             <h5><%= nf.numberFormat(cart.getTotal()) %>đ</h5>
-                            <%}else{%>
-                            <h5><%= nf.numberFormat(cart.getTotal() + 50000) %>đ</h5>
-                            <%}%>
                         </div>
                         <a href="/Project_CuaHangMuBaoHiem_war/CheckCart" style="text-decoration: none"><button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Tiến hành thanh toán</button></a>
                     </div>

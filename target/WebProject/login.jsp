@@ -79,14 +79,11 @@ To change this template use File | Settings | File Templates.
                 <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout=""
                      data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
                      onlogin="checkLoginState();"></div>
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin&response_type=code
+                                &client_id=293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com&approval_prompt=force" style="color: #FFFFFF">
+                    <button type="button" class="btnSociallogingg">Google+</button>
+                </a>
 
-                <button onclick="getToken();"  data-callback="handleCredentialResponse">Get access token</button>
-                <br><br>
-                <button onclick="loadCalendar();">Load Calendar</button>
-                <br><br>
-                <button onclick="revokeToken();">Revoke token</button>
-
-                <div id="demo"></div>
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
@@ -213,8 +210,6 @@ To change this template use File | Settings | File Templates.
     }
 
     function handleCredentialResponse(response) {
-        // decodeJwtResponse() is a custom function defined by you
-        // to decode the credential response.
         const responsePayload = decodeJwtResponse(response.credential);
 
         console.log("ID: " + responsePayload.sub);

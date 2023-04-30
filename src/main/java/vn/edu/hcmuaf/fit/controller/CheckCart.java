@@ -14,7 +14,7 @@ public class CheckCart extends HttpServlet {
             request.setAttribute("error", "Vui lòng đăng nhập để thanh toán!");
             response.sendRedirect("login.jsp");
         } else {
-            response.sendRedirect("checkout.jsp");
+            response.sendRedirect("address.jsp");
         }
     }
 
