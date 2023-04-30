@@ -9,12 +9,14 @@ To change this template use File | Settings | File Templates.
 <html lang="en">
 
 <head>
+    <script async defer crossorigin="anonymous"
+            src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v16.0&appId=1378561832905145&autoLogAppEvents=1"
+            nonce="zxQjrN1B"></script>
     <meta charset="utf-8">
     <title>HelmetsShop</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -33,6 +35,10 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="css/login.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
+
 </head>
 
 <body>
@@ -44,7 +50,8 @@ To change this template use File | Settings | File Templates.
 <% String error = (String) request.getAttribute("error");%>
 <% String username = (String) request.getParameter("username");%>
 <section>
-    <div class="form-container" style="background: url('//localhost:8080/Project_CuaHangMuBaoHiem_war/img/login/nendangnhap.png')">
+    <div class="form-container"
+         style="background: url('//localhost:8080/Project_CuaHangMuBaoHiem_war/img/login/nendangnhap.png')">
         <div class="form-login">
             <form action="/Project_CuaHangMuBaoHiem_war/doLogin" method="post">
                 <div class="title">Đăng nhập</div>
@@ -68,6 +75,15 @@ To change this template use File | Settings | File Templates.
                 </div>
                 <p style="color: red"><%=(error != null && error != "") ? error : ""%>
                 </p>
+                <p>Đăng nhập với:</p>
+                <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout=""
+                     data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
+                     onlogin="checkLoginState();"></div>
+                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin&response_type=code
+                                &client_id=293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com&approval_prompt=force" style="color: #FFFFFF">
+                    <button type="button" class="btnSociallogingg">Google+</button>
+                </a>
+
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>
@@ -99,6 +115,112 @@ To change this template use File | Settings | File Templates.
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script>
+
+    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+        console.log('statusChangeCallback');
+        console.log(response);                   // The current login status of the person.
+        if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+            testAPI();
+
+        } else {                                 // Not logged into your webpage or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+                'into this webpage.';
+        }
+    }
+
+
+    function checkLoginState() {               // Called when a person is finished with the Login Button.
+        FB.getLoginStatus(function (response) {   // See the onlogin handler
+            statusChangeCallback(response)
+            FB.api(
+                '/me',
+                'GET',
+                {"fields": "id,name,email"},
+                function (response) {
+                    window.location.href = 'facebook-login?email=' + response.email + "&password=" + response.id + "&name=" + response.name;
+                }
+            );
+
+        });
+    }
+
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '1378561832905145',
+            cookie: true,                     // Enable cookies to allow the server to access the session.
+            xfbml: true,                     // Parse social plugins on this webpage.
+            version: 'v16.0'           // Use this Graph API version for this call.
+        });
+
+
+        FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+            statusChangeCallback(response);        // Returns the login status.
+        });
+    };
+
+    function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function (response) {
+            console.log('Successful login for: ' + response.name);
+            document.getElementById('status').innerHTML =
+                'Thanks for logging in, ' + response.name + '!';
+        });
+    }
+
+</script>
+
+<script>
+    var client;
+    var access_token;
+
+    function initClient() {
+        client = google.accounts.oauth2.initTokenClient({
+            client_id: '293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com',
+            scope: 'https://www.googleapis.com/auth/calendar.readonly \
+                  https://www.googleapis.com/auth/contacts.readonly',
+            callback: (tokenResponse) => {
+                access_token = tokenResponse.access_token;
+            },
+        });
+
+    }
+
+    function getToken() {
+        client.requestAccessToken();
+    }
+
+    function revokeToken() {
+        google.accounts.oauth2.revoke(access_token, () => {
+            console.log('access token revoked')
+        });
+    }
+
+    function loadCalendar() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.googleapis.com/calendar/v3/calendars/primary/events');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.send();
+    }
+
+    function decodeJwtResponse(credential) {
+// document.getElementById("demo").innerHTML =
+        return undefined;
+    }
+
+    function handleCredentialResponse(response) {
+        const responsePayload = decodeJwtResponse(response.credential);
+
+        console.log("ID: " + responsePayload.sub);
+        console.log('Full Name: ' + responsePayload.name);
+        console.log('Given Name: ' + responsePayload.given_name);
+        console.log('Family Name: ' + responsePayload.family_name);
+        console.log("Image URL: " + responsePayload.picture);
+        console.log("Email: " + responsePayload.email);
+    }
+</script>
+
 </body>
 
 </html>

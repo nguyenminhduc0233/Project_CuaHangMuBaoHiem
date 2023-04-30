@@ -19,12 +19,13 @@ public class ProductDetail extends HttpServlet {
         if(id != null) {
             Product product = null;
             try {
-                product = ProductService.getProduct(id);
+                product = ProductService.getProduct(Integer.parseInt(id));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
             request.setAttribute("product",product);
             request.getRequestDispatcher("detail.jsp").forward(request,response);
+            System.out.println(product);
         }else
             response.sendError(404,"Product not found");
     }

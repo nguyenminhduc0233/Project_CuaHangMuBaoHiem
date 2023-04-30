@@ -1,5 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
+import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.*;
@@ -12,8 +14,20 @@ import java.sql.SQLException;
 public class FormFixDetailBill extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id_bill = request.getParameter("id_bill");
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Customer customer = null;
         try {
+            customer = CustomerService.customer(username);
+            if (customer == null || customer.getPermission() == 0) {
+                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            } else if (!CustomerService.allow_access("Sửa hóa đơn", customer.getPermission())) {
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");
+                return;
+            }
+            int id_bill = Integer.parseInt(request.getParameter("id_bill"));
             request.setAttribute("bill", ProductService.getBill(id_bill));
         } catch (SQLException e) {
             throw new RuntimeException(e);

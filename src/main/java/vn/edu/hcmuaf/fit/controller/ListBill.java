@@ -4,12 +4,9 @@ import vn.edu.hcmuaf.fit.model.Customer;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -26,32 +23,12 @@ public class ListBill extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
-            } else if (customer.getPermission() > 1) {
+            } else if (!CustomerService.allow_access("Quản lý hóa đơn",customer.getPermission())) {
                 request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-
-            String indexPage = request.getParameter("index");
-            int index = Integer.parseInt(indexPage);
-            int pre = index - 1;
-            int next = index + 1;
-
-//            List<Product> list = ProductService.onePageProduct(index);
-
-            int n = ProductService.getTotalBill();
-            int endPage = n/8;
-            if(n % 8 != 0){
-                endPage++;
-            }
-
-            request.setAttribute("index", index);
-            request.setAttribute("pre", pre);
-            request.setAttribute("next", next);
-            request.setAttribute("endP", endPage);
-//            request.setAttribute("list",list);
-
-            request.setAttribute("list", ProductService.onePageBill(index));
+            request.setAttribute("list", ProductService.getListBill());
             long sales = 0;
             int count = 0;
             request.setAttribute("sales",sales);

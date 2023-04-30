@@ -20,7 +20,7 @@ public class AddDetail extends HttpServlet {
             cart = new Cart();
         }
         PrintWriter out = response.getWriter();
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         String size = request.getParameter("size");
         String color = request.getParameter("color");
         String quan = request.getParameter("quantity");
@@ -31,10 +31,10 @@ public class AddDetail extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        String key = "";
+        int key = 0;
 
         if (p.getDetail().isEmpty()) {
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id=null"+"&size="+size+"&color="+key+"&quantity="+quantity+"&quantityDB=0");
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id="+id+"&size="+size+"&color="+key+"&quantity="+quantity+"&quantityDB=0");
         }else {
             if (!p.getDetail().isEmpty()) {
 

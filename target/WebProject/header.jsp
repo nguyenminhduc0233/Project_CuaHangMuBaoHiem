@@ -1,4 +1,6 @@
-<%@ page import="vn.edu.hcmuaf.fit.model.Cart" %><%--
+<%@ page import="vn.edu.hcmuaf.fit.model.Cart" %>
+<%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %><%--
   Created by IntelliJ IDEA.
   User: ACER
   Date: 11/6/2022
@@ -112,10 +114,20 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
                                         class="fas fa-user text-primary"
-                                        style="padding-top: 4px; padding-right: 4px; "></i><%=se%>
+                                        style="padding-top: 4px; padding-right: 4px; "></i>
+                                    <%if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getTypeAccount()==1){%>
+                                    <%= CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getName()%>
+                                <%}else{%>
+                                    <%= se%>
+                                    <%}%>
                                 </a>
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>
+                                    <%
+                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()!=0){
+                                    %>
+                                    <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct" class="dropdown-item text-primary">Trang quản lý</a>
+                                    <%}%>
                                     <a href="DoLogout" class="dropdown-item text-primary">Đăng xuất</a>
                                 </div>
                             </div>
@@ -139,6 +151,5 @@
 <!-- Navbar End -->
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
 </body>
 </html>

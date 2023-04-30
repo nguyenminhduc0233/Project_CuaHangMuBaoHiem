@@ -91,7 +91,7 @@ To change this template use File | Settings | File Templates.
 <% NumberFormat nf = new NumberFormat();
     Product p= (Product) request.getAttribute("product"); %>
 <!-- Shop Detail Start -->
-<%Map<String,String> listComment = ProductService.getListComment(p.getId());%>
+<%List<Integer> listComment = ProductService.getListIDCommentByProduct(p.getId());%>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
@@ -159,7 +159,7 @@ To change this template use File | Settings | File Templates.
 
                 </div>
                 <p id="color1234" class="help-block text-danger"></p>
-
+                <% if(ProductService.totalQuantity(p.getId())<=0) {%>Hết hàng<%}%>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
@@ -167,7 +167,6 @@ To change this template use File | Settings | File Templates.
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-
                         <input type="text" class="form-control bg-secondary border-0 text-center" name="quantity" style="height: 30px" value="1">
 
                         <div class="input-group-btn">
@@ -176,8 +175,13 @@ To change this template use File | Settings | File Templates.
                             </button>
                         </div>
                     </div>
+                    <% if(ProductService.totalQuantity(p.getId())<=0) {%>
+                    <button type="button" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Hết hàng</button>
+                    <%}else{%>
                     <button type="submit" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào
                         giỏ hàng</button>
+                    <%}%>
+
                 </div>
                 </form>
                 <div class="d-flex pt-2">
@@ -217,22 +221,26 @@ To change this template use File | Settings | File Templates.
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-                                <%for(String key:listComment.keySet()){%>
+                                <%
+                                    for(int id:listComment){
+                                        if(ProductService.getDisplayByIdComment(id) == 1){
+                                %>
                                 <div class="col-md-6">
                                     <div class="media mb-4" style="width: 600px;">
                                         <div class="media-body" >
-                                            <h6><%=ProductService.getCustomer(key).getName()%><small> - <i><%=ProductService.getDateComment(key,p.getId(),listComment.get(key))%></i></small></h6>
+                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>
                                             <div class="text-primary mb-2">
-                                                <%int star = ProductService.getStarComment(key,p.getId(),listComment.get(key));
+                                                <%int star = ProductService.getStarByIdComment(id);
                                                     for(int a=0;a<star;a++){%>
                                                 <i class="fas fa-star"></i>
                                                 <%}%>
                                             </div>
-                                            <p><%=listComment.get(key)%></p>
+                                            <p><%=ProductService.getCommentByIdComment(id)%></p>
                                         </div>
                                     </div>
                                 </div>
-                                <%}%>
+                                <%}
+                                }%>
                             </div>
                             <div class="col-md-6" style="float: right; width: 500px;">
 

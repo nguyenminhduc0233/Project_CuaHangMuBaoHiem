@@ -22,25 +22,16 @@ public class ContactService {
         }
         return instance;
     }
-    public void remove(String id)  {
+    public void remove(int id)  {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from contacts where id=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
         }
     }
     public void insert(String name, String email, String subject, String content) {
-        String id = "ct"+(quantity()+1);
-        int count = quantity();
-        while(true){
-            count +=1;
-            id="ct"+(count);
-            if(!idContact(id)){
-                break;
-            }
-        }
         LocalDate localDate = LocalDate.now();
         int year = localDate.getYear();
         int mont = localDate.getMonthValue();
@@ -51,13 +42,12 @@ public class ContactService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
             try {
-                PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into contacts(id_contact, name, email, subject,content,date) values (?,?,?,?,?,?)");
-                ps.setString(1,id);
-                ps.setString(2,name);
-                ps.setString(3,email);
-                ps.setString(4,subject);
-                ps.setString(5,content);
-                ps.setString(6,date);
+                PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into contacts(name, email, subject,content,date) values (?,?,?,?,?)");
+                ps.setString(1,name);
+                ps.setString(2,email);
+                ps.setString(3,subject);
+                ps.setString(4,content);
+                ps.setString(5,date);
                 ps.executeUpdate();
             }catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +62,7 @@ public class ContactService {
             PreparedStatement ps =dbConnect.getConnection().prepareStatement("select id_contact, name, email,subject,content,date from contacts order by date desc");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-            contact = new Contact(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+            contact = new Contact(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
 
                 list.add(contact);
             }
@@ -89,21 +79,22 @@ public class ContactService {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_contact from contacts");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-            count++;
+                count++;
             }
         } catch (SQLException e) {
         }
         return count;
     }
-    public Contact getContact(String id){
+
+    public Contact getContact(int id){
         Contact contact = new Contact();
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_contact, name, email,subject,content,date from contacts where id_contact=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                contact = new Contact(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+                contact = new Contact(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -123,7 +114,7 @@ public class ContactService {
             ps.setInt(2,b);
           ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                contact = new Contact(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
+                contact = new Contact(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6));
 
                 list.add(contact);
             }
@@ -145,12 +136,12 @@ public class ContactService {
 
         return result;
     }
-    public boolean idContact(String id){
+    public boolean idContact(int id){
         boolean result=false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_contact from contacts where id_contact=?");
-            ps.setString(1,id);
+            ps.setInt(1,id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()){
                 result=true;

@@ -14,7 +14,7 @@ import java.io.IOException;
 public class GetComment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String idPro = request.getParameter("id_Pro");
+        int idPro = Integer.parseInt(request.getParameter("id_Pro"));
         String mess = request.getParameter("mess");
         int star = Integer.parseInt(request.getParameter("star"));
         Customer customer = (Customer) request.getSession().getAttribute("tendangnhap");

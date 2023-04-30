@@ -26,21 +26,26 @@ public class AddSCQ extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
-            } else if (customer.getPermission() > 1) {
+            } else if (customer.getPermission() > 2) {
                 request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            String id = request.getParameter("id");
+            int id = Integer.parseInt(request.getParameter("id"));
             String size = request.getParameter("size");
             String color = request.getParameter("color");
             String quantity = request.getParameter("quantity");
-            String iddp = null;
+            String price = request.getParameter("price");
+            int iddp = 0;
             if (ProductService.checkDBContainSizeColor(id, size, color)) {
                 iddp = ProductService.getIdDetailProductByCS(id, size, color);
                 ProductService.updateSizeColorById(iddp, quantity);
+                ProductService.insertImportProduct(id,size,color,quantity,price);
+                ProductService.updatePriceMax((request.getParameter("id")));
             } else {
                 ProductService.insertDetailProduct(id, size, color, quantity);
+                ProductService.insertImportProduct(id,size,color,quantity,price);
+                ProductService.updatePriceMax((request.getParameter("id")));
             }
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/AddDetailProductIntoDB?id=" + id);
         } catch (SQLException e) {

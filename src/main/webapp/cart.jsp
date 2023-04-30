@@ -19,7 +19,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -72,7 +72,9 @@
                             for(Product p: cart.getListProduct()){
                         %>
                         <tr>
-                            <td class="align-middle"><div style="float: left"><img <%if(p.getImg().size()<=0){%>src="img/noimage.jpg" <%}else{%>src="<%= p.getImg().get(0).getImg() %>"<%}%> alt="" style="width: 50px;"> <%= p.getName() %></div></td>
+                            <td class="align-middle"><a href="<%="/Project_CuaHangMuBaoHiem_war/detail?id=" +p.getId()%>" style="color: #6c757d;">
+                                <div style="float: left"><img <%if(p.getImg().size()<=0){%>src="img/noimage.jpg" <%}else{%>src="<%= p.getImg().get(0).getImg() %>"<%}%> alt="" style="width: 50px"> <%= p.getName() %></div>
+                            </a></td>
                             <td class="align-middle"><%=p.getDetail().get(0).getSize()%></td>
                             <td class="align-middle"><%=p.getDetail().get(0).getColor()%></td>
                             <td class="align-middle"><%=nf.numberFormat((long) (p.getPrice()-p.getPrice()*p.getDiscount()))%>đ</td>
@@ -84,7 +86,7 @@
                                             <button type="submit" class="btn btn-sm btn-primary btn"> <i class="fa fa-minus"></i></button>
                                         </form>
                                     </div>
-                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<%= p.getQuantity() %>">
+                                    <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center " value="<%= p.getQuantity() %>">
                                     <div class="input-group-btn">
                                         <form method="get" action="/Project_CuaHangMuBaoHiem_war/Plus">
                                             <input type="hidden" name="plus" value="<%= p.getId() %>">
@@ -124,23 +126,11 @@
                             <h6>Tổng tiền hàng</h6>
                             <h6><%=  nf.numberFormat(cart.getTotal()) %>đ</h6>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                            <% if(cart.getQuanlity()==0){%>
-                            <h6 class="font-weight-medium">0đ</h6>
-                            <%}else{%>
-                            <h6 class="font-weight-medium">50.000đ</h6>
-                            <%}%>
-                        </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Tổng thanh toán</h5>
-                            <%if(cart.getQuanlity()==0){%>
                             <h5><%= nf.numberFormat(cart.getTotal()) %>đ</h5>
-                            <%}else{%>
-                            <h5><%= nf.numberFormat(cart.getTotal() + 50000) %>đ</h5>
-                            <%}%>
                         </div>
                         <a href="/Project_CuaHangMuBaoHiem_war/CheckCart" style="text-decoration: none"><button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Tiến hành thanh toán</button></a>
                     </div>

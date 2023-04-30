@@ -40,7 +40,9 @@ public class DBConnect {
         }
         return null;
     }
-
+//    public void close() throws SQLException {
+//        connection.close();
+//    }
     public Connection getConnection() {
         return connection;
     }

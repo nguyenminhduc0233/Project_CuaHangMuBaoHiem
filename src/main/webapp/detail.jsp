@@ -1,5 +1,3 @@
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
 
@@ -7,8 +5,7 @@
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Comment" %><%--
+<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %><%--
 Created by IntelliJ IDEA.
 User: ACER
 Date: 11/6/2022
@@ -92,12 +89,9 @@ To change this template use File | Settings | File Templates.
 <!-- Breadcrumb End -->
 
 <% NumberFormat nf = new NumberFormat();
-    Product p= (Product) request.getAttribute("product");
-    %>
-
+    Product p= (Product) request.getAttribute("product"); %>
 <!-- Shop Detail Start -->
-<%--<%Map<String,String> listComment = ProductService.getListComment(p.getId());%>--%>
-<%List<Comment> listComment = ProductService.getListCommentById(p.getId());%>
+<%List<Integer> listComment = ProductService.getListIDCommentByProduct(p.getId());%>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
@@ -165,7 +159,7 @@ To change this template use File | Settings | File Templates.
 
                 </div>
                 <p id="color1234" class="help-block text-danger"></p>
-
+                <% if(ProductService.totalQuantity(p.getId())<=0) {%>Hết hàng<%}%>
                 <div class="d-flex align-items-center mb-4 pt-2">
                     <div class="input-group quantity mr-3" style="width: 130px;">
                         <div class="input-group-btn">
@@ -173,7 +167,6 @@ To change this template use File | Settings | File Templates.
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
-
                         <input type="text" class="form-control bg-secondary border-0 text-center" name="quantity" style="height: 30px" value="1">
 
                         <div class="input-group-btn">
@@ -182,8 +175,13 @@ To change this template use File | Settings | File Templates.
                             </button>
                         </div>
                     </div>
+                    <% if(ProductService.totalQuantity(p.getId())<=0) {%>
+                    <button type="button" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Hết hàng</button>
+                    <%}else{%>
                     <button type="submit" class="btn btn-primary px-3" onclick="check()"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào
                         giỏ hàng</button>
+                    <%}%>
+
                 </div>
                 </form>
                 <div class="d-flex pt-2">
@@ -221,50 +219,33 @@ To change this template use File | Settings | File Templates.
                     </div>
 
                     <div class="tab-pane fade" id="tab-pane-3">
-
                         <div class="row" style="overflow: auto">
-
                             <div style="float:left;width:680px; padding-right:0px;">
-
-<%--                                <%for(String key:listComment.keySet()){%>--%>
-<%--                                <div class="col-md-6">--%>
-<%--                                    <div class="media mb-4" style="width: 600px;">--%>
-<%--                                        <div class="media-body" >--%>
-<%--                                            <h6><%=ProductService.getCustomer(key).getName()%><small> - <i><%=ProductService.getDateComment(key,p.getId(),listComment.get(key))%></i></small></h6>--%>
-<%--                                            <div class="text-primary mb-2">--%>
-<%--                                                <%int star = ProductService.getStarComment(key,p.getId(),listComment.get(key));--%>
-<%--                                                    for(int a=0;a<star;a++){%>--%>
-<%--                                                <i class="fas fa-star"></i>--%>
-<%--                                                <%}%>--%>
-<%--                                            </div>--%>
-<%--                                            <p><%=listComment.get(key)%></p>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                                <%}%>--%>
-
-                                <%for(Comment com:listComment){%>
+                                <%
+                                    for(int id:listComment){
+                                        if(ProductService.getDisplayByIdComment(id) == 1){
+                                %>
                                 <div class="col-md-6">
                                     <div class="media mb-4" style="width: 600px;">
                                         <div class="media-body" >
-                                            <h6><%=ProductService.getCustomer(com.getId_customer()).getName()%><small> - <i><%=ProductService.getDateComment(com.getId_comt())%></i></small></h6>
+                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>
                                             <div class="text-primary mb-2">
-                                                <%int star = ProductService.getStarComment(com.getId_comt());
+                                                <%int star = ProductService.getStarByIdComment(id);
                                                     for(int a=0;a<star;a++){%>
                                                 <i class="fas fa-star"></i>
                                                 <%}%>
                                             </div>
-                                            <p><%=com.getContent()%></p>
+                                            <p><%=ProductService.getCommentByIdComment(id)%></p>
                                         </div>
                                     </div>
                                 </div>
-                                <%}%>
+                                <%}
+                                }%>
                             </div>
-
                             <div class="col-md-6" style="float: right; width: 500px;">
+
                                 <h4 class="mb-4">Viết đánh giá</h4>
-                                <form id="comment_form" action="/Project_CuaHangMuBaoHiem_war/CommentServlet" method="get">
-                                    <input type="hidden" name="id" value="<%= p.getId() %>">
+                                <form action="/Project_CuaHangMuBaoHiem_war/get-comment" method="get">
                                     <div class="d-flex my-3">
                                         <p class="mb-0 mr-2">Đánh giá * :</p>
                                         <div class="text-primary">
@@ -288,10 +269,9 @@ To change this template use File | Settings | File Templates.
                                         <input type="hidden" name="id_Pro" value="1" class="form-control" id="email">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input onclick="addComment()" type="submit" value="Gửi" class="btn btn-primary px-3">
+                                        <input type="submit" value="Gửi" class="btn btn-primary px-3">
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -303,31 +283,6 @@ To change this template use File | Settings | File Templates.
 </div>
 <!-- Shop Detail End -->
 
-<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>--%>
-
-<%--<script>--%>
-
-<%--    function addComment(){--%>
-<%--        if($("comment_form").valid()){--%>
-<%--            var star = document.getElementById()--%>
-<%--            var url = 'DisplayComment.jsp';--%>
-<%--            var data = $("#comment_form").serialize();--%>
-<%--            var method = 'POST';--%>
-
-<%--            $.ajax({--%>
-<%--                type: method,--%>
-<%--                url:url,--%>
-<%--                dataType: "JSON",--%>
-<%--                data: data,--%>
-
-<%--                success:function(data){--%>
-<%--                    $('#star').val();--%>
-<%--                    $('#content').val();--%>
-<%--                }--%>
-<%--            });--%>
-<%--        }--%>
-<%--    }--%>
-<%--</script>--%>
 
 <!-- Products Start -->
 <div class="container-fluid py-5">

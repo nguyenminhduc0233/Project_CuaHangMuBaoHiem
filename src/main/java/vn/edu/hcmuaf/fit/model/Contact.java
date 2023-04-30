@@ -1,7 +1,7 @@
 package vn.edu.hcmuaf.fit.model;
 
 public class Contact {
-    private String id;
+    private int id;
     private String name;
     private String email;
     private String subject;
@@ -10,7 +10,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String id, String name, String email, String subject, String content, String date) {
+    public Contact(int id, String name, String email, String subject, String content, String date) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -19,11 +19,11 @@ public class Contact {
         this.date = date;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
@@ -77,38 +76,34 @@
           </div>
           <h6 class="mb-3">Các sản phẩm</h6>
           <%
-            List<String> list = (List<String>)request.getAttribute("list");
+            List<BillDetail> list = (List<BillDetail>)request.getAttribute("list");
             NumberFormat nf = new NumberFormat();
-            for(String s: list){
-              Product p = ProductService.getProduct(ProductService.getIdProductByIddp(s));
-          %>
+            for(BillDetail s: list){%>
           <div class="d-flex justify-content-between">
-            <p><%=p.getName()%></p>
-            <p><%=nf.numberFormat(p.getPrice()-p.getPrice()*(long)p.getDiscount())%>đ</p>
+            <p><%=s.getName()%> x<%=s.getQuantitySold()%></p>
+            <p><%=nf.numberFormat(s.getPrice()*s.getQuantitySold())%>đ</p>
           </div>
           <%}%>
-
         </div>
         <div class="border-bottom pt-3 pb-2">
           <div class="d-flex justify-content-between mb-3">
             <h6>Tổng tiền hàng</h6>
             <%
               long price = 0;
-              for(String s:list){
-                Product p = ProductService.getProduct(ProductService.getIdProductByIddp(s));
-                price += p.getPrice()-p.getPrice()*(long)p.getDiscount();
+              for(BillDetail s:list){
+                price += s.getPrice()*s.getQuantitySold();
               }%>
             <h6><%=nf.numberFormat(price)%>đ</h6>
           </div>
           <div class="d-flex justify-content-between">
             <h6 class="font-weight-medium">Phí vận chuyển</h6>
-            <h6 class="font-weight-medium">50.000đ</h6>
+            <h6 class="font-weight-medium"><%=nf.numberFormat(Integer.parseInt(request.getAttribute("fee").toString()))%> đ</h6>
           </div>
         </div>
         <div class="pt-2">
           <div class="d-flex justify-content-between mt-2">
             <h5>Tổng thanh toán</h5>
-            <h5><%=nf.numberFormat(price+50000)%>đ</h5>
+            <h5><%=nf.numberFormat(price+Integer.parseInt(request.getAttribute("fee").toString()))%>đ</h5>
           </div>
         </div>
       </div>

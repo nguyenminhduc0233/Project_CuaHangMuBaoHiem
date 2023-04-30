@@ -277,7 +277,7 @@
                     >
                     <%
                       NumberFormat nf = new NumberFormat();
-                      for(String s: bill.getProductList()){
+                      for(int s: bill.getProductList()){
                         Product p = ProductService.getProduct(ProductService.getIdProduct(s));
                     %>
                       <tr class="text-gray-700 dark:text-gray-400">
@@ -309,7 +309,7 @@
               >
                 <span class="flex items-center col-span-3">
                   <% long price = 0;
-                    for(String id_dp:bill.getProductList()){
+                    for(int id_dp:bill.getProductList()){
                       Product p = ProductService.getProduct(ProductService.getIdProduct(id_dp));
                       price += p.getPrice()-p.getPrice()*p.getDiscount();
                     }

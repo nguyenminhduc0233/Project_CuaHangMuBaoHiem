@@ -92,7 +92,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí sản phẩm</span>
+            <span class="ml-4">Quản lý sản phẩm</span>
           </a>
         </li>
         <li class="relative px-6 py-3">
@@ -116,7 +116,7 @@
             >
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
-            <span class="ml-4">Quản lí hóa đơn</span>
+            <span class="ml-4">Quản lý hóa đơn</span>
           </a>
         </li>
         <li class="relative px-6 py-3">
@@ -154,6 +154,76 @@
               <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
             </svg>
             <span class="ml-4">Quản lý trang chủ</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
+          <a
+                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                  href="/Project_CuaHangMuBaoHiem_war/list-comment"
+          >
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Quản lý bình luận</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
+          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+             href="/Project_CuaHangMuBaoHiem_war/ManageImport">
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Quản lý nhập hàng</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
+          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+             href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Kiểm tra hàng tồn kho</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
+          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+             href="/Project_CuaHangMuBaoHiem_war/manager-permission">
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Quản lý quyền hạn</span>
           </a>
         </li>
       </ul>
@@ -298,6 +368,7 @@
                      name="address"     value="<%=address%>"     />
             </label>
             <br>
+            <%if(bill.getStatus().equals("Đang gửi")){%>
             <label
                     class="inline-flex items-center text-gray-600 dark:text-gray-400"
             >
@@ -312,11 +383,34 @@
             <label
                     class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
             >
-              <input id="recived"
+              <input id="recived1"
                       type="radio"
                       class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
                       name="status"
                       value="Đã nhận"
+              />
+              <span class="ml-2">Đã nhận</span>
+            </label>
+            <label
+                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
+            >
+              <input  id="cancel1"
+                      type="radio"
+                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                      name="status"
+                      value="Đã hủy"
+              />
+              <span class="ml-2">Đã hủy</span>
+            </label>
+            <%}else if(bill.getStatus().equals("Đã nhận")){%>
+            <label
+                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
+            >
+              <input id="recived"
+                     type="radio"
+                     class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                     name="status"
+                     value="Đã nhận"
               />
               <span class="ml-2">Đã nhận</span>
             </label>
@@ -330,7 +424,19 @@
                       value="Đã hủy"
               />
               <span class="ml-2">Đã hủy</span>
+            <%}else{%>
             </label>
+            <label
+                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
+            >
+              <input  id="cancel"
+                      type="radio"
+                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                      name="status"
+                      value="Đã hủy"
+              />
+              <span class="ml-2">Đã hủy</span>
+            <%}%>
           </div>
           <input type="submit" value="Lưu" class="button" style="background: #007bff; margin-right: 20px">
           <a href="http://localhost:8080/Project_CuaHangMuBaoHiem_war/list-bill"><button type="button" class="button cancel" style="background: red">Hủy</button></a>

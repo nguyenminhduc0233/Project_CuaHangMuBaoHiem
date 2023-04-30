@@ -1,6 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.DetailProduct" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.ImageProduct" %><%--
+<%@ page import="vn.edu.hcmuaf.fit.model.ImageProduct" %>
+<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %><%--
   Created by IntelliJ IDEA.
   User: TranDangQuoc
   Date: 07/01/2023
@@ -469,33 +470,30 @@
               </thead>
               <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
               <%
-                for(DetailProduct dp : p.getDetail()){
+                for(DetailProduct dp : ProductService.getfirst(p.getId())){
               %>
+
               <tr class="text-gray-700 dark:text-gray-400">
 
 
                 <form action="/Project_CuaHangMuBaoHiem_war/UpdateDetailProduct">
                   <input type="hidden" name="id" value="<%= p.getId() %>" >
-                  <input type="hidden" name="id_dp" value="<%= dp.getId() %>" >
+                  <input type="hidden" name="id_dp" value="<%=dp.getId()%>" >
 
                   <td class="px-4 py-3 text-sm">
-                    <div><%= dp.getSize()%></div>
+                    <div><%=dp.getSize()%></div>
                   </td>
                   <td class="px-4 py-3 text-sm">
-                    <div><%= dp.getColor()%></div>
+                    <div><%=dp.getColor()%></div>
                   </td>
                   <td class="px-4 py-3 text-sm">
-                    <input name="quantity"  value="<%= dp.getQuantity()%>">
-
+                    <input name="quantity"  value="<%=dp.getQuantity()%>">
                   </td>
                   <td class="px-4 py-3">
                     <div class="flex items-center space-x-4 text-sm">
-
-
                       <button type="submit" >
                         <i class="fa fa-refresh" ></i>
                       </button>
-
                       <a href="<%="/Project_CuaHangMuBaoHiem_war/RemoveDetailProduct?id="+p.getId()+"&id_dp=" + dp.getId()%>">
                         <button type="button"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
@@ -534,6 +532,8 @@
               <div style="margin-top: 10px; color: red;" id="warning_color"></div>
               <input id="quantity" name="quantity" type="number" placeholder="Số lượng" required="required">
               <div style="margin-top: 10px; color: red;" id="warning_quantity"></div>
+              <input id="price_import" name="price" type="number" placeholder="Giá" required="required">
+              <div style="margin-top: 10px; color: red;" id="warning_price_import"></div>
               <button  type="submit" onclick="checkSCQ()" style="margin-top: 20px; background: #1c7430;" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                 Thêm
               </button>
@@ -657,4 +657,3 @@
 </div>
 </body>
 </html>
-

@@ -5,15 +5,15 @@ import java.util.Date;
 import java.util.List;
 
 public class Bill {
-    private String id;
+    private int id;
     private Date date;
-    private List<String> productList;
+    private List<Integer> productList;
     private String status;
-    private String id_cus;
+    private int id_cus;
     private String address;
     private String phone;
 
-    public Bill(String id, Date date, List<String> list, String status, String id_cus, String address, String phone) {
+    public Bill(int id, Date date, List<Integer> list, String status, int id_cus, String address, String phone) {
         this.id = id;
         this.date = date;
         this.productList = list;
@@ -26,11 +26,11 @@ public class Bill {
 
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -42,11 +42,11 @@ public class Bill {
         this.date = date;
     }
 
-    public List<String> getProductList() {
+    public List<Integer> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<String> productList) {
+    public void setProductList(List<Integer> productList) {
         this.productList = productList;
     }
 
@@ -58,11 +58,11 @@ public class Bill {
         this.status = status;
     }
 
-    public String getId_cus() {
+    public int getId_cus() {
         return id_cus;
     }
 
-    public void setId_cus(String id_cus) {
+    public void setId_cus(int id_cus) {
         this.id_cus = id_cus;
     }
 
