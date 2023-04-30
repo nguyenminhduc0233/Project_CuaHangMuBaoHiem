@@ -15,18 +15,17 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ApiLogistic {
@@ -431,7 +430,54 @@ public class ApiLogistic {
            e.printStackTrace();
         }
     }
+    public static String parseDate(String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneId.of("UTC"));
+        LocalDateTime dateTime = LocalDateTime.parse(dateString, formatter);
+        String newPattern = "dd-MM-yyyy";
+        DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern(newPattern);
+        String newDateString = dateTime.format(newFormatter);
+        return newDateString;
+    }
+    public static String formatDateYMD(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneId.of("UTC"));
+        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+        String newPattern = "yyyy-dd-MM";
+        DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern(newPattern);
+        String newDateString = dateTime.format(newFormatter);
+        return newDateString;
+    }
+    public static String getDateNow(){
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
+        String formattedDate = currentDate.format(formatter);
+        return formattedDate;
+    }
+    public static String getAddress(int province,int district, String ward){
+        String result = "";
+        for(Address a : getAllWard(district)){
+            if(a.getWardCode().equals(ward)){
+                result+= a.getWardName()+" - ";
+                break;
+            }
+        }
+        for(Address a : getAllDistrict(province)){
+            if(a.getDistrictID()==district){
+                result+= a.getDistrictName()+" - ";
+                break;
+            }
+        }
+        for(Address a : getAllProvince()){
+            if(a.getProvinceID()==province){
+                result+= a.getProvinceName();
+                break;
+            }
+        }
+        return result;
+    }
     public static void main(String[] args) {
+        System.out.println(getTransferTime(25,25,25,3000,3695,90735,1769,371008).get(0));
+        System.out.println(parseDate("2023-05-02T23:59:59Z"));
+        System.out.println(getAddress(262,1769,"371008"));
     }
 }

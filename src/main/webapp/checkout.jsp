@@ -1,5 +1,6 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
+<%@ page import="vn.edu.hcmuaf.fit.api.ApiLogistic" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
@@ -62,7 +63,13 @@
             <div class="col-lg-8">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">ĐỊA CHỈ THANH TOÁN</span></h5>
                 <div class="bg-light p-30 mb-5">
-                    <%String error = (String)request.getAttribute("error");
+                    <%ApiLogistic api = new ApiLogistic();%>
+
+                    <%
+                        String province = request.getParameter("province");
+                        String district = request.getParameter("district");
+                        String ward = request.getParameter("ward");
+                        String error = (String)request.getAttribute("error");
                     if(error == "error") error = "* Vui lòng nhập đầy đủ thông tin";
                     if(error == null) error ="";
                         String name = request.getParameter("name");
@@ -73,6 +80,13 @@
                         email=email==null?"":email;
                         phone=phone==null?"":phone;
                         address = address== null?"":address;
+                    %>
+                    <%
+                        long fee = (api.getCalculateFee(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0));
+                        long price = 0;
+                        for(Product p:cart.getListProduct()){
+                            price += p.getPrice()-p.getPrice()*p.getDiscount();
+                        }
                     %>
                     <form action="/Project_CuaHangMuBaoHiem_war/add_bill" method="get">
                     <div class="row">
@@ -89,15 +103,28 @@
                             <input name="phone" class="form-control" value="<%=phone%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label>Địa chỉ</label>
-                            <input name="address" class="form-control" value="<%=address%>" type="text" placeholder="">
+                            <input type="hidden" name="address" class="form-control" value="<%=api.getAddress(Integer.parseInt(province),Integer.parseInt(district),ward)%>" type="text" placeholder="">
                         </div>
-
+                        <div class="col-md-6 form-group">
+                            <input type="hidden" name="fee" class="form-control" value="<%=fee%>" type="text" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+price%>" type="text" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="hidden" name="district" class="form-control" value="<%=district%>" type="text" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="hidden" name="ward" class="form-control" value="<%=ward%>" type="text" placeholder="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="hidden" name="received_date" class="form-control" value="<%=api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)%>" type="text" placeholder="">
+                        </div>
                     </div>
                     <div><span id="error" class="error"><%=error%></span></div>
                     <div><small style="color: red;">* Thanh toán khi nhận hàng</small></div>
                     <div class="bg-light p-30">
-                        <input type="submit" class="btn btn-block btn-primary font-weight-bold py-3" value="Đặt hàng" style="margin-left: 360px;width: 186px">
+                        <input type="submit" class="btn btn-block btn-primary font-weight-bold py-3" value="Tiếp theo" style="margin-left: 360px;width: 186px">
                     </div>
                     </form>
                 </div>
@@ -119,22 +146,23 @@
                     <div class="border-bottom pt-3 pb-2">
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Tổng tiền hàng</h6>
-                            <%
-                                long price = 0;
-                                for(Product p:cart.getListProduct()){
-                                    price += p.getPrice()-p.getPrice()*p.getDiscount();
-                                }%>
+
                             <h6><%=nf.numberFormat(price)%>đ</h6>
                         </div>
-                        <div class="d-flex justify-content-between">
+                        <div class="d-flex justify-content-between  mb-3">
                             <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                            <h6 class="font-weight-medium">50.000đ</h6>
+
+                            <h6 class="font-weight-medium"><%=nf.numberFormat(fee)%>đ</h6>
+                        </div>
+                        <div class="d-flex justify-content-between  mb-3">
+                            <h6 class="font-weight-medium">Thời gian vận chuyển</h6>
+                            <h6 class="font-weight-medium"><%= api.getDateNow()%> - <%= api.parseDate(api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)) %></h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Tổng thanh toán</h5>
-                            <h5><%=nf.numberFormat(price+50000)%>đ</h5>
+                            <h5><%=nf.numberFormat(price+fee)%>đ</h5>
                         </div>
                     </div>
                 </div>

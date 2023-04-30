@@ -83,6 +83,7 @@ To change this template use File | Settings | File Templates.
                                 &client_id=293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com&approval_prompt=force" style="color: #FFFFFF">
                     <button type="button" class="btnSociallogingg">Google+</button>
                 </a>
+
             </form>
             <div class="form-footer">
                 <p>Bạn chưa có tài khoản?</p>

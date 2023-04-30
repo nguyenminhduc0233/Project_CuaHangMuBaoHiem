@@ -42,10 +42,45 @@ public class Address {
         this.provinceName = provinceName;
     }
 
+    public int getDistrictID() {
+        return districtID;
+    }
+
+    public void setDistrictID(int districtID) {
+        this.districtID = districtID;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getWardCode() {
+        return wardCode;
+    }
+
+    public void setWardCode(String wardCode) {
+        this.wardCode = wardCode;
+    }
+
+    public String getWardName() {
+        return wardName;
+    }
+
+    public void setWardName(String wardName) {
+        this.wardName = wardName;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
-                "districtID=" + districtID +
+                "provinceID=" + provinceID +
+                ", provinceName='" + provinceName + '\'' +
+                ", districtID=" + districtID +
+                ", districtName='" + districtName + '\'' +
                 ", wardCode='" + wardCode + '\'' +
                 ", wardName='" + wardName + '\'' +
                 '}';

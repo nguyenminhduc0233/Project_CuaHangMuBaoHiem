@@ -512,31 +512,36 @@ public class ProductService {
         return c;
     }
 
-    public static int addBill(int id_Customer, String status, List<Integer> id_dp, String address, String phone) {
+    public static int addBill(int id_Customer, String status, List<BillDetail> id_dp, String address, String phone, String id_transport, String received_date, String fee, String total_cost) {
         int id_bill = 0;
         try {
-
             Date date = new Date();
             ResultSet resultSet = DBConnect.getInstance().get().executeQuery("select curdate()");
             if (resultSet.next()) {
                 date = resultSet.getDate(1);
             }
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bill(id_customer,date,status,address,phone) values(?,?,?,?,?)");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bill(id_customer,date,status,address,phone,id_transport, received_date,fee, total_cost ) values(?,?,?,?,?,?,?,?,?)");
             prs.setInt(1, id_Customer);
             prs.setDate(2, (java.sql.Date) date);
             prs.setString(3, status);
             prs.setString(4, address);
             prs.setString(5, phone);
+            prs.setString(6, id_transport);
+            prs.setString(7, received_date);
+            prs.setInt(8, Integer.parseInt(fee));
+            prs.setInt(9, Integer.parseInt(total_cost));
             prs.executeUpdate();
 
             ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bill");
             rs.last();
             id_bill = rs.getInt("id");
 
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bill(id_bill,id_dp) values(?,?)");
-            for (int i : id_dp) {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bill(id_bill,id_dp, quantitySold, price) values(?,?,?,?)");
+            for (BillDetail i : id_dp) {
                 ps.setInt(1, id_bill);
-                ps.setInt(2, i);
+                ps.setInt(2, i.getId_dp());
+                ps.setLong(3, i.getQuantitySold());
+                ps.setLong(4, i.getPrice());
                 ps.executeUpdate();
             }
         } catch (SQLException e) {
@@ -1930,8 +1935,9 @@ public class ProductService {
     }
 
     public static void main(String[] args) throws SQLException {
-       for(Product p : productsToBeImported()){
-           System.out.println(p);
-       }
+        List<BillDetail> list = new ArrayList<>();
+        list.add(new BillDetail(1,1,400000));
+        list.add(new BillDetail(2,1,50000));
+       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
     }
 }
