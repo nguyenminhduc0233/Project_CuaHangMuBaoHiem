@@ -102,4 +102,19 @@ public class UserGoogle implements Serializable {
     public boolean checkRole(int role) {
         return this.role >= role;
     }
+
+    @Override
+    public String toString() {
+        return "UserGoogle{" +
+                "id='" + id + '\'' +
+                ", email='" + email + '\'' +
+                ", verified_email=" + verified_email +
+                ", name='" + name + '\'' +
+                ", given_name='" + given_name + '\'' +
+                ", family_name='" + family_name + '\'' +
+                ", link='" + link + '\'' +
+                ", picture='" + picture + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

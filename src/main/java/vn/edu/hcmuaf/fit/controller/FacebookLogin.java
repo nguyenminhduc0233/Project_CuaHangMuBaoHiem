@@ -19,7 +19,7 @@ public class FacebookLogin extends HttpServlet {
         String name = request.getParameter("name").trim();
         try {
             if(!CustomerService.checkLogin(email, CustomerService.toMD5(password))) {
-                CustomerService.addCustomer(email, CustomerService.toMD5(password), name, email);
+                CustomerService.addCustomer(email, CustomerService.toMD5(password), name, email, 1);
                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/doLogin?username="+email+"&password=" +password);
             }
             else{

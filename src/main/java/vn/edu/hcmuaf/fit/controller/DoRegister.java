@@ -41,7 +41,7 @@ public class DoRegister extends HttpServlet {
                 request.setAttribute("error", "Tên đăng nhập đã có người sử dụng!");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
-                CustomerService.addCustomer(username, CustomerService.toMD5(password), name, email);
+                CustomerService.addCustomer(username, CustomerService.toMD5(password), name, email, 0);
                 request.setAttribute("success", "Đăng ký thành công.");
                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/login.jsp");
             }
