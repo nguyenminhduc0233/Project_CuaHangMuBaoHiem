@@ -1,31 +1,31 @@
 package vn.edu.hcmuaf.fit.model;
 
 public class Comment {
-    private String id_customer;
-    private String id_product;
-    private String avatar;
+    private int id_customer;
+    private int id_product;
+    private int display;
     private String content;
     private String star;
     private String date;
 
-    private int id_comt;
+    private int id;
 
-    public Comment(String id_customer, String id_product, String content, String star, String date, String avatar, int id_comt) {
+    public Comment(int id_customer, int id_product, String content, String star, String date, int id_comt, int display) {
         this.id_customer = id_customer;
         this.id_product = id_product;
         this.content = content;
         this.star = star;
         this.date = date;
-        this.avatar = avatar;
-        this.id_comt = id_comt;
+        this.id = id_comt;
+        this.display = display;
     }
 
-    public int getId_comt() {
-        return id_comt;
+    public int getId() {
+        return id;
     }
 
-    public void setId_comt(int id_comt) {
-        this.id_comt = id_comt;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDate() {
@@ -52,27 +52,41 @@ public class Comment {
         this.content = content;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    public String getId_product() {
+    public int getId_product() {
         return id_product;
     }
 
-    public void setId_product(String id_product) {
+    public void setId_product(int id_product) {
         this.id_product = id_product;
     }
 
-    public String getId_customer() {
+    public int getId_customer() {
         return id_customer;
     }
 
-    public void setId_customer(String id_customer) {
+    public void setId_customer(int id_customer) {
         this.id_customer = id_customer;
     }
+
+    public int getDisplay() {
+        return display;
+    }
+
+    public void setDisplay(int display) {
+        this.display = display;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id_customer=" + id_customer +
+                ", id_product=" + id_product +
+                ", display=" + display +
+                ", content='" + content + '\'' +
+                ", star='" + star + '\'' +
+                ", date='" + date + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
 }

@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.service;
 import vn.edu.hcmuaf.fit.Database.DBConnect;
 import vn.edu.hcmuaf.fit.model.*;
 
-import java.awt.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +10,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.List;
 
 
 public class ProductService {
@@ -337,34 +335,104 @@ public class ProductService {
         return null;
     }
 
-    public static void addComment(int id_Cus, int id_Pro, String mess, int star) {
-        DBConnect dbConnect = DBConnect.getInstance();
+    public static int getStarComment(int id_comt){
+        int result = 0;
         try {
-            Date date = new Date();
-            ResultSet resultSet = DBConnect.getInstance().get().executeQuery("select curdate()");
-            if (resultSet.next()) {
-                date = resultSet.getDate(1);
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id = ?");
+            ps.setInt(1, id_comt);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                result+= rs.getInt(1);
             }
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment(id_customer,id_product,comment,star,date,display) values (?,?,?,?,?,?)");
-            prs.setInt(1, id_Cus);
-            prs.setInt(2, id_Pro);
-            prs.setString(3, mess);
-            prs.setInt(4, star);
-            prs.setDate(5, (java.sql.Date) date);
-            prs.setInt(6, 1);
-            prs.executeUpdate();
-            Product p = getProduct(id_Pro);
-            int newAmount = p.getAmount() + 1;
-            double newStar = (p.getStar() * p.getAmount() + star) / newAmount;
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update star_vote set amount =?, star =?  where id_product=?");
-            ps.setInt(3, id_Pro);
-            ps.setInt(1, newAmount);
-            ps.setDouble(2, newStar);
-            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static String getDateComment(int id_comt) {
+        String result = "";
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select DAY(date),MONTH(date),YEAR(date) from comment where id = ?");
+            ps.setInt(1, id_comt);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                result += rs.getInt(1) + "/" + rs.getInt(2) + "/" + rs.getInt(3);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return result;
     }
+    public static void addComment(int id_customer, int id_product, String content, int star, Date date, int id_comt, int display) {
+        DBConnect dbConnect = DBConnect.getInstance();
+
+        try {
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment values(?, ?, ?, ?, ?, ?, ?)");
+            prs.setInt(1,id_customer);
+            prs.setInt(2,id_product);
+            prs.setString(3,content);
+            prs.setInt(4,star);
+            prs.setDate(5, (java.sql.Date) date);
+            prs.setInt(6, id_comt);
+            prs.setInt(7, display);
+            prs.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void deleteComment(int id_comt) {
+        DBConnect dbConnect = DBConnect.getInstance();
+
+        try {
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("delete from comment where id = ?");
+            prs.setInt(1, id_comt);
+            prs.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static List<Comment> getAllComment(){
+        List<Comment> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                list.add(new Comment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7)));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static List<Comment> getListCommentById(int id_pro){
+        List<Comment> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment where id_product=?");
+            ps.setInt(1,id_pro);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                list.add(new Comment(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getInt(7)));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
 
     public static List<Product> sort(String s) {
         List<Product> result = new ArrayList<Product>();
@@ -1947,9 +2015,10 @@ public class ProductService {
 //        list.add(new BillDetail(2,1,50000));
 //       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
         System.out.print(getRevenueByMonthYear( 4,  2023));
-        for(long l : chartLine()){
-            System.out.println(l);
-        }
+//        for(long l : chartLine()){
+//            System.out.println(l);
+//        }
 
+        deleteComment(15);
         }
 }

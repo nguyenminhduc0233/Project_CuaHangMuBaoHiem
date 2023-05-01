@@ -3,7 +3,6 @@ package vn.edu.hcmuaf.fit.controller;
 import vn.edu.hcmuaf.fit.api.ApiLogistic;
 import vn.edu.hcmuaf.fit.model.BillDetail;
 import vn.edu.hcmuaf.fit.model.Cart;
-import vn.edu.hcmuaf.fit.model.Customer;
 import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.MailService;
 import vn.edu.hcmuaf.fit.service.ProductService;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "add_bill", value = "/add_bill")
