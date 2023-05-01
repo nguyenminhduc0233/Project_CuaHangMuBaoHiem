@@ -1752,6 +1752,36 @@ public class ProductService {
         return list;
     }
 
+    public static int getTotalProduct(){
+        String query = "select count(id_product) from product";
+        try{
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public static List<Product> onePageProduct(int index){
+        List<Product> list = new ArrayList<>();
+        String  query = "select * from product  limit ?, 24";
+        try{
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, (index-1)*24);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                list.add(getProduct(rs.getInt("id_product")));
+            }
+        }catch (SQLException e){
+        }
+        return list;
+    }
+
+
     public static List<Product> getRecords(int start, int total) {
         List<Product> list = new ArrayList<Product>();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2014,11 +2044,13 @@ public class ProductService {
 //        list.add(new BillDetail(1,1,400000));
 //        list.add(new BillDetail(2,1,50000));
 //       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
-        System.out.print(getRevenueByMonthYear( 4,  2023));
+//        System.out.print(getRevenueByMonthYear( 4,  2023));
 //        for(long l : chartLine()){
 //            System.out.println(l);
 //        }
 
-        deleteComment(15);
+//        deleteComment(15);
+        System.out.println(onePageProduct(1));
+        System.out.println(getTotalProduct());
         }
 }

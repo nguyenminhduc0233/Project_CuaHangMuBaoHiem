@@ -82,8 +82,8 @@ To change this template use File | Settings | File Templates.
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="#">Trang chủ</a>
-                <a class="breadcrumb-item text-dark" href="#">Sản phẩm</a>
+                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/Home">Trang chủ</a>
+                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/list-product">Sản phẩm</a>
                 <span class="breadcrumb-item active">Chi tiết sản phẩm</span>
             </nav>
         </div>
