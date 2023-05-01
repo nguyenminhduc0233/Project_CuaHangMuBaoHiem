@@ -97,7 +97,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="/Project_CuaHangMuBaoHiem_war/Home" class="nav-item nav-link">Trang chủ</a>
-                        <a href="/Project_CuaHangMuBaoHiem_war/list-product" class="nav-item nav-link">Sản phẩm</a>
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/list-product?index=" + "1"%>" class="nav-item nav-link">Sản phẩm</a>
                         <a href="list_brand.jsp" class="nav-item nav-link">Thương hiệu</a>
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
                     </div>
@@ -114,7 +114,12 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
                                         class="fas fa-user text-primary"
-                                        style="padding-top: 4px; padding-right: 4px; "></i><%=se%>
+                                        style="padding-top: 4px; padding-right: 4px; "></i>
+                                    <%if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getTypeAccount()==1){%>
+                                    <%= CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getName()%>
+                                <%}else{%>
+                                    <%= se%>
+                                    <%}%>
                                 </a>
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>

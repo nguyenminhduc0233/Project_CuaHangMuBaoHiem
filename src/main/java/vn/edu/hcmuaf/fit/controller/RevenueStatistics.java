@@ -15,7 +15,7 @@ public class RevenueStatistics extends HttpServlet {
         String y = request.getParameter("year");
         int month = Integer.parseInt(m);
         int year = Integer.parseInt(y);
-        long sales = ProductService.totalPriceBill(month,year);
+        long sales = ProductService.getRevenueByMonthYear(month,year);
         request.setAttribute("sales",sales);
         request.getRequestDispatcher("revenue_statistics.jsp").forward(request,response);
     }
