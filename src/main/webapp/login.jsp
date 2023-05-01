@@ -40,7 +40,19 @@ To change this template use File | Settings | File Templates.
     <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
 
 </head>
+<style>
+    /* CSS code */
+    .login-button-google {
+        background-color: #5c7af3;
+        color: #ffffff;
+        border: none;
+        font-size: 12px;
+        /*padding: 10px 20px;*/
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
+</style>
 <body>
 <!-- Header Start -->
 <%@include file="header.jsp" %>
@@ -79,10 +91,12 @@ To change this template use File | Settings | File Templates.
                 <div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout=""
                      data-auto-logout-link="false" data-use-continue-as="false" scope="public_profile,email"
                      onlogin="checkLoginState();"></div>
-                <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin&response_type=code
-                                &client_id=293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com&approval_prompt=force" style="color: #FFFFFF">
-                    <button type="button" class="btnSociallogingg">Google+</button>
-                </a>
+                <div style="margin-top: 5px;">
+                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/Project_CuaHangMuBaoHiem_war/GoogleLogin&response_type=code
+                                &client_id=293295540307-uv7em2d9e8vs9quo68ab4lcf88ogbc6l.apps.googleusercontent.com&approval_prompt=force"
+                        style="color: #FFFFFF">
+                    <button type="button" class="login-button-google" style="">Google</button>
+                </a></div>
 
             </form>
             <div class="form-footer">

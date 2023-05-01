@@ -115,7 +115,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i
                                         class="fas fa-user text-primary"
                                         style="padding-top: 4px; padding-right: 4px; "></i>
-                                    <%if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getTypeAccount()==1){%>
+                                    <%if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getTypeAccount()==1 || CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getTypeAccount()==2){%>
                                     <%= CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getName()%>
                                 <%}else{%>
                                     <%= se%>
