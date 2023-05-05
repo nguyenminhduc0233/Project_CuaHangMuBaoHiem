@@ -157,7 +157,7 @@
                     </div>
                 </div>
                 <% NumberFormat nf = new NumberFormat();
-                    List<Product> list =(List<Product>)request.getAttribute("list");
+                    List<Product> list =(List<Product>)request.getAttribute("listP");
                     for(Product p : list){
                 %>
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
