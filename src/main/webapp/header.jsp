@@ -97,7 +97,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="/Project_CuaHangMuBaoHiem_war/Home" class="nav-item nav-link">Trang chủ</a>
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/list-product?index=" + "1"%>" class="nav-item nav-link">Sản phẩm</a>
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + 1%>" class="nav-item nav-link">Sản phẩm</a>
                         <a href="list_brand.jsp" class="nav-item nav-link">Thương hiệu</a>
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
                     </div>

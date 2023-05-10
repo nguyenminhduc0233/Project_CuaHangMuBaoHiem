@@ -30,7 +30,24 @@ public class ListComment extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            List<Product> list = ProductService.getData();
+            String indexPage = request.getParameter("index");
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
+            List<Product> list = ProductService.getDatabyId(index);
+
+            int n = ProductService.getTotalProduct();
+            int endPage = n/8;
+            if(n % 8 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
             request.setAttribute("list", list);
             request.getRequestDispatcher("comment_manager.jsp").forward(request, response);
         } catch (SQLException e) {
@@ -38,7 +55,7 @@ public class ListComment extends HttpServlet {
         }
     }
 
-        @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }

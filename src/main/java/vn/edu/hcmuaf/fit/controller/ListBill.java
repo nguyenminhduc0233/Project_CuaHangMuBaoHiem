@@ -28,7 +28,26 @@ public class ListBill extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            request.setAttribute("list", ProductService.getListBill());
+            String indexPage = request.getParameter("index");
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
+//            List<Product> list = ProductService.onePageProduct(index);
+
+            int n = ProductService.getTotalBill();
+            int endPage = n/8;
+            if(n % 8 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+//            request.setAttribute("list",list);
+
+            request.setAttribute("list", ProductService.onePageBill(index));
             long sales = 0;
             int count = 0;
             request.setAttribute("sales",sales);

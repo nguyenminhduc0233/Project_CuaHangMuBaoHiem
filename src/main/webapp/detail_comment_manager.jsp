@@ -36,6 +36,10 @@
     .fa-eye{
       cursor: pointer;
     }
+    .page-item.disabled{
+      color: #d5d6d7;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -103,7 +107,7 @@
         <li class="relative px-6 py-3">
           <a
                   class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                  href="/Project_CuaHangMuBaoHiem_war/list-bill"
+                  href="<%="/Project_CuaHangMuBaoHiem_war/list-bill?index=" + "1"%>"
           >
             <svg
                     class="w-5 h-5"
@@ -121,8 +125,10 @@
           </a>
         </li>
         <li class="relative px-6 py-3">
-          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="/Project_CuaHangMuBaoHiem_war/list-customer">
+          <a
+                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                  href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + "1"%>"
+          >
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -162,10 +168,8 @@
                             class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                             aria-hidden="true"
                     ></span>
-          <a
-                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                  href="/Project_CuaHangMuBaoHiem_war/list-comment"
-          >
+          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+             href="<%="/Project_CuaHangMuBaoHiem_war/list-comment?index=" + "1"%>">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -182,7 +186,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="/Project_CuaHangMuBaoHiem_war/ManageImport">
+             href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + "1"%>">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -199,7 +203,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
+             href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -332,11 +336,15 @@
     <main class="h-full pb-16 overflow-y-auto">
       <div class="container grid px-6 mx-auto">
 
-        <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200" style= "font-size: 1rem;margin-top: 50px"><a href="comment_manager.jsp">Quản lý bình luận </a><span style="font-size: 1rem;color: rgb(183, 183, 183);">/ Tất cả bình luận</span></h2>
+        <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200" style= "font-size: 1rem;margin-top: 50px"><a href="<%="/Project_CuaHangMuBaoHiem_war/list-comment?index=" + "1"%>">Quản lý bình luận </a><span style="font-size: 1rem;color: rgb(183, 183, 183);">/ Tất cả bình luận</span></h2>
         <!-- With actions -->
 
         <br><br>
         <%
+          int index = (int) request.getAttribute("index");
+          int endPage = (int) request.getAttribute("endP");
+          int pre = (int) request.getAttribute("pre");
+          int next = (int) request.getAttribute("next");
           List<Integer> comment = (List<Integer>) request.getAttribute("detail_comment");
           int id_product = (Integer) request.getAttribute("id_product");
         %>
@@ -387,7 +395,7 @@
                   <%=ProductService.getDateByIdComment(s)%>
                 </td>
                 <td class="px-4 py-3 text-sm">
-                  <a href="/Project_CuaHangMuBaoHiem_war/change-display-comment?id=<%=s%>&idpro=<%=id_product%>">
+                  <a href="/Project_CuaHangMuBaoHiem_war/change-display-comment?id=<%=s%>&idpro=<%=id_product%>&index=<%=index%>">
                   <%if(ProductService.getDisplayByIdComment(s)==1){%>
                   <i class="fa fa-eye" style="cursor: pointer"></i>
                   <%}else{%>
@@ -399,6 +407,44 @@
               <%}%>
               </tbody>
             </table>
+          </div>
+          <div
+                  class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+          >
+                <span class="flex items-center col-span-3">
+                  Showing 21-30 of 100
+                </span>
+            <span class="col-span-2"></span>
+            <!-- Pagination -->
+            <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                  <nav aria-label="Table navigation">
+                    <ul class="inline-flex items-center">
+                      <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="/Project_CuaHangMuBaoHiem_war/detail-comment?id=<%=id_product%>&index=<%=pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                      <%for(int i = 1; i <= endPage; i++){%>
+                        <li>
+                        <a  href="/Project_CuaHangMuBaoHiem_war/detail-comment?id=<%=id_product%>&index=<%=i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
+                          <%=i%>
+                        </button></a>
+                        </li>
+                      <%}%>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="/Project_CuaHangMuBaoHiem_war/detail-comment?id=<%=id_product%>&index=<%=next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                    </ul>
+                  </nav>
+                </span>
           </div>
         </div>
       </div>

@@ -90,7 +90,7 @@
 
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/list-bill"
+                            href="<%="/Project_CuaHangMuBaoHiem_war/list-bill?index=" + "1"%>"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -109,7 +109,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/list-customer">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -145,10 +145,8 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a
-                            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/list-comment"
-                    >
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                       href="<%="/Project_CuaHangMuBaoHiem_war/list-comment?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -165,7 +163,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/ManageImport">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -182,7 +180,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"

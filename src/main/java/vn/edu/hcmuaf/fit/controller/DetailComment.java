@@ -1,7 +1,6 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
-import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -31,7 +30,25 @@ public class DetailComment extends HttpServlet {
                 return;
             }
             int id_product = Integer.parseInt(request.getParameter("id"));
-            request.setAttribute("detail_comment", ProductService.getListIDCommentByProduct(id_product));
+            String indexPage = request.getParameter("index");
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
+//            List<Integer> list = ProductService.getListCommentByProduct(id_product, index);
+
+            int n = ProductService.getTotalComment(id_product);
+            int endPage = n/8;
+            if(n % 8 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
+            request.setAttribute("detail_comment", ProductService.getListCommentByProduct(id_product, index));
             request.setAttribute("id_product", id_product);
             request.getRequestDispatcher("detail_comment_manager.jsp").forward(request,response);
         } catch (SQLException e) {

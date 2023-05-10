@@ -31,7 +31,25 @@ public class CheckInventory extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        List<Product> list = ProductService.checkInventory();
+            String indexPage = request.getParameter("index");
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
+            List<Product> list = ProductService.onePageInventory(index);
+
+            int n = ProductService.getTotalCustomer();
+            int endPage = n/8;
+            if(n % 8 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
+//        List<Product> list = ProductService.checkInventory();
         request.setAttribute("list",list);
         request.getRequestDispatcher("inventory.jsp").forward(request,response);
     } catch (

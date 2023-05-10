@@ -31,7 +31,25 @@ public class ManageImport extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        List<ImportProduct> list = ProductService.getProductInImport();
+            String indexPage = request.getParameter("index");
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
+//            List<Customer> list = ProductService.onePageImport(index);
+
+            int n = ProductService.getTotalImport();
+            int endPage = n/8;
+            if(n % 8 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
+            List<ImportProduct> list = ProductService.onePageImport(index);
         request.setAttribute("list",list);
         request.getRequestDispatcher("ImportProduct.jsp").forward(request,response);
     } catch (

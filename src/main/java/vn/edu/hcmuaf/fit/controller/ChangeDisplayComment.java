@@ -14,8 +14,10 @@ public class ChangeDisplayComment extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         String idpro = request.getParameter("idpro");
+        String indexPage = request.getParameter("index");
+        int index = Integer.parseInt(indexPage);
         ProductService.changeDisplayComment(id);
-        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail-comment?id="+idpro);
+        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail-comment?id="+idpro+"&index="+index);
 
     }
 
