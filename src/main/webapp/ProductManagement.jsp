@@ -214,6 +214,45 @@
                         <span class="ml-4">Quản lý quyền hạn</span>
                     </a>
                 </li>
+                <li class="relative px-6 py-3">
+                    <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @click="togglePagesMenu" aria-haspopup="true">
+                <span class="inline-flex items-center">
+                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                  </svg>
+                  <span class="ml-4">Thống kê</span>
+                </span>
+                        <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <template x-if="isPagesMenuOpen">
+                        <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu">
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/BestSeller">Bán nhiều nhất</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/Stattistic">Doanh thu</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/SalesRate">Tỉ lệ bán được</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductReturn">Tỉ lệ trả hàng</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported">Sản phẩm cần nhập kho</a>
+                            </li>
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
+                            </li>
+                        </ul>
+                    </template>
+
+                </li>
             </ul>
 
         </div>
@@ -246,9 +285,7 @@
                 </button>
                 <!-- Search input -->
                 <div class="flex justify-center flex-1 lg:mr-32">
-                    <div
-                            class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-                    >
+                    <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                         <div class="absolute inset-y-0 flex items-center pl-2">
                             <svg
                                     class="w-4 h-4"
@@ -263,12 +300,13 @@
                                 ></path>
                             </svg>
                         </div>
-                        <input
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                type="text"
-                                placeholder="Tìm kiếm"
-                                aria-label="Search"
-                        />
+                        <form action="/Project_CuaHangMuBaoHiem_war/SearchProduct" method="get">
+                            <input class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                   type="text"
+                                   name="text"
+                                   placeholder="Tìm kiếm"
+                                   aria-label="Search"/>
+                        </form>
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -361,22 +399,39 @@
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
 
                             <%
-                                List<Product> data = (List<Product>) request.getAttribute("list");
+                                int a = (int) request.getAttribute("a");
+                                String t = (String) request.getAttribute("t");
                                 NumberFormat nf = new NumberFormat();
-                                int first = 0, last = 0, pages = 1;
+                                int first = 1, last = 0, pages = 1;
 
                                 if (request.getParameter("pages") != null) {
                                     pages = (int) Integer.parseInt(request.getParameter("pages"));
                                 }
-                                int total = new ProductService().countProduct();
+                                int total = 0;
+                                if(a==1){
+                                    total = ProductService.quantityFindProduct(t);
+                                }
+                                if(a==0){
+                                    total = ProductService.countProduct();
+                                }
                                 if (total <= 10) {
-                                    first = 0;
+                                    first = 1;
                                     last = total;
                                 } else {
-                                    first = (pages - 1) * 10;
+                                    if(pages==1){
+                                        first =1;
+                                    }else{
+                                        first = (pages - 1) * 10;
+                                    }
                                     last = 10;
                                 }
-                                List<Product> list = new ProductService().pagination(first, last, data);
+                                List<Product> list =null;
+                                if(a==0){
+                                    list =  (List<Product>) ProductService.getRecords(first,last);
+                                }
+                                if(a==1){
+                                    list = (List<Product>)ProductService.getRecords(first,last, t);
+                                }
                                 for (Product p : list) {
                             %>
                             <tr class="text-gray-700 dark:text-gray-400">
@@ -471,7 +526,7 @@
                          f = first + last;
                      }
                  %>
-                  Hiển thị <%= first + 1%>-<%=f%> của <%=total%>
+                  Hiển thị <%= first%>-<%=f%> của <%=total%>
                 </span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
@@ -488,7 +543,11 @@
                       %>
 
                       <li>
-                        <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=back%>">
+                        <%
+                            if (a == 0) {
+                        %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=back%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=back%>&<%="text="+t%>"><%}%>
                             <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
                                     aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
@@ -524,7 +583,11 @@
                 <% if (pages == i) {%>
 
                       <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=i%>&<%="text="+t%>"><%}%>
                         <button
                                 class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
                         >
@@ -535,7 +598,11 @@
                         <%} else {%>
 
                         <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=i%>"><%}%>
+                                <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=i%>&<%="text="+t%>"><%}%>
                         <button
                                 class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
                           <%= i %>
@@ -577,7 +644,11 @@
                             }
                         %>
                       <li>
-                          <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=next%>">
+                          <%
+                              if (a == 0) {
+                          %><a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%=next%>"><%}%>
+                              <%if(a==1){
+                          %><a href="/Project_CuaHangMuBaoHiem_war/SearchProduct?pages=<%=next%>&<%="text="+t%>"><%}%>
                         <button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
                                 aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">

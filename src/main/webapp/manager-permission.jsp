@@ -5,12 +5,8 @@
   Time: 5:40 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
+
 <%@ page import="java.util.List" %>
-<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
-<%@ page import="java.util.Collections" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %>
 <%@ page import="vn.edu.hcmuaf.fit.service.CustomerService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -381,10 +377,10 @@
                                     <%=index%>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <%=CustomerService.checkPermission(CustomerService.getPermissionById(id))%>
+                                    <%=CustomerService.getRole(CustomerService.getPermissionById(id))%>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
-                                    <%=CustomerService.getServiceById(id)%>
+                                    <%=CustomerService.getActionById(id)%>
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <%if(CustomerService.allow_service(id)){%>
@@ -444,12 +440,7 @@
     function genderChanged(obj)
     {
         let value = obj.value;
-        if (value === 'Tất cả'){
-            window.location = "/Project_CuaHangMuBaoHiem_war/manager-permission"
-        }
-        else {
-            window.location = "/Project_CuaHangMuBaoHiem_war/permission?name=" + value;
-        }
+        window.location = "/Project_CuaHangMuBaoHiem_war/permission?name=" + value;
     }
 </script>
 </body>

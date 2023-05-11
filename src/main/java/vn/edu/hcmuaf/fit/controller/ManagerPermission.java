@@ -25,10 +25,10 @@ public class ManagerPermission extends HttpServlet {
                 return;
             }
             List<String> listService = CustomerService.getListService();
-            List<Integer> list = CustomerService.getListIdPermission();
+            String name = listService.get(0);
+            List<Integer> list = CustomerService.getListIdServiceByName(name);
             request.setAttribute("listService",listService);
             request.setAttribute("list",list);
-            String name = "Tất cả";
             request.setAttribute("name",name);
             request.getRequestDispatcher("manager-permission.jsp").forward(request,response);
         }catch (SQLException e){

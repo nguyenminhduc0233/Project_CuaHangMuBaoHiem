@@ -19,6 +19,7 @@ import java.util.List;
 public class ManageProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
@@ -29,12 +30,14 @@ public class ManageProduct extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            List<Product> list = ProductService.getData();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("ProductManagement.jsp").forward(request, response);
+
+        request.setAttribute("a", 0);
+        request.getRequestDispatcher("ProductManagement.jsp").forward(request, response);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
     }
 
     @Override

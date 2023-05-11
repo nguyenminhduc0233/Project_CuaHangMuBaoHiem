@@ -1,7 +1,5 @@
 package vn.edu.hcmuaf.fit.Database;
 
-import vn.edu.hcmuaf.fit.model.Product;
-
 import java.sql.*;
 
 public class DBConnect {
@@ -42,7 +40,9 @@ public class DBConnect {
         }
         return null;
     }
-
+//    public void close() throws SQLException {
+//        connection.close();
+//    }
     public Connection getConnection() {
         return connection;
     }

@@ -64,7 +64,7 @@
 <% String exits = (String) request.getAttribute("exits");
     String color =(String) request.getAttribute("color");
     String size =(String) request.getAttribute("size");
-    String id =(String) request.getAttribute("id");
+    int id =(int) request.getAttribute("id");
     String quantity =(String) request.getAttribute("quantity");
     String quantityDB =(String) request.getAttribute("quantityDB");
     int a = Integer.parseInt(quantity);
