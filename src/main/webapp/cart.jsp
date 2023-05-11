@@ -128,10 +128,10 @@
                         </div>
                     </div>
                     <div class="pt-2">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5>Tổng thanh toán</h5>
-                            <h5><%= nf.numberFormat(cart.getTotal()) %>đ</h5>
-                        </div>
+<%--                        <div class="d-flex justify-content-between mt-2">--%>
+<%--                            <h5>Tổng thanh toán</h5>--%>
+<%--                            <h5><%= nf.numberFormat(cart.getTotal()) %>đ</h5>--%>
+<%--                        </div>--%>
                         <a href="/Project_CuaHangMuBaoHiem_war/CheckCart" style="text-decoration: none"><button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Tiến hành thanh toán</button></a>
                     </div>
                 </div>

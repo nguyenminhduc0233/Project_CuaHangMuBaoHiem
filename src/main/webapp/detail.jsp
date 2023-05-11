@@ -5,7 +5,10 @@
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %><%--
+
+<%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
+<%@ page import="vn.edu.hcmuaf.fit.model.Comment" %>
+<%--
 Created by IntelliJ IDEA.
 User: ACER
 Date: 11/6/2022
@@ -79,8 +82,8 @@ To change this template use File | Settings | File Templates.
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="#">Trang chủ</a>
-                <a class="breadcrumb-item text-dark" href="#">Sản phẩm</a>
+                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/Home">Trang chủ</a>
+                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/list-product">Sản phẩm</a>
                 <span class="breadcrumb-item active">Chi tiết sản phẩm</span>
             </nav>
         </div>
@@ -91,7 +94,8 @@ To change this template use File | Settings | File Templates.
 <% NumberFormat nf = new NumberFormat();
     Product p= (Product) request.getAttribute("product"); %>
 <!-- Shop Detail Start -->
-<%List<Integer> listComment = ProductService.getListIDCommentByProduct(p.getId());%>
+<%--<%List<Integer> listComment = ProductService.getListIDCommentByProduct(p.getId());%>--%>
+<%List<Comment> listComment = ProductService.getListCommentById(p.getId());%>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
@@ -136,23 +140,23 @@ To change this template use File | Settings | File Templates.
                     <strong class="text-dark mr-3">Kích thước:</strong>
                     <form id="size" action="/Project_CuaHangMuBaoHiem_war/AddDetail">
                         <input type="hidden" name="id" value="<%= p.getId() %>">
-                        <% int i=1; for(String size : p.getListSize()){ i++;%>
+                            <% int i=1; for(String size : p.getListSize()){ i++;%>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" required="required" class="custom-control-input" id="size-<%=i%>" name="size"  value="<%= size %>">
                             <label class="custom-control-label" for="size-<%=i%>"><%= size %></label>
                         </div>
 
-                        <%}%>
+                            <%}%>
                 </div>
 
                 <div class="d-flex mb-4">
                     <strong class="text-dark mr-3">Màu sắc:</strong>
-                        <% int j=0; for(String color : p.getListColor()){ j++;%>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            <input type="radio"  required="required" class="custom-control-input" id="color-<%=j%>" name="color" value="<%= color%>">
-                            <label class="custom-control-label" for="color-<%=j%>"><%= color %></label>
-                        </div>
-                        <%}%>
+                    <% int j=0; for(String color : p.getListColor()){ j++;%>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio"  required="required" class="custom-control-input" id="color-<%=j%>" name="color" value="<%= color%>">
+                        <label class="custom-control-label" for="color-<%=j%>"><%= color %></label>
+                    </div>
+                    <%}%>
 
                 </div>
                 <div>
@@ -221,31 +225,66 @@ To change this template use File | Settings | File Templates.
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-                                <%
-                                    for(int id:listComment){
-                                        if(ProductService.getDisplayByIdComment(id) == 1){
-                                %>
+<%--                                <%--%>
+<%--                                    for(int id:listComment){--%>
+<%--                                        if(ProductService.getDisplayByIdComment(id) == 1){--%>
+<%--                                %>--%>
+<%--                                <div class="col-md-6">--%>
+<%--                                    <div class="media mb-4" style="width: 600px;">--%>
+<%--                                        <div class="media-body" >--%>
+<%--                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>--%>
+<%--                                            <div class="text-primary mb-2">--%>
+<%--                                                <%int star = ProductService.getStarByIdComment(id);--%>
+<%--                                                    for(int a=0;a<star;a++){%>--%>
+<%--                                                <i class="fas fa-star"></i>--%>
+<%--                                                <%}%>--%>
+<%--                                            </div>--%>
+<%--                                            <p><%=ProductService.getCommentByIdComment(id)%></p>--%>
+<%--                                        </div>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <%}--%>
+<%--                                }%>--%>
+<%--                                <%for (Comment com : listComment) {%>--%>
+                                <%for (Comment com : listComment) {%>
+                                <input type="hidden" name="id_comt" value="<%=com.getId()%>">
                                 <div class="col-md-6">
                                     <div class="media mb-4" style="width: 600px;">
-                                        <div class="media-body" >
-                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>
+                                        <div class="media-body">
+                                            <h6><%=ProductService.getCustomer(com.getId_customer()).getName()%><small> -
+                                                <i><%=ProductService.getDateComment(com.getId())%>
+                                                </i></small></h6>
                                             <div class="text-primary mb-2">
-                                                <%int star = ProductService.getStarByIdComment(id);
-                                                    for(int a=0;a<star;a++){%>
+                                                <%
+                                                    int star = ProductService.getStarComment(com.getId());
+                                                    for (int a = 0; a < star; a++) {
+                                                %>
                                                 <i class="fas fa-star"></i>
                                                 <%}%>
                                             </div>
-                                            <p><%=ProductService.getCommentByIdComment(id)%></p>
+                                            <p><%=com.getContent()%>
+                                            </p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <p class="small mb-0" style="color: #aaa;">
+                                                    <a href="/Project_CuaHangMuBaoHiem_war/CommentManager"
+                                                       class="link-grey">Remove</a> •
+                                                    <a href="#!" class="link-grey">Reply</a> •
+                                                </p>
+                                                <div class="d-flex flex-row">
+                                                    <i class="far fa-check-circle text-primary"></i>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <%}
-                                }%>
+                                <%}%>
+                                <div class="col-md-6" class="media mb-4" style="width: 600px;" class="media-body" id="display"></div>
                             </div>
                             <div class="col-md-6" style="float: right; width: 500px;">
 
                                 <h4 class="mb-4">Viết đánh giá</h4>
-                                <form action="/Project_CuaHangMuBaoHiem_war/get-comment" method="get">
+                                <form id="comment_form">
+                                    <input type="hidden" name="id" value="<%= p.getId() %>">
                                     <div class="d-flex my-3">
                                         <p class="mb-0 mr-2">Đánh giá * :</p>
                                         <div class="text-primary">
@@ -257,29 +296,31 @@ To change this template use File | Settings | File Templates.
                                             <label class="star star-3" for="star-3"></label>
                                             <input class="star star-2" id="star-2" value="2" type="radio" name="star">
                                             <label class="star star-2" for="star-2"></label>
-                                            <input class="star star-1" id="star-1" value="1" type="radio" checked="checked" name="star">
+                                            <input class="star star-1" id="star-1" value="1" type="radio"
+                                                   checked="checked" name="star">
                                             <label class="star star-1" for="star-1"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="message">Bình luận *</label>
-                                        <textarea id="message" name="mess" cols="30" rows="5" class="form-control"></textarea>
+                                        <textarea id="message" name="mess" cols="30" rows="5"
+                                                  class="form-control"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <input type="hidden" name="id_Pro" value="1" class="form-control" id="email">
                                     </div>
                                     <div class="form-group mb-0">
-                                        <input type="submit" value="Gửi" class="btn btn-primary px-3">
+                                        <input id="gui" type="button" value="Gửi" class="btn btn-primary px-3">
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Shop Detail End -->
 
@@ -291,7 +332,7 @@ To change this template use File | Settings | File Templates.
         <div class="col">
             <div class="owl-carousel related-carousel">
                 <% List<Product> list = ProductService.listType(p.getType(),p.getId());
-                for(Product pd : list){
+                    for(Product pd : list){
                 %>
 
                 <div class="product-item bg-light">
@@ -342,6 +383,69 @@ To change this template use File | Settings | File Templates.
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="lib/easing/easing.min.js"></script>
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script>
+    // Lắng nghe sự kiện click vào nút "Gửi"
+    $('#gui').click(function () {
+        // Lấy giá trị của các trường dữ liệu
+        var id = $('input[name="id"]').val();
+        var mess = $('textarea[name="mess"]').val();
+        var star = $('input[name="star"]:checked').val();
+        var currentDate = new Date().toLocaleString();
+        // Gửi yêu cầu ajax đến servlet
+        $.ajax({
+            url: '/Project_CuaHangMuBaoHiem_war/CommentServlet',
+            type: 'POST',
+            data: {
+                "id": id,
+                "mess": mess,
+                "star": star,
+            },
+            success: function (data) {
+
+                console.log(data)
+                // Hiển thị comment mới vừa thêm vào
+                var newComment = data.comments[data.comments.length - 1];
+                var date = data.date;
+                var username = data.username;
+                // Tạo đoạn HTML mới cho comment mới
+                var html = '<div class="media mb-4" style="width: 600px;">' +
+                    '<div class="media-body">' +
+                    '<h6>' + username + '<small> - <i>' + date + '</i></small></h6>' +
+                    '<div class="text-primary mb-2">';
+                for (var i = 0; i < newComment.star; i++) {
+                    html += '<i class="fas fa-star"></i>';
+                }
+                html += '</div>' +
+                    '<p>' + newComment.content + '</p>' +
+                    '<div class="d-flex justify-content-between align-items-center">' +
+                    '<p class="small mb-0" style="color: #aaa;">' +
+                    '<a href="/Project_CuaHangMuBaoHiem_war/CommentManager" class="link-grey">Remove</a> •' +
+                    '<a href="#!" class="link-grey">Reply</a> •' +
+                    '</p>' +
+                    '<div class="d-flex flex-row">' +
+                    '<i class="far fa-check-circle text-primary"></i>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                // Thêm đoạn HTML mới vào phần tử chứa danh sách comment
+                $('#display').append(html);
+
+                // Reset giá trị của các input trong form
+                $('#comment_form')[0].reset();
+
+            },
+            error: function (xhr) {
+                // Nếu có lỗi, hiển thị thông báo lỗi
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+</script>
 
 <!-- Contact Javascript File -->
 <script src="mail/jqBootstrapValidation.min.js"></script>
