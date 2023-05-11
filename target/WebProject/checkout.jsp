@@ -128,24 +128,22 @@
                     </div>
                 </form>
             </div>
-
-        </div>
-        <div class="col-lg-4">
-            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">TỔNG ĐƠN HÀNG</span></h5>
-            <div class="bg-light p-30 mb-5">
-                <div class="border-bottom">
-                    <h6 class="mb-3">Các sản phẩm</h6>
-                    <%NumberFormat nf = new NumberFormat();%>
-                    <%for(Product p: cart.getListProduct()){%>
-                    <div class="d-flex justify-content-between">
-                        <p><%=p.getName()%></p>
-                        <p><%=nf.numberFormat((long) (p.getPrice() - (p.getPrice()* p.getDiscount())))%>đ</p>
+            <div class="col-lg-4">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">TỔNG ĐƠN HÀNG</span></h5>
+                <div class="bg-light p-30 mb-5">
+                    <div class="border-bottom">
+                        <h6 class="mb-3">Các sản phẩm</h6>
+                        <%NumberFormat nf = new NumberFormat();%>
+                        <%for(Product p: cart.getListProduct()){%>
+                        <div class="d-flex justify-content-between">
+                            <p><%=p.getName()%></p>
+                            <p><%=nf.numberFormat((long) (p.getPrice() - (p.getPrice()* p.getDiscount())))%>đ</p>
+                        </div>
+                        <%}%>
                     </div>
-                    <%}%>
-                </div>
-                <div class="border-bottom pt-3 pb-2">
-                    <div class="d-flex justify-content-between mb-3">
-                        <h6>Tổng tiền hàng</h6>
+                    <div class="border-bottom pt-3 pb-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <h6>Tổng tiền hàng</h6>
 
                         <h6><%=nf.numberFormat(cart.getTotal())%>đ</h6>
                     </div>
