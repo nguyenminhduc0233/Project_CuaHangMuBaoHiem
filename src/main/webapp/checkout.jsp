@@ -109,7 +109,7 @@
                             <input type="hidden" name="fee" class="form-control" value="<%=fee%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+price%>" type="text" placeholder="">
+                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+cart.getTotal()%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
                             <input type="hidden" name="district" class="form-control" value="<%=district%>" type="text" placeholder="">
@@ -139,7 +139,7 @@
                         <%for(Product p: cart.getListProduct()){%>
                         <div class="d-flex justify-content-between">
                             <p><%=p.getName()%></p>
-                            <p><%=nf.numberFormat(p.getPrice()*(1-(long)p.getDiscount()))%>đ</p>
+                            <p><%=nf.numberFormat((long) (p.getPrice() - (p.getPrice()* p.getDiscount())))%>đ</p>
                         </div>
                         <%}%>
                     </div>

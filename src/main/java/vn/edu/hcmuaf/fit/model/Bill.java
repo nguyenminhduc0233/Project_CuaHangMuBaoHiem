@@ -12,6 +12,8 @@ public class Bill {
     private int id_cus;
     private String address;
     private String phone;
+    private Date received;
+    private int total_cost;
 
     public Bill(int id, Date date, List<Integer> list, String status, int id_cus, String address, String phone) {
         this.id = id;
@@ -22,7 +24,20 @@ public class Bill {
         this.address = address;
         this.phone = phone;
     }
-    public Bill(){
+
+    public Bill(int id, Date date, List<Integer> list, String status, int id_cus, String address, String phone, Date received, int total_cost) {
+        this.id = id;
+        this.date = date;
+        this.productList = list;
+        this.status = status;
+        this.id_cus = id_cus;
+        this.address = address;
+        this.phone = phone;
+        this.received = received;
+        this.total_cost = total_cost;
+    }
+
+    public Bill() {
 
     }
 
@@ -80,6 +95,22 @@ public class Bill {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Date getReceived() {
+        return received;
+    }
+
+    public void setReceived(Date received) {
+        this.received = received;
+    }
+
+    public int getTotal_cost() {
+        return total_cost;
+    }
+
+    public void setTotal_cost(int total_cost) {
+        this.total_cost = total_cost;
     }
 
     @Override

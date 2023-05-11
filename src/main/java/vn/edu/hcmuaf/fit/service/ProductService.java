@@ -335,20 +335,21 @@ public class ProductService {
         return null;
     }
 
-    public static int getStarComment(int id_comt){
+    public static int getStarComment(int id_comt) {
         int result = 0;
         try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id = ?");
             ps.setInt(1, id_comt);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                result+= rs.getInt(1);
+            if (rs.next()) {
+                result += rs.getInt(1);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
     }
+
     public static String getDateComment(int id_comt) {
         String result = "";
         try {
@@ -363,24 +364,26 @@ public class ProductService {
         }
         return result;
     }
+
     public static void addComment(int id_customer, int id_product, String content, int star, Date date, int id_comt, int display) {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
             PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment values(?, ?, ?, ?, ?, ?, ?)");
-            prs.setInt(1,id_customer);
-            prs.setInt(2,id_product);
-            prs.setString(3,content);
-            prs.setInt(4,star);
+            prs.setInt(1, id_customer);
+            prs.setInt(2, id_product);
+            prs.setString(3, content);
+            prs.setInt(4, star);
             prs.setDate(5, (java.sql.Date) date);
             prs.setInt(6, id_comt);
             prs.setInt(7, display);
             prs.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public static void deleteComment(int id_comt) {
         DBConnect dbConnect = DBConnect.getInstance();
 
@@ -389,16 +392,17 @@ public class ProductService {
             prs.setInt(1, id_comt);
             prs.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static List<Comment> getAllComment(){
+
+    public static List<Comment> getAllComment() {
         List<Comment> list = new ArrayList<>();
         try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment");
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
@@ -407,18 +411,19 @@ public class ProductService {
                         rs.getInt(6),
                         rs.getInt(7)));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
     }
-    public static List<Comment> getListCommentById(int id_pro){
+
+    public static List<Comment> getListCommentById(int id_pro) {
         List<Comment> list = new ArrayList<>();
         try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment where id_product=?");
-            ps.setInt(1,id_pro);
+            ps.setInt(1, id_pro);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
@@ -427,7 +432,7 @@ public class ProductService {
                         rs.getInt(6),
                         rs.getInt(7)));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
@@ -538,11 +543,11 @@ public class ProductService {
         while (rs.next()) {
             list_product.add(rs.getInt("id_dp"));
         }
-        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone from bill where id=?");
+        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone, received_date, total_cost from bill where id=?");
         ps.setInt(1, id);
         ResultSet resultSet = ps.executeQuery();
         if (resultSet.next()) {
-            return new Bill(id, resultSet.getDate("date"), list_product, resultSet.getString("status"), resultSet.getInt("id_customer"), resultSet.getString("address"), resultSet.getString("phone"));
+            return new Bill(id, resultSet.getDate("date"), list_product, resultSet.getString("status"), resultSet.getInt("id_customer"), resultSet.getString("address"), resultSet.getString("phone"), resultSet.getDate("received_date"), resultSet.getInt("total_cost"));
         }
         return null;
     }
@@ -1256,15 +1261,27 @@ public class ProductService {
         }
         return result;
     }
-
-    public static int getQuantity(int id_bill, int id_dp) {
+    public static int getCost(int id_bill, int id_dp) {
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_bill,count(id_dp) as quantity from detail_bill where id_dp=? and id_bill=? group by id_bill");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  price from detail_bill where id_dp=? and id_bill=? group by id_bill");
             ps.setInt(1, id_dp);
             ps.setInt(2, id_bill);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) result += rs.getInt("quantity");
+            if (rs.next()) result += rs.getInt("price");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static int getQuantity(int id_bill, int id_dp) {
+        int result = 0;
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  quantitySold from detail_bill where id_dp=? and id_bill=? group by id_bill");
+            ps.setInt(1, id_dp);
+            ps.setInt(2, id_bill);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) result += rs.getInt("quantitySold");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -1752,31 +1769,31 @@ public class ProductService {
         return list;
     }
 
-    public static int getTotalProduct(){
+    public static int getTotalProduct() {
         String query = "select count(id_product) from product";
-        try{
+        try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 return rs.getInt(1);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return 0;
     }
 
-    public static List<Product> onePageProduct(int index){
+    public static List<Product> onePageProduct(int index) {
         List<Product> list = new ArrayList<>();
-        String  query = "select * from product  limit ?, 24";
-        try{
+        String query = "select * from product  limit ?, 24";
+        try {
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, (index-1)*24);
+            ps.setInt(1, (index - 1) * 24);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
         }
         return list;
     }
@@ -1944,7 +1961,7 @@ public class ProductService {
         LocalDate localDate = LocalDate.now();
         long res = 0;
         for (int i = 1; i < 13; i++) {
-            result[i-1] = getRevenueByMonthYear(i, localDate.getYear());
+            result[i - 1] = getRevenueByMonthYear(i, localDate.getYear());
         }
         return result;
     }
@@ -2009,7 +2026,7 @@ public class ProductService {
             while (rs.next()) {
                 product = getProduct(rs.getInt("id_product"));
                 product.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
-                if(product.getRate()>=60){
+                if (product.getRate() >= 60) {
 
                     product.setImg(getimg(rs.getInt("id_product")));
                     product.setQuantity(rs.getInt("s"));
@@ -2021,7 +2038,8 @@ public class ProductService {
         }
         return list;
     }
-    public static long getRevenueByMonthYear(int month, int year){
+
+    public static long getRevenueByMonthYear(int month, int year) {
         long total = 0;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
@@ -2032,25 +2050,37 @@ public class ProductService {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-            total = rs.getInt("s");
+                total = rs.getInt("s");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return total;
     }
-    public static void main(String[] args) throws SQLException {
-//        List<BillDetail> list = new ArrayList<>();
-//        list.add(new BillDetail(1,1,400000));
-//        list.add(new BillDetail(2,1,50000));
-//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
-//        System.out.print(getRevenueByMonthYear( 4,  2023));
-//        for(long l : chartLine()){
-//            System.out.println(l);
-//        }
 
-//        deleteComment(15);
-        System.out.println(onePageProduct(1));
-        System.out.println(getTotalProduct());
+    public List<Bill> getQuantitySold(int id) {
+        List<Bill> list = new ArrayList<Bill>();
+        Bill bill;
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id from bill b join detail_product dp on dp.id");
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                list.add(bill = new Bill());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return list;
+    }
+
+    public static void main(String[] args) throws SQLException {
+        System.out.println(getCost(13, 18));
+        List<BillDetail> l = new ArrayList<BillDetail>();
+    int id = addBill(1,"Đang gửi",l,"BD","17271","áasasa","2023-05-02","18821","81821");
+
+        System.out.print(id);
+    }
 }

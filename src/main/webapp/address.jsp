@@ -195,7 +195,7 @@
                     <div class="d-flex justify-content-between">
                         <p><%=p.getName()%>
                         </p>
-                        <p><%=nf.numberFormat(p.getPrice() * (1 - (long) p.getDiscount()))%>đ</p>
+                        <p><%=nf.numberFormat((long) (p.getPrice() - (p.getPrice()* p.getDiscount())))%>đ</p>
                     </div>
                     <%}%>
                 </div>
@@ -207,7 +207,7 @@
                             for (Product p : cart.getListProduct()) {
                                 price += p.getPrice() - p.getPrice() * p.getDiscount();
                             }%>
-                        <h6><%=nf.numberFormat(price)%>đ</h6>
+                        <h6><%= nf.numberFormat(cart.getTotal()) %>đ</h6>
                     </div>
                 </div>
                 <div class="pt-2">

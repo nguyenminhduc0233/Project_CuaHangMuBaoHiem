@@ -109,7 +109,7 @@
                             <input type="hidden" name="fee" class="form-control" value="<%=fee%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+price%>" type="text" placeholder="">
+                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+cart.getTotal()%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
                             <input type="hidden" name="district" class="form-control" value="<%=district%>" type="text" placeholder="">

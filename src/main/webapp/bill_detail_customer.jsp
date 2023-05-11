@@ -169,7 +169,7 @@
                                 <%=p.getName()%>
                             </td>
                             <td class="px-4 py-3 text-sm">
-                                <%=nf.numberFormat((long) (p.getPrice() - p.getPrice() * p.getDiscount()))%>đ
+                                <%=nf.numberFormat(ProductService.getCost(bill.getId(), s))%>đ
                             </td>
                             <td class="px-4 py-3 text-sm">
                                 <%=ProductService.getSize(s)%>
