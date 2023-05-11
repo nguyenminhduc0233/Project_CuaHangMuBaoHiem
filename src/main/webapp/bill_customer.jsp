@@ -138,7 +138,7 @@
                         </form>
                     </div>
                 </div>
-                <%
+                <% NumberFormat nf = new NumberFormat();
                     String username = (String) session.getAttribute("tendangnhap");
                     int id_cus = ProductService.getIdCusByUserName(username);
                     List<Bill> list = ProductService.getListBillByIdCustomer(id_cus);
@@ -152,10 +152,11 @@
                                 class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                         >
                             <th class="px-4 py-3">Id hóa đơn</th>
-                            <th class="px-4 py-3">Đơn giá</th>
                             <th class="px-4 py-3">Địa chỉ</th>
                             <th class="px-4 py-3">Số điện thoại</th>
                             <th class="px-4 py-3">Ngày lập đơn</th>
+                            <th class="px-4 py-3">Thời gian giao hàng</th>
+                            <th class="px-4 py-3">Tổng hóa đơn</th>
                             <th class="px-4 py-3">Trạng thái</th>
                         </tr>
                         </thead>
@@ -178,17 +179,7 @@
                                     </div>
                                 </a>
                             </td>
-                            <td class="px-4 py-3 text-sm">
-                                <a href="/Project_CuaHangMuBaoHiem_war/CustomerBillToDetailBil?id=<%=b.getId()%>">
-                                    <% long price = 0;
-                                        for (int id_dp : b.getProductList()) {
-                                            Product p = ProductService.getProduct(ProductService.getIdProduct(id_dp));
-                                            price += p.getPrice() - p.getPrice() * p.getDiscount();
-                                        }
-                                        NumberFormat nf = new NumberFormat();%>
-                                    <%=nf.numberFormat(price)%>đ
-                                </a>
-                            </td>
+
                             <td class="px-4 py-3 text-sm">
                                 <a href="/Project_CuaHangMuBaoHiem_war/CustomerBillToDetailBil?id=<%=b.getId()%>">
                                     <%=b.getAddress()%>
@@ -202,6 +193,16 @@
                             <td class="px-4 py-3 text-sm">
                                 <a href="/Project_CuaHangMuBaoHiem_war/CustomerBillToDetailBil?id=<%=b.getId()%>">
                                     <%=b.getDate()%>
+                                </a>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <a href="/Project_CuaHangMuBaoHiem_war/CustomerBillToDetailBil?id=<%=b.getId()%>">
+                                    <%=b.getReceived()%>
+                                </a>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <a href="/Project_CuaHangMuBaoHiem_war/CustomerBillToDetailBil?id=<%=b.getId()%>">
+                                    <%=nf.numberFormat(b.getTotal_cost())%>đ
                                 </a>
                             </td>
                             <td class="px-4 py-3 text-sm">

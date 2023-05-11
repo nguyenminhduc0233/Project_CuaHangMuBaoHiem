@@ -470,11 +470,11 @@ public class ProductService {
         while (rs.next()) {
             list_product.add(rs.getInt("id_dp"));
         }
-        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone from bill where id=?");
+        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone, received_date, total_cost from bill where id=?");
         ps.setInt(1, id);
         ResultSet resultSet = ps.executeQuery();
         if (resultSet.next()) {
-            return new Bill(id, resultSet.getDate("date"), list_product, resultSet.getString("status"), resultSet.getInt("id_customer"), resultSet.getString("address"), resultSet.getString("phone"));
+            return new Bill(id, resultSet.getDate("date"), list_product, resultSet.getString("status"), resultSet.getInt("id_customer"), resultSet.getString("address"), resultSet.getString("phone"), resultSet.getDate("received_date"), resultSet.getInt("total_cost"));
         }
         return null;
     }
@@ -1188,15 +1188,27 @@ public class ProductService {
         }
         return result;
     }
-
-    public static int getQuantity(int id_bill, int id_dp) {
+    public static int getCost(int id_bill, int id_dp) {
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_bill,count(id_dp) as quantity from detail_bill where id_dp=? and id_bill=? group by id_bill");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  price from detail_bill where id_dp=? and id_bill=? group by id_bill");
             ps.setInt(1, id_dp);
             ps.setInt(2, id_bill);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) result += rs.getInt("quantity");
+            if (rs.next()) result += rs.getInt("price");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static int getQuantity(int id_bill, int id_dp) {
+        int result = 0;
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  quantitySold from detail_bill where id_dp=? and id_bill=? group by id_bill");
+            ps.setInt(1, id_dp);
+            ps.setInt(2, id_bill);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) result += rs.getInt("quantitySold");
         } catch (SQLException e) {
             e.printStackTrace();
         }

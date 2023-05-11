@@ -16,7 +16,7 @@
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">  
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -37,58 +37,58 @@
 
 <body>
 
-    <!-- Header Star -->
-    <%@include file="header.jsp"%>
-    <!-- Header End -->
+<!-- Header Star -->
+<%@include file="header.jsp"%>
+<!-- Header End -->
 
 
-    <!-- Breadcrumb Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="index.html">Trang Chủ</a>
-                    <a class="breadcrumb-item text-dark" href="#">Cửa hàng</a>
-                    <span class="breadcrumb-item active">Thanh Toán</span>
-                </nav>
-            </div>
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="index.html">Trang Chủ</a>
+                <a class="breadcrumb-item text-dark" href="#">Cửa hàng</a>
+                <span class="breadcrumb-item active">Thanh Toán</span>
+            </nav>
         </div>
     </div>
-    <!-- Breadcrumb End -->
+</div>
+<!-- Breadcrumb End -->
 
 
-    <!-- Checkout Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-lg-8">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">ĐỊA CHỈ THANH TOÁN</span></h5>
-                <div class="bg-light p-30 mb-5">
-                    <%ApiLogistic api = new ApiLogistic();%>
+<!-- Checkout Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">ĐỊA CHỈ THANH TOÁN</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <%ApiLogistic api = new ApiLogistic();%>
 
-                    <%
-                        String province = request.getParameter("province");
-                        String district = request.getParameter("district");
-                        String ward = request.getParameter("ward");
-                        String error = (String)request.getAttribute("error");
+                <%
+                    String province = request.getParameter("province");
+                    String district = request.getParameter("district");
+                    String ward = request.getParameter("ward");
+                    String error = (String)request.getAttribute("error");
                     if(error == "error") error = "* Vui lòng nhập đầy đủ thông tin";
                     if(error == null) error ="";
-                        String name = request.getParameter("name");
-                        String email = request.getParameter("email");
-                        String phone = request.getParameter("phone");
-                        String address = request.getParameter("address");
-                        name = name==null?"":name;
-                        email=email==null?"":email;
-                        phone=phone==null?"":phone;
-                        address = address== null?"":address;
-                    %>
-                    <%
-                        long fee = (api.getCalculateFee(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0));
-                        long price = 0;
-                        for(Product p:cart.getListProduct()){
-                            price += p.getPrice()-p.getPrice()*p.getDiscount();
-                        }
-                    %>
-                    <form action="/Project_CuaHangMuBaoHiem_war/add_bill" method="get">
+                    String name = request.getParameter("name");
+                    String email = request.getParameter("email");
+                    String phone = request.getParameter("phone");
+                    String address = request.getParameter("address");
+                    name = name==null?"":name;
+                    email=email==null?"":email;
+                    phone=phone==null?"":phone;
+                    address = address== null?"":address;
+                %>
+                <%
+                    long fee = (api.getCalculateFee(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0));
+                    long price = 0;
+                    for(Product p:cart.getListProduct()){
+                        price += p.getPrice()-p.getPrice()*p.getDiscount();
+                    }
+                %>
+                <form action="/Project_CuaHangMuBaoHiem_war/add_bill" method="get">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label>Tên</label>
@@ -109,7 +109,7 @@
                             <input type="hidden" name="fee" class="form-control" value="<%=fee%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+price%>" type="text" placeholder="">
+                            <input type="hidden" name="total_cost" class="form-control" value="<%=fee+cart.getTotal()%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
                             <input type="hidden" name="district" class="form-control" value="<%=district%>" type="text" placeholder="">
@@ -126,71 +126,71 @@
                     <div class="bg-light p-30">
                         <input type="submit" class="btn btn-block btn-primary font-weight-bold py-3" value="Tiếp theo" style="margin-left: 360px;width: 186px">
                     </div>
-                    </form>
-                </div>
-                
+                </form>
             </div>
-            <div class="col-lg-4">
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">TỔNG ĐƠN HÀNG</span></h5>
-                <div class="bg-light p-30 mb-5">
-                    <div class="border-bottom">
-                        <h6 class="mb-3">Các sản phẩm</h6>
-                        <%NumberFormat nf = new NumberFormat();%>
-                        <%for(Product p: cart.getListProduct()){%>
-                        <div class="d-flex justify-content-between">
-                            <p><%=p.getName()%></p>
-                            <p><%=nf.numberFormat(p.getPrice()*(1-(long)p.getDiscount()))%>đ</p>
-                        </div>
-                        <%}%>
-                    </div>
-                    <div class="border-bottom pt-3 pb-2">
-                        <div class="d-flex justify-content-between mb-3">
-                            <h6>Tổng tiền hàng</h6>
 
-                            <h6><%=nf.numberFormat(cart.getTotal())%>đ</h6>
-                        </div>
-                        <div class="d-flex justify-content-between  mb-3">
-                            <h6 class="font-weight-medium">Phí vận chuyển</h6>
-
-                            <h6 class="font-weight-medium"><%=nf.numberFormat(fee)%>đ</h6>
-                        </div>
-                        <div class="d-flex justify-content-between  mb-3">
-                            <h6 class="font-weight-medium">Thời gian vận chuyển</h6>
-                            <h6 class="font-weight-medium"><%= api.getDateNow()%> - <%= api.parseDate(api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)) %></h6>
-                        </div>
+        </div>
+        <div class="col-lg-4">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">TỔNG ĐƠN HÀNG</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="border-bottom">
+                    <h6 class="mb-3">Các sản phẩm</h6>
+                    <%NumberFormat nf = new NumberFormat();%>
+                    <%for(Product p: cart.getListProduct()){%>
+                    <div class="d-flex justify-content-between">
+                        <p><%=p.getName()%></p>
+                        <p><%=nf.numberFormat((long) (p.getPrice() - (p.getPrice()* p.getDiscount())))%>đ</p>
                     </div>
-                    <div class="pt-2">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5>Tổng thanh toán</h5>
-                            <h5><%=nf.numberFormat(cart.getTotal()+fee)%>đ</h5>
-                        </div>
+                    <%}%>
+                </div>
+                <div class="border-bottom pt-3 pb-2">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Tổng tiền hàng</h6>
+
+                        <h6><%=nf.numberFormat(cart.getTotal())%>đ</h6>
+                    </div>
+                    <div class="d-flex justify-content-between  mb-3">
+                        <h6 class="font-weight-medium">Phí vận chuyển</h6>
+
+                        <h6 class="font-weight-medium"><%=nf.numberFormat(fee)%>đ</h6>
+                    </div>
+                    <div class="d-flex justify-content-between  mb-3">
+                        <h6 class="font-weight-medium">Thời gian vận chuyển</h6>
+                        <h6 class="font-weight-medium"><%= api.getDateNow()%> - <%= api.parseDate(api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)) %></h6>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5>Tổng thanh toán</h5>
+                        <h5><%=nf.numberFormat(cart.getTotal()+fee)%>đ</h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Checkout End -->
+</div>
+<!-- Checkout End -->
 
-    <!-- Footer Start -->
-    <%@include file="footer.jsp" %>
-    <!-- Footer End -->
+<!-- Footer Start -->
+<%@include file="footer.jsp" %>
+<!-- Footer End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 </body>
 
 </html>
