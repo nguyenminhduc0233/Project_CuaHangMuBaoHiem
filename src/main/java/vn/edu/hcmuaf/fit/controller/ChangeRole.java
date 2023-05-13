@@ -24,10 +24,10 @@ public class ChangeRole extends HttpServlet {
 //            session.invalidate();
 //        }
 //        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
-//        String permission = request.getParameter("name");
-//        int per = CustomerService.getPermissonByRole(permission);
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        CustomerService.updatePermission(id,per);
+        String permission = request.getParameter("name");
+        int per = CustomerService.getPermissonByRole(permission);
+        int id = Integer.parseInt(request.getParameter("id"));
+        CustomerService.updatePermission(id,per);
 //
 //        Object active = session.getAttribute("dmanager");
 //        PrintWriter printWriter = response.getWriter();
@@ -36,7 +36,7 @@ public class ChangeRole extends HttpServlet {
 //        }else{
 //            printWriter.print(false);
 //        }
-//            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/user_hierarchy");
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/user_hierarchy");
 
     }
 
