@@ -19,25 +19,24 @@ import java.util.List;
 public class ManageProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        HttpSession session = request.getSession();
-//        String username = (String) session.getAttribute("tendangnhap");
-//        Customer customer = null;
-//        try {
-//            customer = CustomerService.customer(username);
-//            if (customer == null || customer.getPermission() == 0) {
-//                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-//                request.getRequestDispatcher("login.jsp").forward(request, response);
-//                return;
-//            } else if (customer.getPermission() > 1) {
-//                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
-//                request.getRequestDispatcher("login.jsp").forward(request, response);
-//                return;
-//            }
+
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Customer customer = null;
+        try {
+            customer = CustomerService.customer(username);
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý hóa đơn",customer.getPermission(),"VIEW"))) {
+                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+                return;
+            }
+
         request.setAttribute("a", 0);
         request.getRequestDispatcher("ProductManagement.jsp").forward(request, response);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 

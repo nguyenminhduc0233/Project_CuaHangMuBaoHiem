@@ -22,12 +22,9 @@ public class DetailCustomer extends HttpServlet {
         Customer cus = null;
         try {
             cus = CustomerService.customer(username);
-            if (cus == null || cus.getPermission() == 0) {
+            if (cus == null || cus.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",cus.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            } else if (!CustomerService.allow_access("Chỉnh sửa thông tin khách hàng",cus.getPermission())) {
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
                 return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));
