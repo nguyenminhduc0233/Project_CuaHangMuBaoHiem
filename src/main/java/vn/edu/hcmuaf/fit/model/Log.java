@@ -33,15 +33,15 @@ public class Log {
     public Log() {
     }
 
-    public Log(int level, String user, String src, String content, Date createAt, int status, String browerName, String locationIpClient) {
+    public Log(int id, int level, String user, String src, String content, Date createAt, int status) {
+        this.id = id;
         this.level = level;
         this.user = user;
         this.src = src;
         this.content = content;
         this.createAt = createAt;
         this.status = status;
-        this.browerName = browerName;
-        this.locationIpClient = locationIpClient;
+
     }
 
 
@@ -137,6 +137,16 @@ public class Log {
         return levelMapping.get(levelMapping.containsKey(this.level) ? this.level : 0);
     }
 
-
-
+    @Override
+    public String toString() {
+        return "Log{" +
+                "id=" + id +
+                ", level=" + level +
+                ", user='" + user + '\'' +
+                ", src='" + src + '\'' +
+                ", content='" + content + '\'' +
+                ", createAt=" + createAt +
+                ", status=" + status +
+                '}';
+    }
 }

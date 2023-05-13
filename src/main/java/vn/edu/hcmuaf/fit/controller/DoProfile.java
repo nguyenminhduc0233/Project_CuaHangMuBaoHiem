@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.Database.DBConnect;
+import vn.edu.hcmuaf.fit.model.Log;
+import vn.edu.hcmuaf.fit.service.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "DoProfile", value = "/DoProfile")
 public class DoProfile extends HttpServlet {
+    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -28,6 +31,7 @@ public class DoProfile extends HttpServlet {
         DBConnect dbConnect = DBConnect.getInstance();
         String sql = "select name, phone, address from customer where username = ?";
         try {
+            Log log = new Log(Log.INFO, username, this.name, "", 0);
             PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
             pre.setString(1, username);
             ResultSet rs = pre.executeQuery();
@@ -35,13 +39,21 @@ public class DoProfile extends HttpServlet {
                 if (name.trim() == "" || phone.trim() == "" || address.trim() == "") {
                     request.setAttribute("error", "Người dùng không được để trống thông tin khi cập nhật.");
                     request.getRequestDispatcher("account.jsp").forward(request, response);
+
+                    log.setSrc(this.name + "EDIT PROFILE FALSE");
+                    log.setContent("EDIT PROFILE FALSE: Username - " + username);
+                    log.setLevel(Log.WARNING);
                 } else {
                     String change = "update customer set name = '" + name + "', phone = '" + phone + "', address = '" + address + "' where username ='" + username + "';";
                     pre.executeUpdate(change);
                     request.setAttribute("success", "Thay đổi thông tin thành công");
                     request.getRequestDispatcher("edit-account.jsp").forward(request, response);
+
+                    log.setSrc(this.name + "EDIT PROFILE");
+                    log.setContent("EDIT PROFILE SUCCESS: Username - "  + username);
                 }
             }
+            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

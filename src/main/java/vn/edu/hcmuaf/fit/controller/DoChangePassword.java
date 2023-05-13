@@ -1,6 +1,8 @@
 package vn.edu.hcmuaf.fit.controller;
 
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
+import vn.edu.hcmuaf.fit.service.LogService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "DoChangePassword", value = "/doChangePassword")
 public class DoChangePassword extends HttpServlet {
+    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,9 +29,14 @@ public class DoChangePassword extends HttpServlet {
         String password = request.getParameter("password").trim();
         String confirm_pw = request.getParameter("confirm_pw").trim();
 
+        Log log = new Log(Log.INFO, username, this.name, "", 0);
         if (username == null || username == "") {
             request.setAttribute("error ", "Vui lòng đăng nhập để sử dụng chức năng này!");
             request.getRequestDispatcher("login.jsp").forward(request,response);
+
+            log.setSrc(this.name + "CHANGE PASSWORD FALSE");
+            log.setContent("CHANGE PASSWORD FALSE: Username - " + username);
+            log.setLevel(Log.WARNING);
         } else if (pass_old == null || pass_old == "" || password == null || password == "" || confirm_pw == null || confirm_pw == "") {
             request.setAttribute("error", "Người dùng chưa điền đầy đủ thông tin.");
             request.getRequestDispatcher("change-password.jsp").forward(request, response);
@@ -44,10 +52,14 @@ public class DoChangePassword extends HttpServlet {
                     CustomerService.changePassword(username, CustomerService.toMD5(pass_old), CustomerService.toMD5(password));
                     request.setAttribute("success", "Đổi mật khẩu thành công.");
                     request.getRequestDispatcher("change-password.jsp").forward(request, response);
+
+                    log.setSrc(this.name + "CHANGE PASSWORD");
+                    log.setContent("CHANGE PASSWORD SUCCESS: Username - "  + username);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
+        LogService.log(log);
     }
 }

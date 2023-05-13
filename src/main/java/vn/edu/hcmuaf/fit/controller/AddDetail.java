@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Cart;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.model.Product;
+import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.*;
@@ -13,8 +15,13 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AddDetail", value = "/AddDetail")
 public class AddDetail extends HttpServlet {
+    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Log log = new Log(Log.INFO, username, this.name, "", 0);
+
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         if (cart == null) {
             cart = new Cart();
@@ -68,6 +75,9 @@ public class AddDetail extends HttpServlet {
                                     request.getSession().setAttribute("cart", cart);
                                     response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail?id=" + id);
 
+                                    log.setSrc(this.name + "ADD PRODUCT TO CART");
+                                    log.setContent("ADD PRODUCT SUCCESS: Username - "  + username);
+
                                 }
                             }
 
@@ -76,6 +86,8 @@ public class AddDetail extends HttpServlet {
                 }
             }
         }
+        LogService.log(log);
+
     }
 
     @Override

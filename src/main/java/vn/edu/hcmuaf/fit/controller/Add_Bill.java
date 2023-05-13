@@ -3,6 +3,7 @@ package vn.edu.hcmuaf.fit.controller;
 import vn.edu.hcmuaf.fit.api.ApiLogistic;
 import vn.edu.hcmuaf.fit.model.BillDetail;
 import vn.edu.hcmuaf.fit.model.Cart;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.MailService;
 import vn.edu.hcmuaf.fit.service.ProductService;
@@ -18,8 +19,13 @@ import java.util.List;
 
 @WebServlet(name = "add_bill", value = "/add_bill")
 public class Add_Bill extends HttpServlet {
+    String namee = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Log log = new Log(Log.INFO, username, this.namee, "", 0);
+
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
@@ -42,7 +48,7 @@ public class Add_Bill extends HttpServlet {
             request.getRequestDispatcher("checkout.jsp").forward(request,response);
         }else {
             LocalDateTime date = LocalDateTime.now();
-            String username = (String) request.getSession().getAttribute("tendangnhap");
+//            String username = (String) request.getSession().getAttribute("tendangnhap");
             int id_cus = 0;
             try {
                 id_cus += ProductService.getCustomer(ProductService.getIdCusByUserName(username)).getId_customer();
@@ -71,6 +77,9 @@ public class Add_Bill extends HttpServlet {
                 MailService.sendMail(email, "Helmetsshop", conttent_cancel);
                 MailService.sendMail("20130233@st.hcmuaf.edu.vn", "Giao hàng", conttent_recive);
                 request.getRequestDispatcher("detail_bill.jsp").forward(request, response);
+
+                log.setSrc(this.namee + "CHECK OUT");
+                log.setContent("CHECK OUT " + name + " SUCCESS: Username - "  + username);
             } catch (Exception e) {
                 e.printStackTrace();
             }

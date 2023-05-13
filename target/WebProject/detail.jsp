@@ -123,6 +123,7 @@ To change this template use File | Settings | File Templates.
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
                 <h3><%=p.getName()%></h3>
+                <input type="hidden" name="name" value="<%= p.getName() %>">
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <%for (int j=1;j<=p.getStar();j++){%>

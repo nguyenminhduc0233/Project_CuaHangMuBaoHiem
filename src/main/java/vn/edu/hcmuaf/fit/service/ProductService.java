@@ -1423,7 +1423,42 @@ public class ProductService {
         }
         return result;
     }
-
+    public static List<Log> getListLogtByCustomer(String user, int index) {
+        List<Log> list = new ArrayList<>();
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select * from log where user=? limit ?,8");
+            prs.setString(1, user);
+            prs.setInt(2, (index-1)*8);
+            ResultSet rs = prs.executeQuery();
+            while (rs.next()) {
+                list.add(new Log(
+                        rs.getInt("id"),
+                        rs.getInt("level"),
+                        rs.getString("user"),
+                        rs.getString("src"),
+                        rs.getString("content"),
+                        rs.getDate("createAt"),
+                        rs.getInt("status")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static int getTotalLog(String user){
+        String query = "select count(distinct id) from log where user = ?";
+        try{
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
+            ps.setString(1, user);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
     public static List<Integer> getListCommentByProduct(int idpro,  int index) {
         List<Integer> list = new ArrayList<Integer>();
         try {
@@ -2204,7 +2239,7 @@ public class ProductService {
 //        }
 
 //        deleteComment(15);
-        System.out.println(getListCommentByProduct(1, 1));
+        System.out.println(getListLogtByCustomer("anh0212", 1));
 //        System.out.println(getTotalProduct());
         }
 }

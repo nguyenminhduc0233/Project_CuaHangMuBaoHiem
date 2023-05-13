@@ -2,6 +2,8 @@ package vn.edu.hcmuaf.fit.controller;
 
 import com.google.gson.Gson;
 import vn.edu.hcmuaf.fit.model.Comment;
+import vn.edu.hcmuaf.fit.model.Log;
+import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -16,14 +19,19 @@ import java.util.List;
 
 @WebServlet(name = "CommentServlet", value = "/CommentServlet")
 public class CommentServlet extends HttpServlet {
-
+    String name = "AUTH ";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
 
-        String username = (String) request.getSession().getAttribute("tendangnhap");
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("tendangnhap");
+        Log log = new Log(Log.INFO, username, this.name, "", 0);
+        String name = request.getParameter("name");
+
+//        String username = (String) request.getSession().getAttribute("tendangnhap");
         int id_cus = ProductService.getIdCusByUserName(username);
         int id_pro = Integer.parseInt(request.getParameter("id"));
         String content = request.getParameter("mess");
@@ -55,6 +63,9 @@ public class CommentServlet extends HttpServlet {
         out.print(responseText);
         out.flush();
 
+        log.setSrc(this.name + "COMMENT");
+        log.setContent("COMMENT AT "  + name + ": Username - "  + username);
+        LogService.log(log);
     }
 
     @Override

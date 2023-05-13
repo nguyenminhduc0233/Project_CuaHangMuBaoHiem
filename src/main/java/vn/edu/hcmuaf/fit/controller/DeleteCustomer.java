@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
+import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -15,16 +17,22 @@ import java.sql.SQLException;
 
 @WebServlet(name = "delete-customer", value = "/delete-customer")
 public class DeleteCustomer extends HttpServlet {
+    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
         try {
+            Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() == 0) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+
+                log.setSrc(this.name + "LOGIN FALSE");
+                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
+                log.setLevel(Log.WARNING);
                 return;
             } else if (!CustomerService.allow_access("Xóa khách hàng",customer.getPermission())) {
                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
@@ -33,6 +41,10 @@ public class DeleteCustomer extends HttpServlet {
             int id_Cus = Integer.parseInt(request.getParameter("id"));
             ProductService.delete_customer(id_Cus);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
+
+            log.setSrc(this.name + "DELETE CUSTOMER");
+            log.setContent("DELETE CUSTOMER " + id_Cus + " AT: Username - "  + username);
+            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

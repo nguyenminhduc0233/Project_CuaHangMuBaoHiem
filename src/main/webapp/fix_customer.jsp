@@ -330,6 +330,7 @@
                 </h2>
                 <%Customer c = (Customer) request.getAttribute("customer");%>
                 <form action="/Project_CuaHangMuBaoHiem_war/fix-customer" method="get">
+                    <input type="hidden" name="nameCus" value="<%=c.getName()%>">
                     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                         <label class="block text-sm">
                             <span class="text-gray-700 dark:text-gray-400">Tên</span>
