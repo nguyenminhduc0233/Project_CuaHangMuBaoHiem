@@ -23,12 +23,9 @@ public class Sales extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý hóa đơn",customer.getPermission(),"VIEW"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            } else if (!CustomerService.allow_access("Kiểm tra doanh thu, doanh số",customer.getPermission())) {
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");
                 return;
             }
         String m = request.getParameter("month");
