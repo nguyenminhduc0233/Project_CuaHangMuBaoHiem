@@ -55,9 +55,9 @@ public class CustomerService {
         }
     }
 
-    public static void addCustomer(String username, String password, String name, String email) throws SQLException {
+    public static void addCustomer(String username, String password, String name, String email,int typeAccount) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock) values (?,?,?,?,?,?,0,1,?,0)");
+        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock, typeAccount) values (?,?,?,?,?,?,0,1,?,0,?)");
         ps.setString(1,name);
         ps.setString(2,email);
         ps.setString(3,"");
@@ -65,6 +65,7 @@ public class CustomerService {
         ps.setString(5,username);
         ps.setString(6,password);
         ps.setString(7,LocalDateTime.now().toString());
+        ps.setInt(8,typeAccount);
         ps.executeUpdate();
 
     }
