@@ -340,8 +340,7 @@
           </svg>
         </button>
         <!-- Search input -->
-
-        <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct"> <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+        <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct?pages=<%= request.getAttribute("pages") %>"> <button class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
          Quay lại
         </button></a>
         <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -438,7 +437,7 @@
               ><%= p.getDecrispe() %></textarea>
             </label>
             <div style="margin-top: 10px; color: red;" id="warning_decrispe"></div>
-            <a href="<%= "/Project_CuaHangMuBaoHiem_war/Remove?="+p.getId() %>">
+            <a href="<%= "/Project_CuaHangMuBaoHiem_war/Remove?="+p.getId()+"&pages=" + request.getAttribute("pages")%>">
               <button  type="button" style="margin-top: 20px;margin-left: 20px; float: right; background: red;" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
               Xóa
               </button>

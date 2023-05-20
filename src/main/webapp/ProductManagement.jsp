@@ -511,6 +511,7 @@
                                         </a>
                                         <form method="get" action="/Project_CuaHangMuBaoHiem_war/Remove">
                                             <input type="hidden" name="id" value="<%= p.getId() %>">
+                                            <input type="hidden" name="pages" value="<%= pages %>">
                                             <button
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Delete"
