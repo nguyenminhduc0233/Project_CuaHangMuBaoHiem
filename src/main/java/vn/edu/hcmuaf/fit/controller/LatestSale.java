@@ -13,8 +13,23 @@ import java.util.List;
 public class LatestSale extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> list = ProductService.productIsNotForSale();
-        request.setAttribute("list",list);
+        String indexPage = request.getParameter("index");
+        int index = Integer.parseInt(indexPage);
+        int pre = index - 1;
+        int next = index + 1;
+
+        int n = ProductService.getTotalProduct();
+        int endPage = n/8;
+        if(n % 8 != 0){
+            endPage++;
+        }
+
+        request.setAttribute("index", index);
+        request.setAttribute("pre", pre);
+        request.setAttribute("next", next);
+        request.setAttribute("endP", endPage);
+
+        request.setAttribute("list", ProductService.onePageIsNotForSale(index));
         request.getRequestDispatcher("latest_sale.jsp").forward(request,response);
     }
 

@@ -1423,12 +1423,11 @@ public class ProductService {
         }
         return result;
     }
-    public static List<Log> getListLogtByCustomer(String user, int index) {
+    public static List<Log> onePageLog(int index) {
         List<Log> list = new ArrayList<>();
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select * from log where user=? limit ?,8");
-            prs.setString(1, user);
-            prs.setInt(2, (index-1)*8);
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select * from log limit ?,8");
+            prs.setInt(1, (index-1)*8);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
                 list.add(new Log(
@@ -1445,11 +1444,10 @@ public class ProductService {
         }
         return list;
     }
-    public static int getTotalLog(String user){
-        String query = "select count(distinct id) from log where user = ?";
+    public static int getTotalLog(){
+        String query = "select count(distinct id) from log";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setString(1, user);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 return rs.getInt(1);
@@ -1849,6 +1847,101 @@ public class ProductService {
         return list;
     }
 
+    public static List<Product> onePageSalesRate(int index){
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?, 8");
+            ps.setInt(1, (index - 1)*8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                if (totalQuantityImport(rs.getInt("id_product")) == 0) {
+                    p.setRate(totalQuantityImport(rs.getInt("id_product")));
+                } else {
+                    p.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
+                }
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static List<Product> onePageReturn(int index){
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?, 8");
+            ps.setInt(1, (index-1)*8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                if (paidRate(rs.getInt("id_product")) == 0) {
+                    p.setRate(0);
+                } else {
+                    p.setRate(((double) paidRate(rs.getInt("id_product")) / (double) amountSold(rs.getInt("id_product"))) * 100);
+                }
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
+    public static List<Product> onePageToBeImport(int index){
+        List<Product> list = new ArrayList<Product>();
+        Product product = new Product();
+        DBConnect dbConnect = DBConnect.getInstance();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from product p join detail_product dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5 limit ?8");
+            ps.setInt(1, (index-1)*8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                product = getProduct(rs.getInt("id_product"));
+                product.setRate(((double) amountSold(rs.getInt("id_product")) / (double) totalQuantityImport(rs.getInt("id_product"))) * 100);
+                if(product.getRate()>=60){
+
+                    product.setImg(getimg(rs.getInt("id_product")));
+                    product.setQuantity(rs.getInt("s"));
+                    list.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public static List<Product> onePageIsNotForSale(int index){
+        List<Product> list = new ArrayList<Product>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Product p = new Product();
+        try {
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?,8");
+            ps.setInt(1, (index-1)*8);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                p = new Product();
+                p.setId(rs.getInt("id_product"));
+                p.setName(rs.getString("name"));
+                p.setLatestSale(latestSale(rs.getInt("id_product")));
+                p.setImg(getimg(rs.getInt("id_product")));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+        }
+        return list;
+    }
+
     public static int getTotalBill(){
         String query = "select count(id) from bill";
         try{
@@ -2239,7 +2332,7 @@ public class ProductService {
 //        }
 
 //        deleteComment(15);
-        System.out.println(getListLogtByCustomer("anh0212", 1));
+        System.out.println(onePageSalesRate(1));
 //        System.out.println(getTotalProduct());
         }
 }

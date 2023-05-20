@@ -216,7 +216,7 @@
 
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="<%="/Project_CuaHangMuBaoHiem_war//ListAccountInLog?index=" + "1"%>"
+                            href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + "1"%>"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -254,19 +254,19 @@
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/Stattistic">Doanh thu</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/SalesRate">Tỉ lệ bán được</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + "1"%>">Tỉ lệ bán được</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductReturn">Tỉ lệ trả hàng</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductReturn?index=" + "1"%>">Tỉ lệ trả hàng</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">Sản phẩm tồn kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported">Sản phẩm cần nhập kho</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported?index=" + "1"%>">Sản phẩm cần nhập kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/LatestSale?index=" + "1"%>">Sản phẩm không bán được</a>
                             </li>
                         </ul>
                     </template>
