@@ -21,6 +21,13 @@
             defer
     ></script>
     <script src="admin/assets/js/init-alpine.js"></script>
+
+    <style>
+        .page-item.disabled{
+            color: #d5d6d7;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
 <div
@@ -64,7 +71,6 @@
             </ul>
             <ul>
                 <li class="relative px-6 py-3">
-
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                             href="/Project_CuaHangMuBaoHiem_war/ManageProduct"
@@ -88,7 +94,7 @@
 
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/list-bill"
+                            href="<%="/Project_CuaHangMuBaoHiem_war/list-bill?index=" + "1"%>"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -107,7 +113,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/list-customer">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -143,10 +149,8 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-                    <a
-                            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/list-comment"
-                    >
+                    <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                       href="<%="/Project_CuaHangMuBaoHiem_war/list-comment?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -163,7 +167,7 @@
                 </li>
                 <li class="relative px-6 py-3">
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="/Project_CuaHangMuBaoHiem_war/ManageImport">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -179,9 +183,8 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-
                     <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                       href="#">
+                       href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">
                         <svg
                                 class="w-5 h-5"
                                 aria-hidden="true"
@@ -214,6 +217,27 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
+
+                    <a
+                            class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                            href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + "1"%>"
+                    >
+                        <svg
+                                class="w-5 h-5"
+                                aria-hidden="true"
+                                fill="none"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                        >
+                            <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                        </svg>
+                        <span class="ml-4">Quản lý log</span>
+                    </a>
+                </li>
+                <li class="relative px-6 py-3">
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                     <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @click="togglePagesMenu" aria-haspopup="true">
                 <span class="inline-flex items-center">
@@ -228,26 +252,26 @@
                     </button>
                     <template x-if="isPagesMenuOpen">
                         <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu">
-                            <li class="px-2 py-1 transition-colors duration-150 ">
+                            <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/BestSeller">Bán nhiều nhất</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
                                 <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/Stattistic">Doanh thu</a>
                             </li>
-                            <li class="px-2 py-1 transition-colors duration-150" style="background-color: #7e3af2; color: white; border-radius: 5px">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/SalesRate">Tỉ lệ bán được</a>
+                            <li class="px-2 py-1 transition-colors duration-150 "  style="background-color: #7e3af2; color: white; border-radius: 5px">
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + "1"%>">Tỉ lệ bán được</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductReturn">Tỉ lệ trả hàng</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductReturn?index=" + "1"%>">Tỉ lệ trả hàng</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/CheckInventory">Sản phẩm tồn kho</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">Sản phẩm tồn kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported">Sản phẩm cần nhập kho</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported?index=" + "1"%>">Sản phẩm cần nhập kho</a>
                             </li>
                             <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-                                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/LatestSale">Sản phẩm không bán được</a>
+                                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/LatestSale?index=" + "1"%>">Sản phẩm không bán được</a>
                             </li>
                         </ul>
                     </template>
@@ -378,6 +402,11 @@
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                             <%
+                                int index = (int) request.getAttribute("index");
+                                int endPage = (int) request.getAttribute("endP");
+                                int pre = (int) request.getAttribute("pre");
+                                int next = (int) request.getAttribute("next");
+
                                 List<Product> data = (List<Product>) request.getAttribute("list");
                                 NumberFormat nf = new NumberFormat();
 
@@ -431,40 +460,28 @@
                         <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                   <nav aria-label="Table navigation">
                     <ul class="inline-flex items-center">
-
-
-                      <li>
-                            <button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                                    aria-label="Previous">
+                      <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                                  clip-rule="evenodd" fill-rule="evenodd"></path>
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
                           </svg>
-                        </button>
+                        </button></a>
                       </li>
-
-                      <li>
-                        <button
-                                class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"
-                        >
-                        </button>
-                      </li>
+                      <%for(int i = 1; i <= endPage; i++){%>
                         <li>
-                        <button
-                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
-                        </button>
-                      </li>
-                      <li>
-                        <button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                                aria-label="Next">
+                        <a  href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
+                          <%=i%>
+                        </button></a>
+                        </li>
+                      <%}%>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/SalsRate?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                  clip-rule="evenodd"
-                                  fill-rule="evenodd"
-                            ></path>
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
                           </svg>
-                        </button>
-
+                        </button></a>
                       </li>
                     </ul>
                   </nav>

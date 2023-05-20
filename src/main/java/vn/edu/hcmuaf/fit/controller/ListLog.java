@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -11,8 +12,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "ListAccountInLog", value = "/ListAccountInLog")
-public class ListAccountInLog extends HttpServlet {
+@WebServlet(name = "ListLog", value = "/ListLog")
+public class ListLog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,9 +35,9 @@ public class ListAccountInLog extends HttpServlet {
             int pre = index - 1;
             int next = index + 1;
 
-            List<Customer> list = ProductService.onePageCustomer(index);
+            List<Log> list = ProductService.onePageLog(index);
 
-            int n = ProductService.getTotalCustomer();
+            int n = ProductService.getTotalLog();
             int endPage = n/8;
             if(n % 8 != 0){
                 endPage++;
