@@ -25,12 +25,8 @@ public class ManageContact extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý liên hệ",customer.getPermission(),"VIEW"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            } else if (!CustomerService.allow_access("QUản lý liên hệ", customer.getPermission())) {
-                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }

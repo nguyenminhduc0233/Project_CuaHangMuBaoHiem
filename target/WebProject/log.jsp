@@ -373,11 +373,11 @@
                             <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
                             >
-                                <th class="px-4 py-3">Tên khách hàng</th>
-                                <th class="px-4 py-3">Email</th>
-                                <th class="px-4 py-3">Số điện thoại</th>
-                                <th class="px-4 py-3">Địa Chỉ</th>
-                                <th class="px-4 py-3">Chỉnh sửa</th>
+                                <th class="px-4 py-3">ID log</th>
+                                <th class="px-4 py-3">Level</th>
+                                <th class="px-4 py-3">Src</th>
+                                <th class="px-4 py-3">Content</th>
+                                <th class="px-4 py-3">Create at</th>
                             </tr>
                             </thead>
                             <tbody
