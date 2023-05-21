@@ -19,17 +19,17 @@ public class ManagerPermission extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
-            } else if (customer.getPermission() <2) {
-                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
             }
-            List<Integer> list = CustomerService.getListIdPermission();
+            List<String> listService = CustomerService.getListService();
+            String name = listService.get(0);
+            List<Integer> list = CustomerService.getListIdServiceByName(name);
+            request.setAttribute("listService",listService);
             request.setAttribute("list",list);
+            request.setAttribute("name",name);
             request.getRequestDispatcher("manager-permission.jsp").forward(request,response);
         }catch (SQLException e){
             e.printStackTrace();
