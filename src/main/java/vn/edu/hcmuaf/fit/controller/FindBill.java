@@ -28,6 +28,7 @@ public class FindBill extends HttpServlet {
                 return;
             }
             int id_bill = Integer.parseInt(request.getParameter("text"));
+            request.setAttribute("id",id_bill);
             List<Bill> list = new ArrayList<Bill>();
             list.add(ProductService.getBill(id_bill));
             request.setAttribute("list", list);

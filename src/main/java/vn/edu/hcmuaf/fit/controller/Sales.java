@@ -68,7 +68,6 @@ public class Sales extends HttpServlet {
             if(n % 10 != 0){
                 endPage++;
             }
-
             request.setAttribute("index", index);
             request.setAttribute("pre", pre);
             request.setAttribute("next", next);

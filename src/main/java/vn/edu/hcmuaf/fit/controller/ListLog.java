@@ -37,8 +37,8 @@ public class ListLog extends HttpServlet {
             List<Log> list = ProductService.onePageLog(index);
 
             int n = ProductService.getTotalLog();
-            int endPage = n/8;
-            if(n % 8 != 0){
+            int endPage = n/10;
+            if(n % 10 != 0){
                 endPage++;
             }
 
