@@ -27,6 +27,9 @@ public class ListLog extends HttpServlet {
                 return;
             }
             String indexPage = request.getParameter("index");
+            if(indexPage==null){
+                indexPage="1";
+            }
             int index = Integer.parseInt(indexPage);
             int pre = index - 1;
             int next = index + 1;

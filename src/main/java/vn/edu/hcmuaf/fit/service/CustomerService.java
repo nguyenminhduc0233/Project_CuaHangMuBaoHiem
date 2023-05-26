@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -558,6 +557,44 @@ public class CustomerService {
             return false;
         }
 
+    }
+    public static List<Customer> onePageLoadCus(int index, List<Customer> listCus){
+        List<Customer> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = start + 9;
+        if(listCus.size()<=end){
+            end = listCus.size()-1;
+        }
+        for(int i=start;i<end+1;i++){
+            list.add(listCus.get(i));
+        }
+        return list;
+    }
+    public static List<Integer> onePageLoadId(int index, List<Integer> listInt){
+        List<Integer> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = start + 9;
+        if(listInt.size()<=end){
+            end = listInt.size()-1;
+        }
+        for(int i=start;i<end+1;i++){
+            list.add(listInt.get(i));
+        }
+        return list;
+    }
+    public static List<Customer> findCusWthoutAdmin(String para){
+        List<Customer> list = new ArrayList<Customer>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Statement statement = dbConnect.get();
+        try {
+            ResultSet rs = statement.executeQuery("select id_customer from customer where name like '%" + para + "%' and permission != 0 ");
+            while (rs.next()) {
+                list.add(ProductService.getCustomer(rs.getInt("id_customer")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {

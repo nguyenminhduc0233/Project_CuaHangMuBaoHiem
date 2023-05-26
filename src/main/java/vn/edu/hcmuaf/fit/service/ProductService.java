@@ -33,8 +33,8 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from product limit ?,8");
-            ps.setInt(1, (index-1)*8);
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from product limit ?,10");
+            ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
@@ -1460,9 +1460,9 @@ public class ProductService {
     public static List<Integer> getListCommentByProduct(int idpro,  int index) {
         List<Integer> list = new ArrayList<Integer>();
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select * from comment where id_product=? limit ?,8");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select * from comment where id_product=? limit ?,10");
             prs.setInt(1, idpro);
-            prs.setInt(2, (index-1)*8);
+            prs.setInt(2, (index-1)*10);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
                 list.add(rs.getInt("id"));
@@ -1958,10 +1958,10 @@ public class ProductService {
 
     public static List<Bill> onePageBill(int index){
         List<Bill> list = new ArrayList<>();
-        String  query = "select * from bill  limit ?, 8";
+        String  query = "select * from bill  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, (index-1)*8);
+            ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 list.add(getBill(rs.getInt("id")));
@@ -1987,10 +1987,10 @@ public class ProductService {
 
     public static List<Customer> onePageCustomer(int index){
         List<Customer> list = new ArrayList<>();
-        String  query = "select * from customer  limit ?, 8";
+        String  query = "select * from customer  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, (index-1)*8);
+            ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 list.add(getCustomer(rs.getInt("id_customer")));
@@ -2017,10 +2017,10 @@ public class ProductService {
     public static List<ImportProduct> onePageImport(int index){
         List<ImportProduct> list = new ArrayList<>();
         ImportProduct im = new ImportProduct();
-        String  query = "select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product limit ?, 8";
+        String  query = "select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, (index-1)*8);
+            ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 im = new ImportProduct(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")), totalPriceImport(rs.getInt("id_product")), getimgFirst(rs.getInt("id_product")));
@@ -2048,10 +2048,10 @@ public class ProductService {
     public static List<Product> onePageInventory(int index){
         List<Product> list = new ArrayList<>();
         Product p = new Product();
-        String  query = "select id_product, name from product  limit ?, 8";
+        String  query = "select id_product, name from product  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
-            ps.setInt(1, (index-1)*8);
+            ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 p = new Product(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")) - amountSold(rs.getInt("id_product")));
@@ -2321,6 +2321,38 @@ public class ProductService {
         }
         return total;
     }
+    public static List<Product> onePageFindProduct(int index, List<Product> listPro){
+        List<Product> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = Math.min(start+10,listPro.size()-1);
+        for(int i=start;i<end+1;i++){
+            list.add(listPro.get(i));
+        }
+        return list;
+    }
+    public static List<Bill> onePageFindBill(int index, List<Bill> listBill){
+        List<Bill> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = Math.min(start+10,listBill.size()-1);
+        for(int i=start;i<end+1;i++){
+            list.add(listBill.get(i));
+        }
+        return list;
+    }
+    public static List<ImportProduct> findProductImport(String para){
+        List<ImportProduct> list = new ArrayList<>();
+        ImportProduct im = new ImportProduct();
+        String  query = "select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product where p.name like '%" + para + "%'";
+        try{
+            ResultSet rs = DBConnect.getInstance().get().executeQuery(query);
+            while (rs.next()){
+                im = new ImportProduct(rs.getInt("id_product"), rs.getString("name"), totalQuantityImport(rs.getInt("id_product")), totalPriceImport(rs.getInt("id_product")), getimgFirst(rs.getInt("id_product")));
+                list.add(im);
+            }
+        }catch (SQLException e){
+        }
+        return list;
+    }
     public static void main(String[] args) throws SQLException {
 //        List<BillDetail> list = new ArrayList<>();
 //        list.add(new BillDetail(1,1,400000));
@@ -2332,7 +2364,7 @@ public class ProductService {
 //        }
 
 //        deleteComment(15);
-        System.out.println(onePageSalesRate(1));
+        System.out.println();
 //        System.out.println(getTotalProduct());
         }
 }

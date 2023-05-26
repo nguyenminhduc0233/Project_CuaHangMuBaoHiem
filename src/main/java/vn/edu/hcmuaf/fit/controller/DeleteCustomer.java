@@ -37,11 +37,12 @@ public class DeleteCustomer extends HttpServlet {
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));
             ProductService.delete_customer(id_Cus);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
+
 
             log.setSrc(this.name + "DELETE CUSTOMER");
             log.setContent("DELETE CUSTOMER " + id_Cus + " AT: Username - "  + username);
             LogService.log(log);
+            response.sendRedirect(request.getHeader("Referer"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
