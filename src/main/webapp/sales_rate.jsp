@@ -332,26 +332,28 @@
                     <div
                             class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
                     >
-                        <div class="absolute inset-y-0 flex items-center pl-2">
-                            <svg
-                                    class="w-4 h-4"
-                                    aria-hidden="true"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                            >
-                                <path
-                                        fill-rule="evenodd"
-                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                        clip-rule="evenodd"
-                                ></path>
-                            </svg>
-                        </div>
-                        <input
-                                class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                                type="text"
-                                placeholder="Tìm kiếm"
-                                aria-label="Search"
-                        />
+                        <form action="/Project_CuaHangMuBaoHiem_war/find_product_sale_rate">
+                            <div class="absolute inset-y-0 flex items-center pl-2">
+                                <svg
+                                        class="w-4 h-4"
+                                        aria-hidden="true"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                >
+                                    <path
+                                            fill-rule="evenodd"
+                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                            clip-rule="evenodd"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <input
+                                    class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                    type="text"
+                                    placeholder="Tìm kiếm" name="text" required
+                                    aria-label="Search"
+                            />
+                        </form>
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -472,8 +474,28 @@
                     </div>
                     <div
                             class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                        <%
+                            int size=0;
+                            String link = "";
+                            if((String)request.getAttribute("text")==null){
+                                size = ProductService.getTotalProduct();
+                                link += "/Project_CuaHangMuBaoHiem_war/SalesRate?index=";
+                            }else{
+                                size = ProductService.findProduct((String)request.getAttribute("text")).size();
+                                link += "/Project_CuaHangMuBaoHiem_war/find_product_sale_rate?text="+(String)request.getAttribute("text")+"&index=";
+                            }
+                            int start = Math.min(size,(index-1)*10+1);
+                            int end = Math.min(size,(index-1)*10+10);
+                            if(size==1){
+                                start=end=size=1;
+                            }
+                            if(size==0){
+                                start=end=size=0;
+                                endPage=1;
+                            }
+                        %>
                 <span class="flex items-center col-span-3">
-
+                    Hiển thị <%=start%>-<%=end%> của <%=size%>
                 </span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
@@ -481,7 +503,7 @@
                   <nav aria-label="Table navigation">
                     <ul class="inline-flex items-center">
                       <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                        <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
                             </path>
@@ -490,13 +512,13 @@
                       </li>
                       <%for(int i = 1; i <= endPage; i++){%>
                         <li>
-                        <a  href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
+                        <a  href="<%=link + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
                           <%=i%>
                         </button></a>
                         </li>
                       <%}%>
                       <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/SalsRate?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                        <a href="<%=link + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
                             </path>

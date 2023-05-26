@@ -14,6 +14,9 @@ public class ListPro extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String indexPage = request.getParameter("index");
+        if(indexPage==null){
+            indexPage="1";
+        }
         int index = Integer.parseInt(indexPage);
         int pre = index - 1;
         int next = index + 1;

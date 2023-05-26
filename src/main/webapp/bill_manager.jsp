@@ -3,6 +3,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.Bill" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
@@ -356,7 +357,7 @@
               </div>
               <input
                       class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                      type="text" name="text"
+                      type="number" name="text"
                       placeholder="ID hóa đơn"
                       aria-label="Search"
               /></form>
@@ -606,21 +607,15 @@
           >
             <%
               int size=0;
-              if(month==""||year==""){
+              if((month==""||year=="")){
                 size = ProductService.getListBill().size();
-                if(index == 1){
-                  index = 1;
-                }
-              }else{
+              }else {
                 size = ProductService.getBillByDate(Integer.parseInt(month),Integer.parseInt(year)).size();
               }
               int start = Math.min(size,(index-1)*10+1);
               int end = Math.min(size,(index-1)*10+10);
-              if(size==1){
+              if(list.size()==1){
                 start=end=size=1;
-              }
-              if(size==0){
-                start=end=size=0;
                 endPage=1;
               }
             %>
