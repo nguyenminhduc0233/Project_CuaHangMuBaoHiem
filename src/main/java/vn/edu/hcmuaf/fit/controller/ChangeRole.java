@@ -27,7 +27,7 @@ public class ChangeRole extends HttpServlet {
             int per = CustomerService.getPermissonByRole(permission);
             int id = Integer.parseInt(request.getParameter("id"));
             CustomerService.updatePermission(id,per);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/user_hierarchy");
+            response.sendRedirect(request.getHeader("Referer"));
         }catch (SQLException e){
             e.printStackTrace();
         }

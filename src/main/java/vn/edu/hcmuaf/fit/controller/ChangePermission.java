@@ -26,7 +26,7 @@ public class ChangePermission extends HttpServlet {
             }
             int id = Integer.parseInt(request.getParameter("id"));
             CustomerService.changeAllow(id);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/manager-permission");
+            response.sendRedirect(request.getHeader("Referer"));
         }catch (SQLException e){
             e.printStackTrace();
         }

@@ -75,7 +75,6 @@
       </ul>
       <ul>
         <li class="relative px-6 py-3">
-
           <a
                   class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                   href="/Project_CuaHangMuBaoHiem_war/ManageProduct"
@@ -96,13 +95,13 @@
           </a>
         </li>
         <li class="relative px-6 py-3">
-                <span
-                        class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                        aria-hidden="true"
-                ></span>
+              <span
+                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
+                      aria-hidden="true"
+              ></span>
           <a
                   class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                  href="<%="/Project_CuaHangMuBaoHiem_war/list-bill?index=" + "1"%>"
+                  href="/Project_CuaHangMuBaoHiem_war/list-bill"
           >
             <svg
                     class="w-5 h-5"
@@ -121,7 +120,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + "1"%>">
+             href="/Project_CuaHangMuBaoHiem_war/list-customer">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -158,7 +157,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="<%="/Project_CuaHangMuBaoHiem_war/list-comment?index=" + "1"%>">
+             href="/Project_CuaHangMuBaoHiem_war/list-comment">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -175,7 +174,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + "1"%>">
+             href="/Project_CuaHangMuBaoHiem_war/ManageImport">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -192,7 +191,7 @@
         </li>
         <li class="relative px-6 py-3">
           <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-             href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">
+             href="/Project_CuaHangMuBaoHiem_war/CheckInventory">
             <svg
                     class="w-5 h-5"
                     aria-hidden="true"
@@ -224,27 +223,83 @@
             <span class="ml-4">Quản lý quyền hạn</span>
           </a>
         </li>
-          <li class="relative px-6 py-3">
+        <li class="relative px-6 py-3">
+          <a class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+             href="/Project_CuaHangMuBaoHiem_war/user_hierarchy">
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Phân cấp tài khoản</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
 
-              <a
-                      class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                      href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + "1"%>"
-              >
-                  <svg
-                          class="w-5 h-5"
-                          aria-hidden="true"
-                          fill="none"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                  >
-                      <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+          <a
+                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                  href="/Project_CuaHangMuBaoHiem_war/ListLog"
+          >
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+            >
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Quản lý log</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
+          <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @click="togglePagesMenu" aria-haspopup="true">
+                <span class="inline-flex items-center">
+                  <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
                   </svg>
-                  <span class="ml-4">Quản lý log</span>
-              </a>
-          </li>
+                  <span class="ml-4">Thống kê</span>
+                </span>
+            <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+          <template x-if="isPagesMenuOpen">
+            <ul x-transition:enter="transition-all ease-in-out duration-300" x-transition:enter-start="opacity-25 max-h-0" x-transition:enter-end="opacity-100 max-h-xl" x-transition:leave="transition-all ease-in-out duration-300" x-transition:leave-start="opacity-100 max-h-xl" x-transition:leave-end="opacity-0 max-h-0" class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900" aria-label="submenu">
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/BestSeller">Bán nhiều nhất</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="/Project_CuaHangMuBaoHiem_war/Stattistic">Doanh thu</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/SalesRate?index=" + "1"%>">Tỉ lệ bán được</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductReturn?index=" + "1"%>">Tỉ lệ trả hàng</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/CheckInventory?index=" + "1"%>">Sản phẩm tồn kho</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/ProductsToBeImported?index=" + "1"%>">Sản phẩm cần nhập kho</a>
+              </li>
+              <li class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+                <a class="w-full" href="<%="/Project_CuaHangMuBaoHiem_war/LatestSale?index=" + "1"%>">Sản phẩm không bán được</a>
+              </li>
+            </ul>
+          </template>
+
+        </li>
       </ul>
 
     </div>
@@ -263,14 +318,14 @@
                 aria-label="Menu"
         >
           <svg
-                  class="w-6 h-6"
+                  class="w-4 h-4"
                   aria-hidden="true"
                   fill="currentColor"
                   viewBox="0 0 20 20"
           >
             <path
                     fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                     clip-rule="evenodd"
             ></path>
           </svg>
@@ -283,14 +338,28 @@
             <div class="absolute inset-y-0 flex items-center pl-2">
 
             </div>
+
             <form action="/Project_CuaHangMuBaoHiem_war/find-bill" method="get">
+              <div class="absolute inset-y-0 flex items-center pl-2">
+                <svg
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                >
+                  <path
+                          fill-rule="evenodd"
+                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                          clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
               <input
-                      class="pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
-                      style="width: 450px"
+                      class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
                       type="text" name="text"
-                      placeholder="Id hóa đơn"
-              />
-              <input type="submit" value="Tìm kiếm" style="width:80px;height: 36px;color: black;border-radius: 5px"></form>
+                      placeholder="ID hóa đơn"
+                      aria-label="Search"
+              /></form>
           </div>
         </div>
         <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -369,19 +438,19 @@
             int next = (int) request.getAttribute("next");
           %>
 
-          <form action="/Project_CuaHangMuBaoHiem_war/sales" method="get" style="margin-left: 176px">
+          <form action="/Project_CuaHangMuBaoHiem_war/sales" method="get" style="margin-left: 176px; width: 200px">
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Tháng</span>
                 <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                       type="number"   name="month"   value="<%=month%>"  placeholder="Nhập tháng"   />
+                       type="number"   name="month"   value="<%=month%>"  placeholder="Nhập tháng" max="12" min="1" required />
                 <span class="error"></span>
               </label>
               <br>
               <label class="block text-sm">
                 <span class="text-gray-700 dark:text-gray-400">Năm</span>
                 <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                       type="number"   name="year"     value="<%=year%>"  placeholder="Nhập năm"   />
+                       type="number"   name="year"     value="<%=year%>"  placeholder="Nhập năm"  max="3999" min="1975" required/>
               </label>
               <span id="error" class="error" style="padding: 10px"><%=error%></span>
               <div><input type="submit" value="Tìm kiếm" class="button" style="background: #007bff;width: 100px;border-radius: 4px;margin-top: 7px"></div>
@@ -535,8 +604,28 @@
           <div
                   class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
           >
+            <%
+              int size=0;
+              if(month==""||year==""){
+                size = ProductService.getListBill().size();
+                if(index == 1){
+                  index = 1;
+                }
+              }else{
+                size = ProductService.getBillByDate(Integer.parseInt(month),Integer.parseInt(year)).size();
+              }
+              int start = Math.min(size,(index-1)*10+1);
+              int end = Math.min(size,(index-1)*10+10);
+              if(size==1){
+                start=end=size=1;
+              }
+              if(size==0){
+                start=end=size=0;
+                endPage=1;
+              }
+            %>
                 <span class="flex items-center col-span-3">
-                  Showing 21-30 of 100
+                  Hiển thị <%=start%>-<%=end%> của <%=size%>
                 </span>
             <span class="col-span-2"></span>
             <!-- Pagination -->
@@ -558,46 +647,7 @@
                         </button></a>
                         </li>
                       <%}%>
-
-<%--                      <li>--%>
-<%--                        <button--%>
-<%--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"--%>
-<%--                        >--%>
-<%--                          2--%>
-<%--                        </button>--%>
-<%--                      </li>--%>
-<%--                      <li>--%>
-<%--                        <button--%>
-<%--                                class="px-3 py-1 text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md focus:outline-none focus:shadow-outline-purple"--%>
-<%--                        >--%>
-<%--                          3--%>
-<%--                        </button>--%>
-<%--                      </li>--%>
-<%--                      <li>--%>
-<%--                        <button--%>
-<%--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"--%>
-<%--                        >--%>
-<%--                          4--%>
-<%--                        </button>--%>
-<%--                      </li>--%>
-<%--                      <li>--%>
-<%--                        <span class="px-3 py-1">...</span>--%>
-<%--                      </li>--%>
-<%--                      <li>--%>
-<%--                        <button--%>
-<%--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"--%>
-<%--                        >--%>
-<%--                          8--%>
-<%--                        </button>--%>
-<%--                      </li>--%>
-<%--                      <li>--%>
-<%--                        <button--%>
-<%--                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"--%>
-<%--                        >--%>
-<%--                          9--%>
-<%--                        </button>--%>
-<%--                      </li>--%>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                      <li class="page-item <%=index==endPage? "disabled":""%><%=next==0? "disabled":""%>">
                         <a href="<%="/Project_CuaHangMuBaoHiem_war/list-bill?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">

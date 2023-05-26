@@ -28,15 +28,18 @@ public class CheckInventory extends HttpServlet {
                 return;
             }
             String indexPage = request.getParameter("index");
+            if(indexPage==null){
+                indexPage="1";
+            }
             int index = Integer.parseInt(indexPage);
             int pre = index - 1;
             int next = index + 1;
 
             List<Product> list = ProductService.onePageInventory(index);
 
-            int n = ProductService.getTotalCustomer();
-            int endPage = n/8;
-            if(n % 8 != 0){
+            int n = ProductService.getTotalProduct();
+            int endPage = n/10;
+            if(n % 10 != 0){
                 endPage++;
             }
 

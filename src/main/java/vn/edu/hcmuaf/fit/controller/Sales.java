@@ -43,12 +43,37 @@ public class Sales extends HttpServlet {
 
             int month = Integer.parseInt(m);
             int year = Integer.parseInt(y);
-            List<Bill> list = ProductService.getBillByDate(month,year);
+            List<Bill> listBill = ProductService.getBillByDate(month,year);
+            List<Bill> list = ProductService.onePageFindBill(1,listBill);
             long sales = ProductService.totalPriceBill(month,year);
             int count = list.size();
             request.setAttribute("list",list);
             request.setAttribute("sales",sales);
             request.setAttribute("count",count);
+
+            String indexPage = request.getParameter("index");
+            if((indexPage==null)){
+                indexPage="1";
+            }
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+            if(list.size()==0){
+                pre =0;
+                next =0;
+            }
+
+            int n = count;
+            int endPage = n/10;
+            if(n % 10 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
             request.getRequestDispatcher("bill_manager.jsp").forward(request,response);
         }
         } catch (SQLException e) {

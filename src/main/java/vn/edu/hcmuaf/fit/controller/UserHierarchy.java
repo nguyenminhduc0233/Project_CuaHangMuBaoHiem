@@ -2,6 +2,7 @@ package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
 import vn.edu.hcmuaf.fit.service.CustomerService;
+import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,7 +25,25 @@ public class UserHierarchy extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-        List<Customer> list = CustomerService.getListCustomerWithoutAdmin();
+            String indexPage = request.getParameter("index");
+            if(indexPage==null){
+                indexPage = "1";
+            }
+            List<Customer> listCus = CustomerService.getListCustomerWithoutAdmin();
+            int index = Integer.parseInt(indexPage);
+            List<Customer> list = CustomerService.onePageLoadCus(index,listCus);
+            int pre = index - 1;
+            int next = index + 1;
+            int n = listCus.size();
+            int endPage = n/10;
+            if(n % 10 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
         request.setAttribute("list",list);
         request.getRequestDispatcher("user_hierarchy.jsp").forward(request,response);
         }catch (SQLException e){

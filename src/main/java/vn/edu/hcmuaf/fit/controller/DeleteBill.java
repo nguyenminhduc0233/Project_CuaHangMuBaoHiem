@@ -37,11 +37,11 @@ public class DeleteBill extends HttpServlet {
             }
             int id = Integer.parseInt(request.getParameter("id"));
             ProductService.deleteBill(id);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");
 
             log.setSrc(this.name + "DELETE BILL");
             log.setContent("DELETE BILL " + id + " AT: Username - "  + username);
             LogService.log(log);
+            response.sendRedirect(request.getHeader("Referer"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

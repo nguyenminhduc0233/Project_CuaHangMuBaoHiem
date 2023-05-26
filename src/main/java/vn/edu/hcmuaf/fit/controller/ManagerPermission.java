@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.CustomerService;
+import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -24,9 +26,32 @@ public class ManagerPermission extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
+            String indexPage = request.getParameter("index");
+            if(indexPage == null){
+                indexPage = "1";
+            }
+            int index = Integer.parseInt(indexPage);
+            int pre = index - 1;
+            int next = index + 1;
+
             List<String> listService = CustomerService.getListService();
             String name = listService.get(0);
-            List<Integer> list = CustomerService.getListIdServiceByName(name);
+
+            List<Integer> list_id = CustomerService.getListIdServiceByName(name);
+            List<Integer> list = CustomerService.onePageLoadId(index,list_id);
+
+            int n = list_id.size();
+            int endPage = n/10;
+            if(n % 10 != 0){
+                endPage++;
+            }
+
+            request.setAttribute("index", index);
+            request.setAttribute("pre", pre);
+            request.setAttribute("next", next);
+            request.setAttribute("endP", endPage);
+
+
             request.setAttribute("listService",listService);
             request.setAttribute("list",list);
             request.setAttribute("name",name);
