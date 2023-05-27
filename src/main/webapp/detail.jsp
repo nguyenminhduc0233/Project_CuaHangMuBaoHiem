@@ -1,20 +1,9 @@
-<%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
-
 <%@ page import="java.util.Map" %>
 
 <%@ page import="java.util.List" %>
 
-
 <%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Comment" %>
-<%--
-Created by IntelliJ IDEA.
-User: ACER
-Date: 11/6/2022
-Time: 9:13 PM
-To change this template use File | Settings | File Templates.
---%>
+<%@ page import="vn.edu.hcmuaf.fit.model.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 
@@ -82,8 +71,8 @@ To change this template use File | Settings | File Templates.
     <div class="row px-xl-5">
         <div class="col-12">
             <nav class="breadcrumb bg-light mb-30">
-                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/Home">Trang chủ</a>
-                <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/list-product">Sản phẩm</a>
+                <a class="breadcrumb-item text-dark" href="#">Trang chủ</a>
+                <a class="breadcrumb-item text-dark" href="#">Sản phẩm</a>
                 <span class="breadcrumb-item active">Chi tiết sản phẩm</span>
             </nav>
         </div>
@@ -94,8 +83,7 @@ To change this template use File | Settings | File Templates.
 <% NumberFormat nf = new NumberFormat();
     Product p= (Product) request.getAttribute("product"); %>
 <!-- Shop Detail Start -->
-<%--<%List<Integer> listComment = ProductService.getListIDCommentByProduct(p.getId());%>--%>
-<%List<Comment> listComment = ProductService.getListCommentById(p.getId());%>
+<%List<Comment> listComment =  ProductService.getListCommentById(p.getId());%>
 <div class="container-fluid pb-5">
     <div class="row px-xl-5">
         <div class="col-lg-5 mb-30">
@@ -123,7 +111,6 @@ To change this template use File | Settings | File Templates.
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
                 <h3><%=p.getName()%></h3>
-                <input type="hidden" name="name" value="<%= p.getName() %>">
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <%for (int j=1;j<=p.getStar();j++){%>
@@ -226,27 +213,27 @@ To change this template use File | Settings | File Templates.
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-<%--                                <%--%>
-<%--                                    for(int id:listComment){--%>
-<%--                                        if(ProductService.getDisplayByIdComment(id) == 1){--%>
-<%--                                %>--%>
-<%--                                <div class="col-md-6">--%>
-<%--                                    <div class="media mb-4" style="width: 600px;">--%>
-<%--                                        <div class="media-body" >--%>
-<%--                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>--%>
-<%--                                            <div class="text-primary mb-2">--%>
-<%--                                                <%int star = ProductService.getStarByIdComment(id);--%>
-<%--                                                    for(int a=0;a<star;a++){%>--%>
-<%--                                                <i class="fas fa-star"></i>--%>
-<%--                                                <%}%>--%>
-<%--                                            </div>--%>
-<%--                                            <p><%=ProductService.getCommentByIdComment(id)%></p>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                                <%}--%>
-<%--                                }%>--%>
-<%--                                <%for (Comment com : listComment) {%>--%>
+                                <%--                                <%--%>
+                                <%--                                    for(int id:listComment){--%>
+                                <%--                                        if(ProductService.getDisplayByIdComment(id) == 1){--%>
+                                <%--                                %>--%>
+                                <%--                                <div class="col-md-6">--%>
+                                <%--                                    <div class="media mb-4" style="width: 600px;">--%>
+                                <%--                                        <div class="media-body" >--%>
+                                <%--                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>--%>
+                                <%--                                            <div class="text-primary mb-2">--%>
+                                <%--                                                <%int star = ProductService.getStarByIdComment(id);--%>
+                                <%--                                                    for(int a=0;a<star;a++){%>--%>
+                                <%--                                                <i class="fas fa-star"></i>--%>
+                                <%--                                                <%}%>--%>
+                                <%--                                            </div>--%>
+                                <%--                                            <p><%=ProductService.getCommentByIdComment(id)%></p>--%>
+                                <%--                                        </div>--%>
+                                <%--                                    </div>--%>
+                                <%--                                </div>--%>
+                                <%--                                <%}--%>
+                                <%--                                }%>--%>
+                                <%--                                <%for (Comment com : listComment) {%>--%>
                                 <%for (Comment com : listComment) {%>
                                 <input type="hidden" name="id_comt" value="<%=com.getId()%>">
                                 <div class="col-md-6">
@@ -378,13 +365,6 @@ To change this template use File | Settings | File Templates.
 <!-- Back to Top -->
 <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
-
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
     // Lắng nghe sự kiện click vào nút "Gửi"
@@ -447,6 +427,11 @@ To change this template use File | Settings | File Templates.
     });
 
 </script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 <!-- Contact Javascript File -->
 <script src="mail/jqBootstrapValidation.min.js"></script>

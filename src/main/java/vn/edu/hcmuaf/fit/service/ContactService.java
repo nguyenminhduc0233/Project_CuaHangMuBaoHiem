@@ -25,7 +25,7 @@ public class ContactService {
     public void remove(int id)  {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from contacts where id=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from contacts where id_contact=?");
             ps.setInt(1,id);
             ps.executeUpdate();
         } catch (SQLException e) {
