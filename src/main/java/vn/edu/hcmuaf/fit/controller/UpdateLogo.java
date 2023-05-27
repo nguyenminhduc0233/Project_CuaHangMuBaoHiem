@@ -26,16 +26,8 @@ public class UpdateLogo extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
-                return;
-            } else if (customer.getPermission() > 2) {
-                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
                 log.setSrc(this.namee + "LOGIN FALSE");

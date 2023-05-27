@@ -50,7 +50,7 @@
     <div class="col-12">
       <nav class="breadcrumb bg-light mb-30">
         <a class="breadcrumb-item text-dark" href="/Project_CuaHangMuBaoHiem_war/Home">Trang chủ</a>
-        <span class="breadcrumb-item active">Thương hiệu sản phẩm</span>
+        <span class="breadcrumb-item active">Danh sách sản phẩm</span>
       </nav>
     </div>
   </div>
@@ -59,7 +59,7 @@
 
 <!-- Categories Start -->
 <div class="container-fluid pt-5">
-  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Thể loại</span></h2>
+  <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Thương hiệu</span></h2>
   <div class="row px-xl-5 pb-3">
     <%
       Map<String,Integer> list_brand = ProductService.getListBrand();
@@ -185,7 +185,11 @@
           </div>
         </div>
         <% NumberFormat nf = new NumberFormat();
-          List<Product> list =ProductService.getData();
+          int index = (int) request.getAttribute("index");
+          int endPage = (int) request.getAttribute("endP");
+          int pre = (int) request.getAttribute("pre");
+          int next = (int) request.getAttribute("next");
+          List<Product> list =(List<Product>)request.getAttribute("list");
           for(Product p : list){
         %>
         <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
@@ -201,7 +205,7 @@
               <div class="d-flex align-items-center justify-content-center mt-2">
                 <h5><%=nf.numberFormat((long)(p.getPrice()-p.getPrice()*p.getDiscount()))%>đ</h5><h6 class="text-muted ml-2"><del><%=nf.numberFormat(p.getPrice())%>đ</del></h6>
               </div>
-              <% if(p.sumQuantity()<=0) {%>Hết hàng<%}else{%> Còn: <%=p.sumQuantity()%><%}%>
+              <% if(ProductService.totalQuantity(p.getId())<=0) {%>Hết hàng<%}else{%> Còn: <%=ProductService.totalQuantity(p.getId())%><%}%>
               <div class="d-flex align-items-center justify-content-center mb-1">
                 <%for (int j=1;j<=p.getStar();j++){%>
                 <small class="fa fa-star text-primary mr-1"></small>
@@ -219,11 +223,11 @@
         <div class="col-12">
           <nav>
             <ul class="pagination justify-content-center">
-              <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              <li class="page-item <%=index==1? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + pre%>">Previous</a></li>
+              <%for(int i = 1; i <= endPage; i++){%>
+              <li class="page-item <%=index==i? "active":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + i%>"><%=i%></a></li>
+              <%}%>
+              <li class="page-item <%=index==endPage? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + next%>">Next</a></li>
             </ul>
           </nav>
         </div>

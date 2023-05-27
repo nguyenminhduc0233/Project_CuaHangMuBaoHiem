@@ -1,5 +1,6 @@
 package vn.edu.hcmuaf.fit.controller;
 
+import vn.edu.hcmuaf.fit.model.Bill;
 import vn.edu.hcmuaf.fit.model.Customer;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
@@ -9,6 +10,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "fix-bill", value = "/fix-bill")
 public class FixBill extends HttpServlet {
@@ -19,12 +22,9 @@ public class FixBill extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý hóa đơn",customer.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            } else if (!CustomerService.allow_access("Sửa hóa đơn", customer.getPermission())) {
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");;
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
@@ -32,7 +32,7 @@ public class FixBill extends HttpServlet {
             String phone = request.getParameter("phone");
             String status = request.getParameter("status");
             ProductService.updateBill(id,address,phone,status);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-bill");
+            response.sendRedirect("list-bill");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -11,8 +12,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "ListAccountInLog", value = "/ListAccountInLog")
-public class ListAccountInLog extends HttpServlet {
+@WebServlet(name = "ListLog", value = "/ListLog")
+public class ListLog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -20,25 +21,24 @@ public class ListAccountInLog extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
-            } else if (!CustomerService.allow_access("Quản lý khách hàng",customer.getPermission())) {
-                request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
             String indexPage = request.getParameter("index");
+            if(indexPage==null){
+                indexPage="1";
+            }
             int index = Integer.parseInt(indexPage);
             int pre = index - 1;
             int next = index + 1;
 
-            List<Customer> list = ProductService.onePageCustomer(index);
+            List<Log> list = ProductService.onePageLog(index);
 
-            int n = ProductService.getTotalCustomer();
-            int endPage = n/8;
-            if(n % 8 != 0){
+            int n = ProductService.getTotalLog();
+            int endPage = n/10;
+            if(n % 10 != 0){
                 endPage++;
             }
 

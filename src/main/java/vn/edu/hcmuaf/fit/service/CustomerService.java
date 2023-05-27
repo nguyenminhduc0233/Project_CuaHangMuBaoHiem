@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import vn.edu.hcmuaf.fit.Database.DBConnect;
 import vn.edu.hcmuaf.fit.model.Customer;
 
+import javax.servlet.http.HttpSession;
 import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -241,6 +241,7 @@ public class CustomerService {
         }
     }
     public static boolean allow_service(int id){
+        if(id==-1)return true;
         boolean check = false;
         int allows = 0;
         DBConnect dbConnect = DBConnect.getInstance();
@@ -314,13 +315,26 @@ public class CustomerService {
 
     public static void changeAllow(int id){
         try{
+            int permission=0;
+            String service="";
+            String action="";
             int allow = 0;
             if(allow_service(id)){allow=0;}
             else{allow=1;}
             DBConnect dbConnect = DBConnect.getInstance();
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("update manager_permissions set allow = ? where id = ?");
+            PreparedStatement prs1 = dbConnect.getConnection().prepareStatement("select permission, service, action from manager_permissions where id=?");
+            prs1.setInt(1,id);
+            ResultSet rs1 = prs1.executeQuery();
+            if(rs1.next()){
+                permission = rs1.getInt("permission");
+                service+= rs1.getString("service");
+                action+= rs1.getString("action");
+            }
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("update manager_permissions set allow = ? where permission=? and service=? and action=?");
             prs.setInt(1, allow);
-            prs.setInt(2,id);
+            prs.setInt(2,permission);
+            prs.setString(3,service);
+            prs.setString(4,action);
             prs.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -378,14 +392,29 @@ public class CustomerService {
         }
         return result;
     }
-    public static String checkPermission(int permission){
-        String result = "";
-        if(permission==1){
-            result+="Quản lý";
-        }else if(permission==0){
-            result+="Khách hàng";
+    public static List<Integer> getListIdServiceByName(String name){
+        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> role = new ArrayList<Integer>();
+        role.add(1);role.add(2);role.add(3);
+        List<String> actions = new ArrayList<String>();
+        actions.add("CREATE");actions.add("DELETE");actions.add("EDIT");actions.add("VIEW");
+        for(int r:role){
+            for(String a:actions){
+                try{
+                    PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from manager_permissions where service = ? and permission=? and action=? ");
+                    prs.setString(1,name);
+                    prs.setInt(2,r);
+                    prs.setString(3,a);
+                    ResultSet rs = prs.executeQuery();
+                    if(rs.next()){
+                        list.add(rs.getInt(1));
+                    }
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+            }
         }
-        return result;
+        return list;
     }
     public static List<Integer> getListIdPermission(){
         List<Integer> list = new ArrayList<Integer>();
@@ -400,25 +429,172 @@ public class CustomerService {
         return list;
     }
 
-    public static boolean allow_access(String service, int permission){
-        if(permission==2){return true;}
+    // lấy id của bảng manager_paermission để kiểm tra access
+    public static int id_access(String service, int permission, String action){
+        if(permission==0) return -1;
         int result = 0;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select allow from manager_permissions where service=? and permission=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from manager_permissions where service=? and permission=? and action =?");
             prs.setString(1,service);
             prs.setInt(2,permission);
+            prs.setString(3,action);
             ResultSet rs = prs.executeQuery();
-            while (rs.next()){
-                result = rs.getInt("allow");
+            if (rs.next()){
+                result = rs.getInt("id");
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
-        if(result==0){
-            return false;
-        }else{
-            return true;
+        return result;
+    }
+
+    public static void change_role(int id) {
+        try {
+            int permission = ProductService.getCustomer(id).getPermission();
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customer set permission = ? where id = ?");
+            if(permission==0){
+                prs.setInt(1,1);
+                prs.setInt(2,id);
+            } else if (permission==1) {
+                prs.setInt(1,0);
+                prs.setInt(2,id);
+            }
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+    }
+    public static String getRole(int permission){
+        switch (permission){
+            case 0:
+                return "Admin";
+            case 1:
+                return "Quản lý";
+            case 2:
+                return "Nhân viên";
+            case 3:
+                return "Khách hàng";
+            default:return "Không có chức vụ";
+        }
+    }
+    // lay gia tri int permission tu vai tro
+    public static int getPermissonByRole(String permission){
+        switch (permission){
+            case "Admin":
+                return 0;
+            case "Quản lý":
+                return 1;
+            case "Nhân viên":
+                return 2;
+            case "Khách hàng":
+                return 3;
+            default:return -1;
+        }
+    }
+    public static String getActionById(int id){
+        String result = "";
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select action from manager_permissions where id = ?");
+            prs.setInt(1,id);
+            ResultSet rs = prs.executeQuery();
+            while (rs.next()){
+                result = rs.getString("action");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public static List<Customer> getListCustomerWithoutAdmin(){
+        List<Customer> list = new ArrayList<Customer>();
+        List<Customer> list_data = ProductService.getData_Customer();
+        for(Customer c:list_data){
+            if(c.getPermission()!=0){
+                list.add(c);
+            }
+        }
+        return list;
+    }
+    public static List<String> getListRole(int permission){
+        List<String> list = new ArrayList<String>();
+        list.add(getRole(permission));
+        for(int r:getRoleOfPermission()){
+            if(r!=permission){
+                list.add(getRole(r));
+            }
+        }
+        return list;
+    }
+    // lay ds cac vai tro cua cac tai khoan
+    public static List<Integer> getRoleOfPermission(){
+        List<Integer> list = new ArrayList<Integer>();
+        try{
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select distinct permission from manager_permissions");
+            while(rs.next()){
+                list.add(rs.getInt(1));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+    // cap nhat quyen han nguoi dung
+    public static void updatePermission(int id, int permission){
+        try{
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customer set permission = ? where id_customer =?");
+            prs.setInt(1,permission);
+            prs.setInt(2,id);
+            prs.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static boolean checkActiveSessions(HttpSession session, String username){
+        Object value = session.getAttribute(username);
+        if(value!=null){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+    public static List<Customer> onePageLoadCus(int index, List<Customer> listCus){
+        List<Customer> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = start + 9;
+        if(listCus.size()<=end){
+            end = listCus.size()-1;
+        }
+        for(int i=start;i<end+1;i++){
+            list.add(listCus.get(i));
+        }
+        return list;
+    }
+    public static List<Integer> onePageLoadId(int index, List<Integer> listInt){
+        List<Integer> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = start + 9;
+        if(listInt.size()<=end){
+            end = listInt.size()-1;
+        }
+        for(int i=start;i<end+1;i++){
+            list.add(listInt.get(i));
+        }
+        return list;
+    }
+    public static List<Customer> findCusWthoutAdmin(String para){
+        List<Customer> list = new ArrayList<Customer>();
+        DBConnect dbConnect = DBConnect.getInstance();
+        Statement statement = dbConnect.get();
+        try {
+            ResultSet rs = statement.executeQuery("select id_customer from customer where name like '%" + para + "%' and permission != 0 ");
+            while (rs.next()) {
+                list.add(ProductService.getCustomer(rs.getInt("id_customer")));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {

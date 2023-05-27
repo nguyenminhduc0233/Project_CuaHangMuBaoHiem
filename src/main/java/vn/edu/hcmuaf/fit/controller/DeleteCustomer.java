@@ -26,7 +26,7 @@ public class DeleteCustomer extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() == 0) {
+            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",customer.getPermission(),"DELETE"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
@@ -34,17 +34,15 @@ public class DeleteCustomer extends HttpServlet {
                 log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
                 log.setLevel(Log.WARNING);
                 return;
-            } else if (!CustomerService.allow_access("Xóa khách hàng",customer.getPermission())) {
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
-                return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));
             ProductService.delete_customer(id_Cus);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
+
 
             log.setSrc(this.name + "DELETE CUSTOMER");
             log.setContent("DELETE CUSTOMER " + id_Cus + " AT: Username - "  + username);
             LogService.log(log);
+            response.sendRedirect(request.getHeader("Referer"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

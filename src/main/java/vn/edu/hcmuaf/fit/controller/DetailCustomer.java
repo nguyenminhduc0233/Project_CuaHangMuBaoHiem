@@ -27,16 +27,13 @@ public class DetailCustomer extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.name, "", 0);
             cus = CustomerService.customer(username);
-            if (cus == null || cus.getPermission() == 0) {
+            if (cus == null || cus.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",cus.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
                 log.setSrc(this.name + "LOGIN FALSE");
                 log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
                 log.setLevel(Log.WARNING);
-                return;
-            } else if (!CustomerService.allow_access("Chỉnh sửa thông tin khách hàng",cus.getPermission())) {
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/list-customer");
                 return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));

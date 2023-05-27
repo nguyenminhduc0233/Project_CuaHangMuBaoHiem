@@ -51,6 +51,7 @@
                     <input type="text" name="text" class="form-control" placeholder="Nhập từ khóa cần tìm kiếm">
                     <div class="input-group-append">
                         <input type="submit" value="Tìm kiếm" class="input-group-text bg-transparent text-primary">
+                        <input hidden name="index" value="1">
                         <%--                                <i class="fa fa-search"></i>--%>
                     </div>
                 </div>
@@ -97,8 +98,8 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="/Project_CuaHangMuBaoHiem_war/Home" class="nav-item nav-link">Trang chủ</a>
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + 1%>" class="nav-item nav-link">Sản phẩm</a>
-                        <a href="list_brand.jsp" class="nav-item nav-link">Thương hiệu</a>
+                        <a href="/Project_CuaHangMuBaoHiem_war/ListPro" class="nav-item nav-link">Sản phẩm</a>
+                        <a href="/Project_CuaHangMuBaoHiem_war/list-brand" class="nav-item nav-link">Thương hiệu</a>
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0">
@@ -124,7 +125,7 @@
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>
                                     <%
-                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()!=0){
+                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==0){
                                     %>
                                     <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct" class="dropdown-item text-primary">Trang quản lý</a>
                                     <%}%>
