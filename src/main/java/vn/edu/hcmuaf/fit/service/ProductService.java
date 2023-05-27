@@ -2244,7 +2244,6 @@ public class ProductService {
             while (rs.next()) {
                 if (count == 3) break;
                 product = getProduct(rs.getInt("id_product"));
-                System.out.println(rs.getInt(1) + " " + rs.getInt("c"));
                 product.setQuantity(rs.getInt("c"));
                 list.add(product);
                 count++;
@@ -2275,6 +2274,7 @@ public class ProductService {
                 list.add(product);
                 count++;
             }
+            count=0;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -2451,7 +2451,12 @@ public class ProductService {
 //        }
 
 //        deleteComment(15);
-        System.out.println(findProductReturn(1,"Nón").size());
+//        System.out.println(findProductReturn(1,"Nón").size());
 //        System.out.println(getTotalProduct());
+//        for(Product p : topThreeByYear()){
+//            System.out.println(p.getId());
+//        }
+        System.out.println(topThreeByMonth().size());
+//        System.out.println(LocalDate.now().getYear());
         }
 }
