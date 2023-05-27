@@ -39,7 +39,7 @@ public class CustomerService {
 
     public static void changePassword(String username, String pass_old, String pass_new) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select username, password from customer where username = ? and password = ?";
+        String sql = "select username, password from customers where username = ? and password = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         pre.setString(2, pass_old);
@@ -50,14 +50,14 @@ public class CustomerService {
             sb.append("Trân trọng cảm ơn! \n");
             sb.append("Đội ngũ bảo mật HelmetShop.");
             MailService.sendMail(rs.getString("email"), "Thay đổi mật khẩu - HelmetShop", sb.toString());
-            String change = "update customer set password = '" + pass_new + "' where username = '" + username + "';";
+            String change = "update customers set password = '" + pass_new + "' where username = '" + username + "';";
             pre.executeUpdate(change);
         }
     }
 
     public static void addCustomer(String username, String password, String name, String email,int typeAccount) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customer(name,email,phone,address,username,password,permission,active,create_date,countLock, typeAccount) values (?,?,?,?,?,?,0,1,?,0,?)");
+        PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into customers(name,email,phone,address,username,password,permission,active,create_date,countLock, typeAccount) values (?,?,?,?,?,?,0,1,?,0,?)");
         ps.setString(1,name);
         ps.setString(2,email);
         ps.setString(3,"");
@@ -73,7 +73,7 @@ public class CustomerService {
     public static void resetPassword(String email) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
         String password = GetRandom();
-        String sql = "select email, password from customer where email = ?";
+        String sql = "select email, password from customers where email = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, email);
         ResultSet rs = pre.executeQuery();
@@ -86,7 +86,7 @@ public class CustomerService {
             sb.append("Trân trọng cảm ơn! \n");
             sb.append("Đội ngũ bảo mật HelmetShop.");
             MailService.sendMail(email, "Đặt lại mật khẩu - HelmetShop", sb.toString());
-            String reset = "update customer set password = '" + toMD5(password) + "' where email = '" + email + "';";
+            String reset = "update customers set password = '" + toMD5(password) + "' where email = '" + email + "';";
             pre.executeUpdate(reset);
         }
     }
@@ -94,7 +94,7 @@ public class CustomerService {
     public static Customer customer(String username) throws SQLException {
         Customer customer = null;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select name, email, phone, address, permission, typeAccount from customer where username = ?";
+        String sql = "select name, email, phone, address, permission, typeAccount from customers where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
@@ -107,7 +107,7 @@ public class CustomerService {
     public static boolean checkLogin(String username, String password) throws SQLException {
         boolean isLogin = false;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select username, password from customer where username = ? and password = ?";
+        String sql = "select username, password from customers where username = ? and password = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         pre.setString(2, password);
@@ -120,7 +120,7 @@ public class CustomerService {
     public static boolean checkLoginLock(String username, String password) throws SQLException {
         boolean isLogin = false;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select username, password from customer where username = ? and password = ?";
+        String sql = "select username, password from customers where username = ? and password = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         pre.setString(2, password);
@@ -133,7 +133,7 @@ public class CustomerService {
     public static boolean checkUsername(String username) throws SQLException {
         boolean isUsername = false;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select username from customer where username = ?";
+        String sql = "select username from customers where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
@@ -146,7 +146,7 @@ public class CustomerService {
     public static boolean checkEmail(String email) throws SQLException {
         boolean isEmail = false;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select email from customer where email = ?";
+        String sql = "select email from customers where email = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, email);
         ResultSet rs = pre.executeQuery();
@@ -172,7 +172,7 @@ public class CustomerService {
     public static int checkActive(String username) throws SQLException {
         int isActive = 0;
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select username, active from customer where username = ?";
+        String sql = "select username, active from customers where username = ?";
         PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
         pre.setString(1, username);
         ResultSet rs = pre.executeQuery();
@@ -186,7 +186,7 @@ public class CustomerService {
     public static void checkLock(String username){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customer where username=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customers where username=?");
             ps.setString(1,username);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -200,7 +200,7 @@ public class CustomerService {
     public static void lock(String username){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set active=? where username=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customers set active=? where username=?");
             ps.setString(1,"0");
             ps.setString(2, username);
             ps.executeUpdate();
@@ -212,7 +212,7 @@ public class CustomerService {
         int count= 0;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customer where username=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select countLock from customers where username=?");
             ps.setString(1,username);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -224,7 +224,7 @@ public class CustomerService {
     public static void plusLock(String username){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set countLock= countLock +1 where username=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customers set countLock= countLock +1 where username=?");
             ps.setString(1,username);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -233,7 +233,7 @@ public class CustomerService {
     public static void resetLock(String username){
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customer set countLock= ? where username=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update customers set countLock= ? where username=?");
             ps.setInt(1,0);
             ps.setString(2,username);
             ps.executeUpdate();
@@ -451,7 +451,7 @@ public class CustomerService {
     public static void change_role(int id) {
         try {
             int permission = ProductService.getCustomer(id).getPermission();
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customer set permission = ? where id = ?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customers set permission = ? where id = ?");
             if(permission==0){
                 prs.setInt(1,1);
                 prs.setInt(2,id);
@@ -541,7 +541,7 @@ public class CustomerService {
     // cap nhat quyen han nguoi dung
     public static void updatePermission(int id, int permission){
         try{
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customer set permission = ? where id_customer =?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update customers set permission = ? where id_customer =?");
             prs.setInt(1,permission);
             prs.setInt(2,id);
             prs.executeUpdate();
@@ -587,7 +587,7 @@ public class CustomerService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id_customer from customer where name like '%" + para + "%' and permission != 0 ");
+            ResultSet rs = statement.executeQuery("select id_customer from customers where name like '%" + para + "%' and permission != 0 ");
             while (rs.next()) {
                 list.add(ProductService.getCustomer(rs.getInt("id_customer")));
             }
