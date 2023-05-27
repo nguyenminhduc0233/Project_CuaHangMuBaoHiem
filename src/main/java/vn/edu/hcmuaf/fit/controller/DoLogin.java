@@ -50,6 +50,13 @@ public class DoLogin extends HttpServlet {
                     request.getRequestDispatcher("login.jsp").forward(request, response);
 
                 }
+                if(!CustomerService.checkLogin(username, CustomerService.toMD5(password)) && !CustomerService.checkUsername(username)){
+                    CustomerService.checkLock(username);
+                    CustomerService.plusLock(username);
+                    request.setAttribute("error", "Người dùng nhập không đúng Tên đăng nhập hoặc Mật khẩu.");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+
+                }
             }
             LogService.log(log);
 
