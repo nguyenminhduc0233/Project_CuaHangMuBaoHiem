@@ -2440,6 +2440,15 @@ public class ProductService {
         }
         return list;
     }
+    public static List<Product> onePageDisplayProduct(int index, List<Product> listPro){
+        List<Product> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = Math.min(start+24,listPro.size()-1);
+        for(int i=start;i<end+1;i++){
+            list.add(listPro.get(i));
+        }
+        return list;
+    }
     public static void main(String[] args) throws SQLException {
 //        List<BillDetail> list = new ArrayList<>();
 //        list.add(new BillDetail(1,1,400000));
