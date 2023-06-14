@@ -26,7 +26,7 @@ public class UpdateImage extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
+            if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 

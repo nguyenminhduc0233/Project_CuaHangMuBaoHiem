@@ -125,7 +125,7 @@
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>
                                     <%
-                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==0){
+                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==0||CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==1||CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==2){
                                     %>
                                     <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct" class="dropdown-item text-primary">Trang quản lý</a>
                                     <%}%>

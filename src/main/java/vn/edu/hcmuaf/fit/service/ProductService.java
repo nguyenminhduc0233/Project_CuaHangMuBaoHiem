@@ -2465,7 +2465,7 @@ public class ProductService {
 //        for(Product p : topThreeByYear()){
 //            System.out.println(p.getId());
 //        }
-        System.out.println(topThreeByMonth().size());
+        System.out.println(getProduct(14).getImg());
 //        System.out.println(LocalDate.now().getYear());
         }
 }
