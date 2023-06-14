@@ -26,8 +26,9 @@ public class RemoveImage extends HttpServlet {
             }
         int id_img= Integer.parseInt(request.getParameter("id_img"));
         String id_product = request.getParameter("id");
+            int pages = Integer.parseInt(request.getParameter("pages"));
         ProductService.removeImage(id_img);
-        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);
+        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product+"&pages="+pages);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

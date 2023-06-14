@@ -36,10 +36,11 @@ public class UpdateImage extends HttpServlet {
                 return;
             }
             int id_img = Integer.parseInt(request.getParameter("id_img"));
+            int pages = Integer.parseInt(request.getParameter("pages"));
             String id_pd = request.getParameter("id");
             String allow = request.getParameter("allow");
             ProductService.updateImage(id_img, allow);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_pd);
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_pd+"&pages="+pages);
 
             log.setSrc(this.namee + "UPDATE IMAGE");
             log.setContent("UPDATE IMAGE AT: Username - "  + username);

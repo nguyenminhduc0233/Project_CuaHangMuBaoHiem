@@ -44,6 +44,7 @@ public class UpdateProduct extends HttpServlet {
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
+            int pages = Integer.parseInt(request.getParameter("pages"));
             String name = request.getParameter("name");
             String price = request.getParameter("price");
             String type = request.getParameter("type");
@@ -51,7 +52,7 @@ public class UpdateProduct extends HttpServlet {
             String discount = request.getParameter("discount");
             String decrispe = request.getParameter("decrispe");
             ProductService.updateProduct(id,name,price,brand,type,discount,decrispe);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id="+id);
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id="+id+"&pages="+pages);
 
             log.setSrc(this.namee + "UPDATE PRODUCT");
             log.setContent("UPDATE PRODUCT " + name + " AT: Username - "  + username);

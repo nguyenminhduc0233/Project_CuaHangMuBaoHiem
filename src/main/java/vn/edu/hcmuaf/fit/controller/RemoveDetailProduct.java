@@ -26,8 +26,9 @@ public class RemoveDetailProduct extends HttpServlet {
             }
         int id_dp= Integer.parseInt(request.getParameter("id_dp"));
         String id_product = request.getParameter("id");
+        int pages = Integer.parseInt(request.getParameter("pages"));
         ProductService.removeDetailProduct(id_dp);
-        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);
+        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product+"&pages="+pages);
     } catch (
     SQLException e) {
         throw new RuntimeException(e);

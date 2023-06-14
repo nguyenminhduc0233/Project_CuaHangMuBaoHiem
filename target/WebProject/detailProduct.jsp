@@ -362,6 +362,7 @@
                 class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
           <form id="addProduct" action="/Project_CuaHangMuBaoHiem_war/UpdateProduct" method="get">
             <input name="id" type="hidden" value="<%= p.getId() %>">
+            <input name="pages" type="hidden" value="<%= request.getAttribute("pages") %>">
             <label  class="block text-sm">
               <span  class="text-gray-700 dark:text-gray-400">Tên sản phẩm</span>
               <input id="name" name="name" required="required"
@@ -479,7 +480,7 @@
                 <form action="/Project_CuaHangMuBaoHiem_war/UpdateDetailProduct">
                   <input type="hidden" name="id" value="<%= p.getId() %>" >
                   <input type="hidden" name="id_dp" value="<%=dp.getId()%>" >
-
+                  <input name="pages" type="hidden" value="<%= request.getAttribute("pages") %>">
                   <td class="px-4 py-3 text-sm">
                     <div><%=dp.getSize()%></div>
                   </td>
@@ -497,7 +498,7 @@
                           <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                         </svg>
                       </button>
-                      <a href="<%="/Project_CuaHangMuBaoHiem_war/RemoveDetailProduct?id="+p.getId()+"&id_dp=" + dp.getId()%>">
+                      <a href="<%="/Project_CuaHangMuBaoHiem_war/RemoveDetailProduct?id="+p.getId()+"&id_dp=" + dp.getId()+"&pages="+request.getAttribute("pages")%>">
                         <button type="button"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Delete">
@@ -529,6 +530,7 @@
           <div style="margin-bottom: 30px; margin-left: 50px;">
             <form id="addDetailProduct" method="get" action="/Project_CuaHangMuBaoHiem_war/AddDetailProduct">
               <input id="id" name="id" type="hidden" value="<%= p.getId() %>">
+              <input name="pages" type="hidden" value="<%= request.getAttribute("pages") %>">
               <input id="size" name="size" type="text" placeholder="Kích thước" required="required">
               <div style="margin-top: 10px; color: red;" id="warning_size"></div>
               <input id="color" name="color" type="text" placeholder="Màu sắc" required="required">
@@ -600,6 +602,7 @@
                 <form action="/Project_CuaHangMuBaoHiem_war/UpdateImage">
                   <input type="hidden" name="id" value="<%= p.getId() %>">
                   <input type="hidden" name="id_img" value="<%= i.getId_dp() %>">
+                  <input name="pages" type="hidden" value="<%= request.getAttribute("pages") %>">
                   <td class="px-4 py-3 text-sm">
                     <select id="allow2" name="allow" class="pix_text">
 
@@ -618,7 +621,7 @@
                         </svg>
                       </button>
 
-                      <a href="<%= "/Project_CuaHangMuBaoHiem_war/RemoveDetailProduct?id="+p.getId()+"&id_img="+i.getId_dp() %>">
+                      <a href="<%= "/Project_CuaHangMuBaoHiem_war/RemoveImage?id="+p.getId()+"&id_img="+i.getId_dp() +"&pages="+request.getAttribute("pages")%>">
                         <button type="button"
                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                 aria-label="Delete">
@@ -649,7 +652,8 @@
         </div>
       </div>
       <div class="container px-6 mx-auto" style="margin-top: 20px;">
-        <form action="<%= "/Project_CuaHangMuBaoHiem_war/UploadImageInDetailProduct?id="+p.getId() %>" method="post" enctype="multipart/form-data">
+        <form action="<%= "/Project_CuaHangMuBaoHiem_war/UploadImageInDetailProduct?id="+p.getId() +"&pages="+request.getAttribute("pages") %>" method="post" enctype="multipart/form-data">
+<%--          <input name="pages" type="hidden" value="<%= request.getAttribute("pages") %>">--%>
           Tải lên hình ảnh:
           <input type="file" name="fileName">
           <button type="submit" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
