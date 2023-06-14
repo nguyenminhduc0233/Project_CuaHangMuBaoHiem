@@ -16,33 +16,32 @@ import java.sql.SQLException;
 
 @WebServlet(name = "ProductDetail", value = "/detail")
 public class ProductDetail extends HttpServlet {
-    String namee = "AUTH ";
+    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.namee, "", 0);
-        String name = request.getParameter("name");
+        String proName = request.getParameter("proName");
+        Log log = new Log(Log.INFO, username, this.name, "", 0);
 
         String id = request.getParameter("id");
-        if(id != null) {
-            Product product = null;
-            try {
+        try {
+            if(id != null) {
+                Product product = null;
                 product = ProductService.getProduct(Integer.parseInt(id));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            request.setAttribute("product",product);
-            request.getRequestDispatcher("detail.jsp").forward(request,response);
-            System.out.println(product);
+                request.setAttribute("product",product);
+                request.getRequestDispatcher("detail.jsp").forward(request,response);
+                System.out.println(product);
 
-            log.setSrc(this.namee + "VIEW");
-            log.setContent("VIEW PRODUCT " + name + ": Username - "  + username);
+                log.setSrc(this.name + "VIEW");
+                log.setContent("VIEW PRODUCT " + proName + ": Username - "  + username);
 
-        }else
-            response.sendError(404,"Product not found");
+            }else response.sendError(404,"Product not found");
+            LogService.log(log);
 
-        LogService.log(log);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

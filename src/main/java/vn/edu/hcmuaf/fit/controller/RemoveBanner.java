@@ -21,10 +21,15 @@ public class RemoveBanner extends HttpServlet {
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
         try {
+            Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0 || !CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ", customer.getPermission(), "DELETE"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+
+                log.setSrc(this.namee + "INVALID ACCOUNT");
+                log.setContent(username + " IS NOT ADMIN");
+                log.setLevel(Log.WARNING);
                 return;
             }
         }catch (SQLException e){
@@ -36,7 +41,7 @@ public class RemoveBanner extends HttpServlet {
 
         Log log = new Log(Log.INFO, username, this.namee, "", 0);
         log.setSrc(this.namee + "REMOVE BANNER");
-        log.setContent("REMOVE BANNER AT: Username - "  + username);
+        log.setContent("REMOVE BANNER: ID - " + id + " SUCCESS: Admin - "  + username);
         LogService.log(log);
     }
 

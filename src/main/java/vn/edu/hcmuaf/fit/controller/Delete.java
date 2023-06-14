@@ -17,7 +17,7 @@ public class Delete extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Log log = new Log(Log.INFO, username, this.namee, "", 0);
-        String name = request.getParameter("name");
+        String proName = request.getParameter("proName");
 
         String id = request.getParameter("delete");
         Cart cart = (Cart) request.getSession().getAttribute("cart");
@@ -26,7 +26,7 @@ public class Delete extends HttpServlet {
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ListProductInCart");
 
         log.setSrc(this.namee + "REMOVE PRODUCT FROM CART");
-        log.setContent("REMOVE " + name + " SUCCESS: Username - "  + username);
+        log.setContent("REMOVE " + proName + " SUCCESS: Username - "  + username);
         LogService.log(log);
     }
 

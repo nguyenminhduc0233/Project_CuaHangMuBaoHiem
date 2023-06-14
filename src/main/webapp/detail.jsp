@@ -128,6 +128,7 @@
                     <strong class="text-dark mr-3">Kích thước:</strong>
                     <form id="size" action="/Project_CuaHangMuBaoHiem_war/AddDetail">
                         <input type="hidden" name="id" value="<%= p.getId() %>">
+                        <input type="hidden" name="proName" value="<%= p.getName() %>">
                             <% int i=1; for(String size : p.getListSize()){ i++;%>
                         <div class="custom-control custom-radio custom-control-inline">
                             <input type="radio" required="required" class="custom-control-input" id="size-<%=i%>" name="size"  value="<%= size %>">

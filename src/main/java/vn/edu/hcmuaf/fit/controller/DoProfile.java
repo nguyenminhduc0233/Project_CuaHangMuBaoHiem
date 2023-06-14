@@ -16,7 +16,6 @@ import java.sql.SQLException;
 
 @WebServlet(name = "DoProfile", value = "/DoProfile")
 public class DoProfile extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -29,9 +28,8 @@ public class DoProfile extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         DBConnect dbConnect = DBConnect.getInstance();
-        String sql = "select name, phone, address from customer where username = ?";
+        String sql = "select name, phone, address from customers where username = ?";
         try {
-            Log log = new Log(Log.INFO, username, this.name, "", 0);
             PreparedStatement pre = dbConnect.getConnection().prepareStatement(sql);
             pre.setString(1, username);
             ResultSet rs = pre.executeQuery();
@@ -40,20 +38,14 @@ public class DoProfile extends HttpServlet {
                     request.setAttribute("error", "Người dùng không được để trống thông tin khi cập nhật.");
                     request.getRequestDispatcher("account.jsp").forward(request, response);
 
-                    log.setSrc(this.name + "EDIT PROFILE FALSE");
-                    log.setContent("EDIT PROFILE FALSE: Username - " + username);
-                    log.setLevel(Log.WARNING);
                 } else {
                     String change = "update customer set name = '" + name + "', phone = '" + phone + "', address = '" + address + "' where username ='" + username + "';";
                     pre.executeUpdate(change);
                     request.setAttribute("success", "Thay đổi thông tin thành công");
                     request.getRequestDispatcher("edit-account.jsp").forward(request, response);
 
-                    log.setSrc(this.name + "EDIT PROFILE");
-                    log.setContent("EDIT PROFILE SUCCESS: Username - "  + username);
                 }
             }
-            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

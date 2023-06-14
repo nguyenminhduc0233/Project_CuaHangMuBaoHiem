@@ -20,12 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "FilterProduct", value = "/filter-product")
 public class FilterProduct extends HttpServlet {
-    String name = "AUTH";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
 
         String[] price = request.getParameterValues("price");
         String[] star = request.getParameterValues("star");
@@ -58,10 +56,6 @@ public class FilterProduct extends HttpServlet {
         request.setAttribute("endP", endPage);
         request.setAttribute("list",list);
         request.getRequestDispatcher("shop.jsp").forward(request,response);
-
-        log.setSrc(this.name + "Filter");
-        log.setContent("FILTER PRODUCT BY" + price + "," + star + "SUCCESS: Username - "  + username);
-        LogService.log(log);
     }
 
     @Override
