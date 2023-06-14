@@ -195,11 +195,11 @@
                 <div class="col-12">
                     <nav>
                         <ul class="pagination justify-content-center">
-                            <li class="page-item <%=index==1? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + pre%>">Previous</a></li>
+                            <li class="page-item <%=index==1? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListProduct?index=" + pre%>">Previous</a></li>
                             <%for(int i = 1; i <= endPage; i++){%>
-                            <li class="page-item <%=index==i? "active":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + i%>"><%=i%></a></li>
+                            <li class="page-item <%=index==i? "active":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListProduct?index=" + i%>"><%=i%></a></li>
                             <%}%>
-                            <li class="page-item <%=index==endPage? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListPro?index=" + next%>">Next</a></li>
+                            <li class="page-item <%=index==endPage? "disabled":""%>"><a class="page-link" href="<%="/Project_CuaHangMuBaoHiem_war/ListProduct?index=" + next%>">Next</a></li>
                         </ul>
                     </nav>
                 </div>
