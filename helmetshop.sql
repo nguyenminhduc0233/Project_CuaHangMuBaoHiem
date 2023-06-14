@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : Localhost
+ Source Server         : host
  Source Server Type    : MariaDB
- Source Server Version : 100425 (10.4.25-MariaDB)
+ Source Server Version : 100427 (10.4.27-MariaDB)
  Source Host           : localhost:3306
  Source Schema         : helmetshop
 
  Target Server Type    : MariaDB
- Target Server Version : 100425 (10.4.25-MariaDB)
+ Target Server Version : 100427 (10.4.27-MariaDB)
  File Encoding         : 65001
 
- Date: 14/06/2023 18:47:18
+ Date: 14/06/2023 23:03:58
 */
 
 SET NAMES utf8mb4;
@@ -40,25 +40,26 @@ INSERT INTO `banners` VALUES (2, 'img/1011890.jpg', '1', 0.08, 'Số lượng c�
 -- ----------------------------
 DROP TABLE IF EXISTS `bills`;
 CREATE TABLE `bills`  (
-  `id` int(11) NOT NULL,
   `id_customer` int(11) NULL DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NULL DEFAULT NULL,
-  `status` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `address` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `phone` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `status` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `address` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `phone` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `id_transport` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `received_date` date NULL DEFAULT NULL,
+  `fee` int(11) NULL DEFAULT NULL,
+  `total_cost` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of bills
 -- ----------------------------
-INSERT INTO `bills` VALUES (1, 1, '2023-04-17', 'Đã hủy', 'Bến Tre', '0642358126');
-INSERT INTO `bills` VALUES (2, 1, '2023-04-17', 'Đã nhận', 'Lào Cai', '0452368123');
-INSERT INTO `bills` VALUES (3, 2, '2023-04-05', 'Đã nhận', 'Đà Nẵng', '0123458523');
-INSERT INTO `bills` VALUES (4, 3, '2023-03-01', 'Đã nhận', 'Lâm Đồng', '0123512456');
-INSERT INTO `bills` VALUES (5, 2, '2023-04-23', 'Đã nhận', 'Huế', '0124395123');
-INSERT INTO `bills` VALUES (6, 4, '2023-04-12', 'Đã nhận', 'TP Hồ Chí Minh', '0158315298');
-INSERT INTO `bills` VALUES (7, 3, '2023-04-27', 'Đã nhận', 'Hà Nội', '0101235642');
+INSERT INTO `bills` VALUES (3, 3, '2023-06-14', 'Đã nhận', 'Xã Yên Bồng - Huyện Lạc Thủy - Hòa Bình', '0389647802', '7176197afe8e4759bab8f39d00062bc3', '2023-06-18', 69000, 1769000);
+INSERT INTO `bills` VALUES (25, 4, '2023-06-14', 'Đang gửi', 'Xã Kan Hồ - Huyện Mường Tè - Lai Châu', '0389647802', '04045d5ddd1f4bfe959caeca8649058d', '2023-06-18', 69000, 833400);
+INSERT INTO `bills` VALUES (25, 5, '2023-06-14', 'Đã nhận', 'Xã Kan Hồ - Huyện Mường Tè - Lai Châu', '0389647802', '8cea97cf401044afb5a5cda380539bb7', '2023-06-18', 69000, 833400);
+INSERT INTO `bills` VALUES (25, 6, '2023-06-14', 'Đang gửi', 'Xã Yên Bồng - Huyện Lạc Thủy - Hòa Bình', '0389647802', 'a32be30f9ef94d5aa5885c8137927fae', '2023-06-18', 69000, 1769000);
 
 -- ----------------------------
 -- Table structure for comments
@@ -135,64 +136,49 @@ CREATE TABLE `customers`  (
   `countLock` int(11) NULL DEFAULT NULL,
   `typeAccount` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_customer`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
 INSERT INTO `customers` VALUES (1, 'Nguyễn Minh Đức', '20130233@st.hcmuaf.edu.vn', '01235746813', 'huyện Hoài Ân, tỉnh Bình Định', 'dadmin', 'e10adc3949ba59abbe56e057f20f883e', 0, '1', '2023-01-06', 0, 0);
 INSERT INTO `customers` VALUES (2, 'Trần Duy Nhân', '20130346@st.hcmuaf.edu.vn', '09845317563', 'tỉnh Quảng Bình', 'nadmin', 'e10adc3949ba59abbe56e057f20f883e', 1, '1', '2023-01-04', 1, 0);
-INSERT INTO `customers` VALUES (3, 'Trần Đặng Quốc', '20130376@st.hcmuaf.edu.vn', '01875246328', 'huyện An Nhơn, tỉnh Bình Định', 'qadmin', 'e10adc3949ba59abbe56e057f20f883e', 2, '1', '2023-01-07', 0, 0);
+INSERT INTO `customers` VALUES (3, 'Trần Đặng Quốc', '20130376@st.hcmuaf.edu.vn', '01875246328', 'huyện An Nhơn, tỉnh Bình Định', 'qadmin', 'e10adc3949ba59abbe56e057f20f883e', 0, '1', '2023-01-07', 0, 0);
 INSERT INTO `customers` VALUES (4, 'Nguyễn Văn A', 'iam@gmail.com', '01325846985', 'tỉnh Quảng Bình', 'tdn', 'd5773a5bd6df69e407fe820bc9aad3c4', 0, '1', '2023-01-08', 1, 0);
 INSERT INTO `customers` VALUES (23, 'Trần Đặng Quốc', 'trandangquoc271202@gmail.com', '03812365405', 'tỉnh Cà Mau', 'trandangquoc271202@gmail.com', '5ee76f27fbf05b055936b2b764a2a669', 0, '1', '2023-03-04', 0, 1);
 INSERT INTO `customers` VALUES (24, 'N.M.Đức', 'dtest@gmail.com', '01235486586', 'TP Hồ Chí Minh', 'ducuser', 'd6a9a933c8aafc51e55ac0662b6e4d4a', 1, '1', '2023-06-14', 0, 0);
+INSERT INTO `customers` VALUES (25, 'Đặng Quốc Trần', 'trandangquoc2712@gmail.com', '', '', '104738908913076708697', '3360e63dfb1b5c1b9947dca4a2283b77', 0, '1', '2023-06-14', 0, 2);
 
 -- ----------------------------
 -- Table structure for detail_bills
 -- ----------------------------
 DROP TABLE IF EXISTS `detail_bills`;
 CREATE TABLE `detail_bills`  (
-  `id_bill` int(11) NOT NULL,
-  `id_dp` int(11) NOT NULL,
-  `quantitySold` int(11) NULL DEFAULT NULL
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `id_bill` int(11) NULL DEFAULT NULL,
+  `id_dp` int(11) NULL DEFAULT NULL,
+  `quantitySold` int(11) NULL DEFAULT NULL,
+  `price` int(11) NULL DEFAULT NULL
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of detail_bills
 -- ----------------------------
-INSERT INTO `detail_bills` VALUES (1, 1, 3);
-INSERT INTO `detail_bills` VALUES (1, 3, 5);
-INSERT INTO `detail_bills` VALUES (1, 7, 24);
-INSERT INTO `detail_bills` VALUES (1, 8, 24);
-INSERT INTO `detail_bills` VALUES (1, 4, 52);
-INSERT INTO `detail_bills` VALUES (2, 2, 13);
-INSERT INTO `detail_bills` VALUES (2, 5, 14);
-INSERT INTO `detail_bills` VALUES (3, 12, 7);
-INSERT INTO `detail_bills` VALUES (4, 24, 22);
-INSERT INTO `detail_bills` VALUES (5, 20, 83);
-INSERT INTO `detail_bills` VALUES (7, 1, 1);
-INSERT INTO `detail_bills` VALUES (8, 3, 2);
-INSERT INTO `detail_bills` VALUES (9, 2, 65);
-INSERT INTO `detail_bills` VALUES (7, 4, 3);
-INSERT INTO `detail_bills` VALUES (8, 5, 1);
-INSERT INTO `detail_bills` VALUES (5, 7, 0);
-INSERT INTO `detail_bills` VALUES (4, 11, 2);
-INSERT INTO `detail_bills` VALUES (3, 22, 5);
-INSERT INTO `detail_bills` VALUES (10, 1, 3);
-INSERT INTO `detail_bills` VALUES (10, 2, 4);
-INSERT INTO `detail_bills` VALUES (11, 1, 2);
-INSERT INTO `detail_bills` VALUES (12, 5, 1);
+INSERT INTO `detail_bills` VALUES (3, 103, 1, 1700000);
+INSERT INTO `detail_bills` VALUES (4, 92, 1, 764400);
+INSERT INTO `detail_bills` VALUES (5, 92, 1, 764400);
+INSERT INTO `detail_bills` VALUES (6, 103, 1, 1700000);
 
 -- ----------------------------
 -- Table structure for detail_products
 -- ----------------------------
 DROP TABLE IF EXISTS `detail_products`;
 CREATE TABLE `detail_products`  (
-  `id_dp` int(11) NULL DEFAULT NULL,
+  `id_dp` int(11) NOT NULL,
   `id_product` int(11) NULL DEFAULT NULL,
   `size` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `color` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `quantity` int(11) NULL DEFAULT NULL
+  `quantity` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_dp`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -397,7 +383,7 @@ INSERT INTO `detail_products` VALUES (196, 7, 'L', 'đen', 2);
 INSERT INTO `detail_products` VALUES (197, 7, 'X', 'đen', 5);
 INSERT INTO `detail_products` VALUES (198, 8, 'XL', 'đen', 83);
 INSERT INTO `detail_products` VALUES (199, 8, 'L', 'đen', 2);
-INSERT INTO `detail_products` VALUES (200, 8, 'M', 'đen', 1);
+INSERT INTO `detail_products` VALUES (200, 8, 'M', 'đen', 3);
 INSERT INTO `detail_products` VALUES (201, 9, 'X', 'đen', 22);
 INSERT INTO `detail_products` VALUES (202, 9, 'M', 'đen', 31);
 INSERT INTO `detail_products` VALUES (203, 9, 'L', 'đen', 1);
@@ -448,7 +434,6 @@ INSERT INTO `detail_products` VALUES (247, 81, 'M', 'trắng', 32);
 INSERT INTO `detail_products` VALUES (248, 82, 'L', 'xanh', 2);
 INSERT INTO `detail_products` VALUES (249, 82, 'L', 'đen', 34);
 INSERT INTO `detail_products` VALUES (250, 82, 'L', 'đỏ', 12);
-INSERT INTO `detail_products` VALUES (251, 83, 'M', 'hồng', 2);
 INSERT INTO `detail_products` VALUES (251, 83, 'M', 'cam', 3);
 INSERT INTO `detail_products` VALUES (252, 83, 'L', 'xanh', 23);
 INSERT INTO `detail_products` VALUES (253, 84, 'L', 'cam', 1);
@@ -456,8 +441,7 @@ INSERT INTO `detail_products` VALUES (254, 84, 'L', 'xanh', 32);
 INSERT INTO `detail_products` VALUES (255, 84, 'M', 'đen', 21);
 INSERT INTO `detail_products` VALUES (256, 85, 'L', 'trắng', 12);
 INSERT INTO `detail_products` VALUES (257, 85, 'M', 'cam', 21);
-INSERT INTO `detail_products` VALUES (258, 85, 'M', 'đen', 1);
-INSERT INTO `detail_products` VALUES (258, 86, 'L', 'vàng', 10);
+INSERT INTO `detail_products` VALUES (258, 85, 'M', 'đen', 5);
 INSERT INTO `detail_products` VALUES (259, 86, 'L', 'đen', 10);
 INSERT INTO `detail_products` VALUES (260, 86, 'L', 'xanh', 11);
 INSERT INTO `detail_products` VALUES (261, 87, 'L', 'cam', 21);
@@ -492,7 +476,7 @@ INSERT INTO `detail_products` VALUES (289, 97, 'M', 'lam', 2);
 INSERT INTO `detail_products` VALUES (290, 98, 'L', 'hồng', 4);
 INSERT INTO `detail_products` VALUES (291, 99, 'L', 'lam', 12);
 INSERT INTO `detail_products` VALUES (292, 100, 'M', 'xanh', 32);
-INSERT INTO `detail_products` VALUES (0, 100, 'L', 'đen', 4);
+INSERT INTO `detail_products` VALUES (293, 100, 'L', 'đen', 4);
 
 -- ----------------------------
 -- Table structure for images
@@ -504,7 +488,7 @@ CREATE TABLE `images`  (
   `link_image` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `allow` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_img`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 439 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 442 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of images
@@ -810,16 +794,304 @@ CREATE TABLE `importproducts`  (
   `price` decimal(10, 2) NULL DEFAULT NULL,
   `date` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 294 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of importproducts
 -- ----------------------------
-INSERT INTO `importproducts` VALUES (4, 1, 'M', 'đen', '9', 590000.00, '2023-03-14 17:49:32');
-INSERT INTO `importproducts` VALUES (5, 1, 'M', 'xám', '5', 590000.00, '2023-03-14 08:41:07');
-INSERT INTO `importproducts` VALUES (6, 1, 'L', 'cam', '4', 600000.00, '2023-03-14 08:47:21');
-INSERT INTO `importproducts` VALUES (7, 1, 'M', 'đen', '2', 620000.00, '2023-03-18 09:20:41');
-INSERT INTO `importproducts` VALUES (8, 1, 'M', 'đen', '2', 630000.00, '2023-03-18 09:21:55');
+INSERT INTO `importproducts` VALUES (1, 1, 'M', 'xám', '2', 630000.00, NULL);
+INSERT INTO `importproducts` VALUES (2, 1, 'L', 'cam', '0', 630000.00, NULL);
+INSERT INTO `importproducts` VALUES (3, 1, 'M', 'đen', '0', 630000.00, NULL);
+INSERT INTO `importproducts` VALUES (4, 10, 'X', 'đen', '20', 500000.00, NULL);
+INSERT INTO `importproducts` VALUES (5, 11, 'L', 'cam', '12', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (6, 11, 'L', 'vàng', '3', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (7, 11, 'L', 'đen', '4', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (8, 11, 'L', 'trắng', '5', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (9, 11, 'X', 'vàng', '6', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (10, 11, 'M', 'trắng', '7', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (11, 11, 'M', 'đen', '8', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (12, 12, 'L', 'đen', '11', 1000000.00, NULL);
+INSERT INTO `importproducts` VALUES (13, 12, 'M', 'đen', '5', 1000000.00, NULL);
+INSERT INTO `importproducts` VALUES (14, 13, 'L', 'đen', '22', 1550000.00, NULL);
+INSERT INTO `importproducts` VALUES (15, 13, 'L', 'xám', '11', 1550000.00, NULL);
+INSERT INTO `importproducts` VALUES (16, 13, 'M', 'đen', '3', 1550000.00, NULL);
+INSERT INTO `importproducts` VALUES (17, 13, 'M', 'xám', '5', 1550000.00, NULL);
+INSERT INTO `importproducts` VALUES (18, 14, 'M', 'đen', '4', 340000.00, NULL);
+INSERT INTO `importproducts` VALUES (19, 14, 'M', 'xám', '5', 340000.00, NULL);
+INSERT INTO `importproducts` VALUES (20, 14, 'M', 'xanh', '6', 340000.00, NULL);
+INSERT INTO `importproducts` VALUES (21, 14, 'M', 'nâu', '7', 340000.00, NULL);
+INSERT INTO `importproducts` VALUES (22, 15, 'L', 'hồng', '23', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (23, 15, 'L', 'tím', '4', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (24, 15, 'X', 'sữa', '1', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (25, 15, 'X', 'đen', '2', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (26, 15, 'XL', 'nâu', '1', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (27, 15, 'M', 'xanh', '2', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (28, 15, 'M', 'trắng', '12', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (29, 15, 'L', 'nhám', '1', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (30, 15, 'M', 'hồng', '21', 310000.00, NULL);
+INSERT INTO `importproducts` VALUES (31, 16, 'M', 'đen', '23', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (32, 16, 'L', 'đen', '23', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (33, 17, 'M', 'lam', '23', 430000.00, NULL);
+INSERT INTO `importproducts` VALUES (34, 17, 'L', 'cam', '23', 430000.00, NULL);
+INSERT INTO `importproducts` VALUES (35, 17, 'L', 'xanh', '23', 430000.00, NULL);
+INSERT INTO `importproducts` VALUES (36, 17, 'XL', 'xám', '23', 430000.00, NULL);
+INSERT INTO `importproducts` VALUES (37, 17, 'M', 'đỏ', '23', 430000.00, NULL);
+INSERT INTO `importproducts` VALUES (38, 18, 'M', 'đỏ', '3', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (39, 18, 'M', 'vàng', '4', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (40, 18, 'L', 'lam', '5', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (41, 18, 'M', 'cam', '5', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (42, 18, 'M', 'đen', '6', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (43, 19, 'M', 'đen', '4', 5300000.00, NULL);
+INSERT INTO `importproducts` VALUES (44, 19, 'L', 'đen', '5', 5300000.00, NULL);
+INSERT INTO `importproducts` VALUES (45, 19, 'XL', 'đen', '6', 5300000.00, NULL);
+INSERT INTO `importproducts` VALUES (46, 19, 'X', 'đen', '7', 5300000.00, NULL);
+INSERT INTO `importproducts` VALUES (47, 2, 'S', 'đen', '8', 1100000.00, NULL);
+INSERT INTO `importproducts` VALUES (48, 20, 'L', 'đen', '3', 730000.00, NULL);
+INSERT INTO `importproducts` VALUES (49, 20, 'M', 'đen', '4', 730000.00, NULL);
+INSERT INTO `importproducts` VALUES (50, 21, 'M', 'đen', '5', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (51, 21, 'L', 'đen', '6', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (52, 21, 'XL', 'đen', '2', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (53, 22, 'M', 'đen', '5', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (54, 22, 'XL', 'đen', '5', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (55, 23, 'X', 'đen', '5', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (56, 23, 'M', 'đen', '12', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (57, 23, 'L', 'đen', '11', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (58, 23, 'XL', 'đen', '7', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (59, 24, 'M', 'xám', '4', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (60, 24, 'L', 'xám', '3', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (61, 24, 'X', 'xám', '2', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (62, 24, 'XL', 'xám', '3', 6200000.00, NULL);
+INSERT INTO `importproducts` VALUES (63, 25, 'M', 'xanh', '2', 950000.00, NULL);
+INSERT INTO `importproducts` VALUES (64, 25, 'X', 'đỏ', '4', 950000.00, NULL);
+INSERT INTO `importproducts` VALUES (65, 25, 'XL', 'vàng', '2', 950000.00, NULL);
+INSERT INTO `importproducts` VALUES (66, 26, 'M', 'xanh', '3', 1180000.00, NULL);
+INSERT INTO `importproducts` VALUES (67, 26, 'L', 'đen', '5', 1180000.00, NULL);
+INSERT INTO `importproducts` VALUES (68, 26, 'M', 'trắng', '4', 1180000.00, NULL);
+INSERT INTO `importproducts` VALUES (69, 26, 'L', 'xám', '6', 1180000.00, NULL);
+INSERT INTO `importproducts` VALUES (70, 26, 'XL', 'xám', '7', 1180000.00, NULL);
+INSERT INTO `importproducts` VALUES (71, 27, 'M', 'đen', '5', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (72, 27, 'M', 'xanh', '6', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (73, 27, 'L', 'trắng', '7', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (74, 27, 'M', 'đen', '8', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (75, 27, 'L', 'đen', '20', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (76, 28, 'M', 'trắng', '6', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (77, 28, 'L', 'đen', '6', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (78, 28, 'M', 'xám', '7', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (79, 29, 'M', 'xám', '1', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (80, 29, 'XL', 'xám', '3', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (81, 29, 'L', 'xám', '11', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (82, 3, 'S', 'cam', '8', 590000.00, NULL);
+INSERT INTO `importproducts` VALUES (83, 30, 'M', 'đỏ', '32', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (84, 30, 'X', 'đỏ', '3', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (85, 30, 'XL', 'đỏ', '43', 6000000.00, NULL);
+INSERT INTO `importproducts` VALUES (86, 31, 'L', 'đen', '22', 820000.00, NULL);
+INSERT INTO `importproducts` VALUES (87, 31, 'M', 'trắng', '3', 820000.00, NULL);
+INSERT INTO `importproducts` VALUES (88, 32, 'M', 'đen', '22', 880000.00, NULL);
+INSERT INTO `importproducts` VALUES (89, 32, 'L', 'đen', '22', 880000.00, NULL);
+INSERT INTO `importproducts` VALUES (90, 32, 'XL', 'đen', '22', 880000.00, NULL);
+INSERT INTO `importproducts` VALUES (91, 33, 'M', 'đỏ', '12', 780000.00, NULL);
+INSERT INTO `importproducts` VALUES (92, 33, 'M', 'xám', '32', 780000.00, NULL);
+INSERT INTO `importproducts` VALUES (93, 33, 'L', 'đỏ', '44', 780000.00, NULL);
+INSERT INTO `importproducts` VALUES (94, 33, 'L', 'xám', '1', 780000.00, NULL);
+INSERT INTO `importproducts` VALUES (95, 34, 'M', 'đen', '23', 2900000.00, NULL);
+INSERT INTO `importproducts` VALUES (96, 34, 'L', 'đen', '56', 2900000.00, NULL);
+INSERT INTO `importproducts` VALUES (97, 35, 'M', 'đen', '21', 1900000.00, NULL);
+INSERT INTO `importproducts` VALUES (98, 35, 'XL', 'đen', '12', 1900000.00, NULL);
+INSERT INTO `importproducts` VALUES (99, 36, 'X', 'đỏ', '1', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (100, 36, 'L', 'đỏ', '12', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (101, 37, 'L', 'đen', '12', 750000.00, NULL);
+INSERT INTO `importproducts` VALUES (102, 37, 'M', 'đen', '12', 750000.00, NULL);
+INSERT INTO `importproducts` VALUES (103, 38, 'L', 'đen', '1', 1700000.00, NULL);
+INSERT INTO `importproducts` VALUES (104, 38, 'M', 'đen', '2', 1700000.00, NULL);
+INSERT INTO `importproducts` VALUES (105, 39, 'XL', 'đen', '1', 900000.00, NULL);
+INSERT INTO `importproducts` VALUES (106, 39, 'S', 'đen', '2', 900000.00, NULL);
+INSERT INTO `importproducts` VALUES (107, 39, 'X', 'đen', '1', 900000.00, NULL);
+INSERT INTO `importproducts` VALUES (108, 4, 'S', 'Trắng', '9', 245700.00, NULL);
+INSERT INTO `importproducts` VALUES (109, 40, 'M', 'đỏ', '3', 1200000.00, NULL);
+INSERT INTO `importproducts` VALUES (110, 40, 'L', 'xám', '4', 1200000.00, NULL);
+INSERT INTO `importproducts` VALUES (111, 40, 'X', 'trắng', '5', 1200000.00, NULL);
+INSERT INTO `importproducts` VALUES (112, 40, 'L', 'xanh', '4', 1200000.00, NULL);
+INSERT INTO `importproducts` VALUES (113, 40, 'M', 'trắng', '4', 1200000.00, NULL);
+INSERT INTO `importproducts` VALUES (114, 41, 'M', 'lam', '6', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (115, 41, 'L', 'lam', '6', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (116, 41, 'XL', 'lam', '6', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (117, 42, 'L', 'đen', '8', 350000.00, NULL);
+INSERT INTO `importproducts` VALUES (118, 42, 'M', 'đen', '8', 350000.00, NULL);
+INSERT INTO `importproducts` VALUES (119, 43, 'M', 'vàng', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (120, 43, 'L', 'trắng', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (121, 43, 'X', 'đỏ', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (122, 43, 'XL', 'đen', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (123, 43, 'L', 'xám', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (124, 43, 'L', 'nhám', '8', 650000.00, NULL);
+INSERT INTO `importproducts` VALUES (125, 44, 'L', 'nâu', '7', 270000.00, NULL);
+INSERT INTO `importproducts` VALUES (126, 44, 'XL', 'nâu', '7', 270000.00, NULL);
+INSERT INTO `importproducts` VALUES (127, 45, 'L', 'đỏ', '7', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (128, 45, 'L', 'hồng', '7', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (129, 45, 'L', 'lam', '7', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (130, 45, 'L', 'xám', '8', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (131, 45, 'XL', 'nâu', '8', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (132, 45, 'XL', 'cam', '8', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (133, 45, 'XL', 'xanh', '8', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (134, 46, 'XL', 'hồng', '8', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (135, 46, 'XL', 'vàng', '8', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (136, 46, 'XL', 'kem', '8', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (137, 46, 'L', 'cam', '5', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (138, 46, 'L', 'đỏ', '5', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (139, 46, 'L', 'xám', '5', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (140, 46, 'M', 'trắng', '5', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (141, 46, 'S', 'lam', '4', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (142, 46, 'L', 'đen', '4', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (143, 47, 'L', 'xám', '8', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (144, 47, 'M', 'đỏ', '8', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (145, 47, 'L', 'đen', '8', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (146, 47, 'L', 'lam', '8', 580000.00, NULL);
+INSERT INTO `importproducts` VALUES (147, 48, 'M', 'đỏ', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (148, 48, 'M', 'cam', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (149, 48, 'M', 'xám', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (150, 48, 'L', 'nâu', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (151, 48, 'L', 'lam', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (152, 48, 'X', 'trắng', '14', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (153, 49, 'L', 'tím', '20', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (154, 49, 'M', 'đen', '20', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (155, 49, 'L', 'trắng', '20', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (156, 5, 'L', 'cam', '9', 209000.00, NULL);
+INSERT INTO `importproducts` VALUES (157, 50, 'L', 'hồng', '14', 200000.00, NULL);
+INSERT INTO `importproducts` VALUES (158, 50, 'L', 'vàng', '14', 200000.00, NULL);
+INSERT INTO `importproducts` VALUES (159, 50, 'L', 'xám', '14', 200000.00, NULL);
+INSERT INTO `importproducts` VALUES (160, 50, 'M', 'lam', '14', 200000.00, NULL);
+INSERT INTO `importproducts` VALUES (161, 51, 'L', 'xanh', '31', 280000.00, NULL);
+INSERT INTO `importproducts` VALUES (162, 51, 'M', 'lam', '31', 280000.00, NULL);
+INSERT INTO `importproducts` VALUES (163, 51, 'M', 'đỏ', '31', 280000.00, NULL);
+INSERT INTO `importproducts` VALUES (164, 51, 'L', 'cam', '31', 280000.00, NULL);
+INSERT INTO `importproducts` VALUES (165, 51, 'L', 'hồng', '31', 280000.00, NULL);
+INSERT INTO `importproducts` VALUES (166, 52, 'L', 'xanh', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (167, 52, 'L', 'cam', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (168, 52, 'L', 'đỏ', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (169, 52, 'M', 'hồng', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (170, 52, 'M', 'lam', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (171, 52, 'M', 'vàng', '17', 260000.00, NULL);
+INSERT INTO `importproducts` VALUES (172, 53, 'L', 'xanh', '15', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (173, 53, 'L', 'vàng', '15', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (174, 53, 'XL', 'đỏ', '15', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (175, 53, 'X', 'cam', '15', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (176, 53, 'S', 'cam', '15', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (177, 54, 'M', 'cam', '12', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (178, 54, 'M', 'đỏ', '12', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (179, 54, 'L', 'lam', '12', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (180, 54, 'L', 'xanh', '12', 290000.00, NULL);
+INSERT INTO `importproducts` VALUES (181, 55, 'M', 'vàng', '12', 165000.00, NULL);
+INSERT INTO `importproducts` VALUES (182, 55, 'M', 'lam', '3', 165000.00, NULL);
+INSERT INTO `importproducts` VALUES (183, 55, 'L', 'hồng', '3', 165000.00, NULL);
+INSERT INTO `importproducts` VALUES (184, 55, 'L', 'cam', '1', 165000.00, NULL);
+INSERT INTO `importproducts` VALUES (185, 56, 'M', 'xanh', '8', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (186, 56, 'L', 'xanh', '7', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (187, 57, 'M', 'xanh', '3', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (188, 57, 'XL', 'xanh', '2', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (189, 58, 'M', 'vàng', '1', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (190, 58, 'L', 'vàng', '3', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (191, 59, 'M', 'hồng', '1', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (192, 59, 'S', 'hồng', '5', 250000.00, NULL);
+INSERT INTO `importproducts` VALUES (193, 6, 'M', 'đen', '3', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (194, 6, 'X', 'đen', '15', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (195, 6, 'L', 'đen', '20', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (196, 7, 'L', 'đen', '2', 620000.00, NULL);
+INSERT INTO `importproducts` VALUES (197, 7, 'X', 'đen', '5', 620000.00, NULL);
+INSERT INTO `importproducts` VALUES (198, 8, 'XL', 'đen', '83', 730000.00, NULL);
+INSERT INTO `importproducts` VALUES (199, 8, 'L', 'đen', '2', 730000.00, NULL);
+INSERT INTO `importproducts` VALUES (200, 8, 'M', 'đen', '3', 730000.00, NULL);
+INSERT INTO `importproducts` VALUES (201, 9, 'X', 'đen', '22', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (202, 9, 'M', 'đen', '31', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (203, 9, 'L', 'đen', '1', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (204, 9, 'S', 'đen', '2', 680000.00, NULL);
+INSERT INTO `importproducts` VALUES (205, 62, 'M', 'đen', '13', 0.00, NULL);
+INSERT INTO `importproducts` VALUES (206, 65, '2', 'cam', '1', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (207, 66, '2', 'cam', '2', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (208, 67, 'M', 'đỏ', '5', 1050000.00, NULL);
+INSERT INTO `importproducts` VALUES (209, 67, 'M', 'xanh', '19', 1050000.00, NULL);
+INSERT INTO `importproducts` VALUES (210, 67, 'L', 'trắng', '3', 1050000.00, NULL);
+INSERT INTO `importproducts` VALUES (211, 68, 'L', 'đen', '10', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (212, 68, 'L', 'trắng', '11', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (213, 69, 'M', 'hồng', '20', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (214, 69, 'L', 'đen', '21', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (215, 69, 'L', 'xanh', '2', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (216, 70, 'L', 'đen', '10', 450000.00, NULL);
+INSERT INTO `importproducts` VALUES (217, 71, 'M', 'đen', '20', 2160000.00, NULL);
+INSERT INTO `importproducts` VALUES (218, 71, 'M', 'đỏ', '11', 2160000.00, NULL);
+INSERT INTO `importproducts` VALUES (219, 71, 'M', 'xanh', '39', 2160000.00, NULL);
+INSERT INTO `importproducts` VALUES (220, 72, 'L', 'đen', '29', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (221, 72, 'L', 'xám', '32', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (222, 72, 'M', 'nhám', '12', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (223, 73, 'L', 'đen', '11', 1080000.00, NULL);
+INSERT INTO `importproducts` VALUES (224, 73, 'L', 'cam', '2', 1080000.00, NULL);
+INSERT INTO `importproducts` VALUES (225, 73, 'M', 'xám', '4', 1080000.00, NULL);
+INSERT INTO `importproducts` VALUES (226, 74, 'L', 'vàng', '5', 1300000.00, NULL);
+INSERT INTO `importproducts` VALUES (227, 74, 'M', 'cam', '22', 1300000.00, NULL);
+INSERT INTO `importproducts` VALUES (228, 74, 'M', 'đen', '33', 1300000.00, NULL);
+INSERT INTO `importproducts` VALUES (229, 75, 'M', 'đen', '12', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (230, 75, 'L', 'hồng', '32', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (231, 75, 'L', 'xám', '8', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (232, 76, 'M', 'đen', '32', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (233, 76, 'M', 'đỏ', '2', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (234, 76, 'M', 'trắng', '23', 1500000.00, NULL);
+INSERT INTO `importproducts` VALUES (235, 77, 'L', 'xanh', '32', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (236, 77, 'L', 'đen', '3', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (237, 77, 'L', 'xám', '54', 2400000.00, NULL);
+INSERT INTO `importproducts` VALUES (238, 78, 'L', 'xanh', '21', 2800000.00, NULL);
+INSERT INTO `importproducts` VALUES (239, 79, 'M', 'đen', '32', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (240, 79, 'L', 'vàng', '2', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (241, 79, 'M', 'đỏ', '3', 980000.00, NULL);
+INSERT INTO `importproducts` VALUES (242, 80, 'M', 'xanh', '4', 850000.00, NULL);
+INSERT INTO `importproducts` VALUES (243, 80, 'M', 'xám', '21', 850000.00, NULL);
+INSERT INTO `importproducts` VALUES (244, 80, 'L', 'đen', '21', 850000.00, NULL);
+INSERT INTO `importproducts` VALUES (245, 81, 'M', 'xanh', '3', 1770000.00, NULL);
+INSERT INTO `importproducts` VALUES (246, 81, 'L', 'đỏ', '12', 1770000.00, NULL);
+INSERT INTO `importproducts` VALUES (247, 81, 'M', 'trắng', '32', 1770000.00, NULL);
+INSERT INTO `importproducts` VALUES (248, 82, 'L', 'xanh', '2', 1400000.00, NULL);
+INSERT INTO `importproducts` VALUES (249, 82, 'L', 'đen', '34', 1400000.00, NULL);
+INSERT INTO `importproducts` VALUES (250, 82, 'L', 'đỏ', '12', 1400000.00, NULL);
+INSERT INTO `importproducts` VALUES (251, 83, 'M', 'cam', '3', 700000.00, NULL);
+INSERT INTO `importproducts` VALUES (252, 83, 'L', 'xanh', '23', 700000.00, NULL);
+INSERT INTO `importproducts` VALUES (253, 84, 'L', 'cam', '1', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (254, 84, 'L', 'xanh', '32', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (255, 84, 'M', 'đen', '21', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (256, 85, 'L', 'trắng', '12', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (257, 85, 'M', 'cam', '21', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (258, 85, 'M', 'đen', '5', 570000.00, NULL);
+INSERT INTO `importproducts` VALUES (259, 86, 'L', 'đen', '10', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (260, 86, 'L', 'xanh', '11', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (261, 87, 'L', 'cam', '21', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (262, 87, 'M', 'đỏ', '12', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (263, 87, 'M', 'hồng', '11', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (264, 88, 'L', 'đen', '32', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (265, 88, 'L', 'đỏ', '21', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (266, 88, 'L', 'xanh', '21', 460000.00, NULL);
+INSERT INTO `importproducts` VALUES (267, 89, 'M', 'xám', '2', 550000.00, NULL);
+INSERT INTO `importproducts` VALUES (268, 89, 'M', 'trắng', '3', 550000.00, NULL);
+INSERT INTO `importproducts` VALUES (269, 90, 'L', 'đỏ', '21', 550000.00, NULL);
+INSERT INTO `importproducts` VALUES (270, 90, 'L', 'xám', '21', 550000.00, NULL);
+INSERT INTO `importproducts` VALUES (271, 91, 'M', 'đen', '2', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (272, 91, 'L', 'hồng', '4', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (273, 91, 'L', 'xanh', '32', 400000.00, NULL);
+INSERT INTO `importproducts` VALUES (274, 92, 'M', 'xanh lục', '21', 330000.00, NULL);
+INSERT INTO `importproducts` VALUES (275, 92, 'L', 'xanh dương', '1', 330000.00, NULL);
+INSERT INTO `importproducts` VALUES (276, 92, 'M', 'đen', '21', 330000.00, NULL);
+INSERT INTO `importproducts` VALUES (277, 93, 'L', 'đen', '12', 990000.00, NULL);
+INSERT INTO `importproducts` VALUES (278, 93, 'M', 'xám', '32', 990000.00, NULL);
+INSERT INTO `importproducts` VALUES (279, 93, 'L', 'trắng', '11', 990000.00, NULL);
+INSERT INTO `importproducts` VALUES (280, 94, 'L', 'đen', '23', 380000.00, NULL);
+INSERT INTO `importproducts` VALUES (281, 94, 'M', 'đỏ', '21', 380000.00, NULL);
+INSERT INTO `importproducts` VALUES (282, 94, 'M', 'xanh', '21', 380000.00, NULL);
+INSERT INTO `importproducts` VALUES (283, 95, 'L', 'xanh', '12', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (284, 95, 'M', 'xám', '12', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (285, 95, 'L', 'trắng', '1', 3500000.00, NULL);
+INSERT INTO `importproducts` VALUES (286, 96, 'L', 'đen', '3', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (287, 96, 'L', 'lục', '23', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (288, 96, 'M', 'lam', '23', 390000.00, NULL);
+INSERT INTO `importproducts` VALUES (289, 97, 'M', 'lam', '2', 450000.00, NULL);
+INSERT INTO `importproducts` VALUES (290, 98, 'L', 'hồng', '4', 440000.00, NULL);
+INSERT INTO `importproducts` VALUES (291, 99, 'L', 'lam', '12', 490000.00, NULL);
+INSERT INTO `importproducts` VALUES (292, 100, 'M', 'xanh', '32', 270000.00, NULL);
+INSERT INTO `importproducts` VALUES (293, 100, 'L', 'đen', '4', 270000.00, NULL);
 
 -- ----------------------------
 -- Table structure for logos
@@ -858,7 +1130,7 @@ CREATE TABLE `logs`  (
   `createAt` datetime NULL DEFAULT NULL,
   `status` tinyint(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 681 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 795 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of logs
@@ -1543,6 +1815,120 @@ INSERT INTO `logs` VALUES (677, 0, 'dadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT 
 INSERT INTO `logs` VALUES (678, 0, 'dadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - dadmin', '2023-06-14 18:12:10', 0);
 INSERT INTO `logs` VALUES (679, 0, 'dadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT Yohe 878 nón bảo hiểm 3/4 AT: Username - dadmin', '2023-06-14 18:12:32', 0);
 INSERT INTO `logs` VALUES (680, 0, 'dadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - dadmin', '2023-06-14 18:12:32', 0);
+INSERT INTO `logs` VALUES (681, 0, 'ashq', 'AUTH ', '', '2023-06-14 20:21:39', 0);
+INSERT INTO `logs` VALUES (682, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:21:57', 0);
+INSERT INTO `logs` VALUES (683, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:22:02', 0);
+INSERT INTO `logs` VALUES (684, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:22:05', 0);
+INSERT INTO `logs` VALUES (685, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:23:13', 0);
+INSERT INTO `logs` VALUES (686, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:25:04', 0);
+INSERT INTO `logs` VALUES (687, 0, 'qadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT Mũ bảo hiểm 1/2 SRT 01 AT: Username - qadmin', '2023-06-14 20:25:15', 0);
+INSERT INTO `logs` VALUES (688, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:25:15', 0);
+INSERT INTO `logs` VALUES (689, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 20:26:11', 0);
+INSERT INTO `logs` VALUES (690, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:26:24', 0);
+INSERT INTO `logs` VALUES (691, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:34:30', 0);
+INSERT INTO `logs` VALUES (692, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:38:32', 0);
+INSERT INTO `logs` VALUES (693, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:39:33', 0);
+INSERT INTO `logs` VALUES (694, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:39:36', 0);
+INSERT INTO `logs` VALUES (695, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:39:51', 0);
+INSERT INTO `logs` VALUES (696, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:43:55', 0);
+INSERT INTO `logs` VALUES (697, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:43:59', 0);
+INSERT INTO `logs` VALUES (698, 0, 'qadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT HP 03B tai mèo cute AT: Username - qadmin', '2023-06-14 20:44:00', 0);
+INSERT INTO `logs` VALUES (699, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:00', 0);
+INSERT INTO `logs` VALUES (700, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:06', 0);
+INSERT INTO `logs` VALUES (701, 0, 'qadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT Mũ phượt 3/4 Bulldog Bravo AT: Username - qadmin', '2023-06-14 20:44:11', 0);
+INSERT INTO `logs` VALUES (702, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:11', 0);
+INSERT INTO `logs` VALUES (703, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:16', 0);
+INSERT INTO `logs` VALUES (704, 0, 'qadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT Mũ bảo hiểm 1/2 SRT 01 AT: Username - qadmin', '2023-06-14 20:44:18', 0);
+INSERT INTO `logs` VALUES (705, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:18', 0);
+INSERT INTO `logs` VALUES (706, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:24', 0);
+INSERT INTO `logs` VALUES (707, 0, 'qadmin', 'AUTH UPDATE PRODUCT', 'UPDATE PRODUCT Nón trùm đầu kính ẩn chống nắng GRS 388K AT: Username - qadmin', '2023-06-14 20:44:33', 0);
+INSERT INTO `logs` VALUES (708, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:44:33', 0);
+INSERT INTO `logs` VALUES (709, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:45:05', 0);
+INSERT INTO `logs` VALUES (710, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:45:50', 0);
+INSERT INTO `logs` VALUES (711, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:45:55', 0);
+INSERT INTO `logs` VALUES (712, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:53:38', 0);
+INSERT INTO `logs` VALUES (713, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 20:58:07', 0);
+INSERT INTO `logs` VALUES (714, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:58:14', 0);
+INSERT INTO `logs` VALUES (715, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:58:37', 0);
+INSERT INTO `logs` VALUES (716, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:58:47', 0);
+INSERT INTO `logs` VALUES (717, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:59:16', 0);
+INSERT INTO `logs` VALUES (718, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 20:59:28', 0);
+INSERT INTO `logs` VALUES (719, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:05:10', 0);
+INSERT INTO `logs` VALUES (720, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:05:15', 0);
+INSERT INTO `logs` VALUES (721, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:05:21', 0);
+INSERT INTO `logs` VALUES (722, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:05:31', 0);
+INSERT INTO `logs` VALUES (723, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:05:41', 0);
+INSERT INTO `logs` VALUES (724, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:05:58', 0);
+INSERT INTO `logs` VALUES (725, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:06:08', 0);
+INSERT INTO `logs` VALUES (726, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:07:23', 0);
+INSERT INTO `logs` VALUES (727, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:07:32', 0);
+INSERT INTO `logs` VALUES (728, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:07:40', 0);
+INSERT INTO `logs` VALUES (729, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:07:42', 0);
+INSERT INTO `logs` VALUES (730, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:07:50', 0);
+INSERT INTO `logs` VALUES (731, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:07:51', 0);
+INSERT INTO `logs` VALUES (732, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:08:25', 0);
+INSERT INTO `logs` VALUES (733, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:11:18', 0);
+INSERT INTO `logs` VALUES (734, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:12:46', 0);
+INSERT INTO `logs` VALUES (735, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:12:52', 0);
+INSERT INTO `logs` VALUES (736, 0, 'qadmin', 'AUTH UPDATE IMAGE', 'UPDATE IMAGE AT: Username - qadmin', '2023-06-14 21:12:59', 0);
+INSERT INTO `logs` VALUES (737, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:12:59', 0);
+INSERT INTO `logs` VALUES (738, 0, 'qadmin', 'AUTH UPDATE IMAGE', 'UPDATE IMAGE AT: Username - qadmin', '2023-06-14 21:13:03', 0);
+INSERT INTO `logs` VALUES (739, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:13:03', 0);
+INSERT INTO `logs` VALUES (740, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:15:15', 0);
+INSERT INTO `logs` VALUES (741, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:16:24', 0);
+INSERT INTO `logs` VALUES (742, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:16:31', 0);
+INSERT INTO `logs` VALUES (743, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:16:35', 0);
+INSERT INTO `logs` VALUES (744, 0, 'qadmin', 'AUTH UPDATE IMAGE', 'UPDATE IMAGE AT: Username - qadmin', '2023-06-14 21:16:47', 0);
+INSERT INTO `logs` VALUES (745, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:16:47', 0);
+INSERT INTO `logs` VALUES (746, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:16:53', 0);
+INSERT INTO `logs` VALUES (747, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:18:38', 0);
+INSERT INTO `logs` VALUES (748, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:18:44', 0);
+INSERT INTO `logs` VALUES (749, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:18:47', 0);
+INSERT INTO `logs` VALUES (750, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:18:50', 0);
+INSERT INTO `logs` VALUES (751, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:18:52', 0);
+INSERT INTO `logs` VALUES (752, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 21:20:39', 0);
+INSERT INTO `logs` VALUES (753, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:20:46', 0);
+INSERT INTO `logs` VALUES (754, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:20:57', 0);
+INSERT INTO `logs` VALUES (755, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:21:00', 0);
+INSERT INTO `logs` VALUES (756, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 21:42:24', 0);
+INSERT INTO `logs` VALUES (757, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:25:37', 0);
+INSERT INTO `logs` VALUES (758, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 22:25:43', 0);
+INSERT INTO `logs` VALUES (759, 0, 'qadmin', 'AUTH EDIT PRODUCT', 'EDIT PRODUCT null AT: Username - qadmin', '2023-06-14 22:26:03', 0);
+INSERT INTO `logs` VALUES (760, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:28:10', 0);
+INSERT INTO `logs` VALUES (761, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:28:13', 0);
+INSERT INTO `logs` VALUES (762, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:28:14', 0);
+INSERT INTO `logs` VALUES (763, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:29:16', 0);
+INSERT INTO `logs` VALUES (764, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:29:19', 0);
+INSERT INTO `logs` VALUES (765, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:29:19', 0);
+INSERT INTO `logs` VALUES (766, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:34:05', 0);
+INSERT INTO `logs` VALUES (767, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:34:46', 0);
+INSERT INTO `logs` VALUES (768, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:34:50', 0);
+INSERT INTO `logs` VALUES (769, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:34:50', 0);
+INSERT INTO `logs` VALUES (770, 0, NULL, 'AUTH VIEW', 'VIEW PRODUCT null: Username - null', '2023-06-14 22:38:01', 0);
+INSERT INTO `logs` VALUES (771, 0, NULL, 'AUTH ', '', '2023-06-14 22:38:03', 0);
+INSERT INTO `logs` VALUES (772, 0, NULL, 'AUTH VIEW', 'VIEW PRODUCT null: Username - null', '2023-06-14 22:38:04', 0);
+INSERT INTO `logs` VALUES (773, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:38:43', 0);
+INSERT INTO `logs` VALUES (774, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:44:52', 0);
+INSERT INTO `logs` VALUES (775, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:44:56', 0);
+INSERT INTO `logs` VALUES (776, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:44:58', 0);
+INSERT INTO `logs` VALUES (777, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:44:58', 0);
+INSERT INTO `logs` VALUES (778, 0, NULL, 'AUTH VIEW', 'VIEW PRODUCT null: Username - null', '2023-06-14 22:50:10', 0);
+INSERT INTO `logs` VALUES (779, 0, NULL, 'AUTH ', '', '2023-06-14 22:50:13', 0);
+INSERT INTO `logs` VALUES (780, 0, NULL, 'AUTH VIEW', 'VIEW PRODUCT null: Username - null', '2023-06-14 22:50:13', 0);
+INSERT INTO `logs` VALUES (781, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:52:51', 0);
+INSERT INTO `logs` VALUES (782, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:52:54', 0);
+INSERT INTO `logs` VALUES (783, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:52:56', 0);
+INSERT INTO `logs` VALUES (784, 0, 'qadmin', 'AUTH VIEW', 'VIEW PRODUCT null: Username - qadmin', '2023-06-14 22:52:57', 0);
+INSERT INTO `logs` VALUES (785, 0, 'qadmin', 'AUTH ', '', '2023-06-14 22:53:11', 0);
+INSERT INTO `logs` VALUES (786, 0, '104738908913076708697', 'AUTH VIEW', 'VIEW PRODUCT null: Username - 104738908913076708697', '2023-06-14 22:54:48', 0);
+INSERT INTO `logs` VALUES (787, 0, '104738908913076708697', 'AUTH ', '', '2023-06-14 22:54:50', 0);
+INSERT INTO `logs` VALUES (788, 0, '104738908913076708697', 'AUTH VIEW', 'VIEW PRODUCT null: Username - 104738908913076708697', '2023-06-14 22:54:50', 0);
+INSERT INTO `logs` VALUES (789, 0, NULL, 'AUTH LOGOUT', 'LOGOUT SUCCESS: Username - null', '2023-06-14 22:56:42', 0);
+INSERT INTO `logs` VALUES (790, 0, '104738908913076708697', 'AUTH VIEW', 'VIEW PRODUCT null: Username - 104738908913076708697', '2023-06-14 22:56:52', 0);
+INSERT INTO `logs` VALUES (791, 0, '104738908913076708697', 'AUTH ', '', '2023-06-14 22:56:56', 0);
+INSERT INTO `logs` VALUES (792, 0, '104738908913076708697', 'AUTH VIEW', 'VIEW PRODUCT null: Username - 104738908913076708697', '2023-06-14 22:56:56', 0);
+INSERT INTO `logs` VALUES (793, 0, '104738908913076708697', 'AUTH LOGOUT', 'LOGOUT SUCCESS: Username - 104738908913076708697', '2023-06-14 22:57:49', 0);
+INSERT INTO `logs` VALUES (794, 0, 'qadmin', 'AUTH LOGIN', 'LOGIN SUCCESS: Username - qadmin', '2023-06-14 22:57:54', 0);
 
 -- ----------------------------
 -- Table structure for manager_permissions
@@ -1564,7 +1950,7 @@ CREATE TABLE `manager_permissions`  (
 INSERT INTO `manager_permissions` VALUES (1, 3, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/forms.jsp', 'CREATE');
 INSERT INTO `manager_permissions` VALUES (2, 3, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/Remove', 'DELETE');
 INSERT INTO `manager_permissions` VALUES (3, 3, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/ManageProduct', 'VIEW');
-INSERT INTO `manager_permissions` VALUES (4, 3, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/DetailProduct', 'EDIT');
+INSERT INTO `manager_permissions` VALUES (4, 3, 'quản lý sản phẩm', 1, '/Project_CuaHangMuBaoHiem_war/DetailProduct', 'EDIT');
 INSERT INTO `manager_permissions` VALUES (5, 2, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/forms.jsp', 'CREATE');
 INSERT INTO `manager_permissions` VALUES (6, 2, 'quản lý sản phẩm', 0, '/Project_CuaHangMuBaoHiem_war/Remove', 'DELETE');
 INSERT INTO `manager_permissions` VALUES (7, 2, 'quản lý sản phẩm', 1, '/Project_CuaHangMuBaoHiem_war/ManageProduct', 'VIEW');
@@ -1675,12 +2061,12 @@ INSERT INTO `products` VALUES (1, 'NÓN POC PK01', 630000, 'POC', 'NUADAU', 0, '
 INSERT INTO `products` VALUES (2, 'NÓN POC P16', 1100000, 'POC', 'NUADAU', 0, 'POC P16 là dòng nón xe đạp chất lượng cao, nhập khẩu Fullbox có mặt tại Việt Nam năm 2022. Sản phẩm được thiết kế nguyên khối, cùng màu tem Titan sang trọng, mang lại sự khác biệt so với các phiên bản nón POC trước đây.', '2022-12-14');
 INSERT INTO `products` VALUES (3, 'NÓN BẢO HIỂM FALCON F05', 590000, 'FALCON', 'NUADAU', 0, 'Đúng như tên gọi Nón Poc Falcon F05 được thiết kế có lưỡi trai cách điệu bằng vải phía trước có thể tháo rời được. Form nón gọn nhẹ phù hợp cho cả người lớn và trẻ em.', '2022-12-14');
 INSERT INTO `products` VALUES (4, 'HP 03B tai mèo cute', 245700, 'HP', 'NUADAU', 0, 'Mũ bảo hiểm nữa đầu HP03 gắn thêm phụ kiện siêu dễ thương , tai thỏ , kính phi công.\r\n- Mũ bảo hiểm Hpro HP03 sản phẩm đạt chuẩn an toàn dành cho người đi xe mô tô, xe gắn máy được sản xuất bởi Công Ty Kỹ Thuật Thương Mại Trần Linh. HP', '2022-12-14');
-INSERT INTO `products` VALUES (5, 'Mũ bảo hiểm 1/2 SRT 01', 209000, 'SRT', 'NUADAU', 0, 'Sản phẩm Mũ bảo hiểm 1/2 đầu kèm kính Phi Công THÔNG TIN CHI TIẾT\r\nMũ bảo hiểm nửa đầu lồng ép nhiệt – kèm kính phi công\r\n\r\n– Thương hiệu: SRT – Xuất xứ: Việt Nam\r\n\r\n– Chất liệu vỏ: Nhựa ABS nguyên sinh chống chịu lực va chạm mạnh.\r\n\r\n– Chất liệu mút xốp: EPS chịu lực cao. Lớp mút xốp dày dặn êm ái, thoải mái khi sử dụng\r\n\r\n– Thiết kế form nón theo phong cách hiện đại.\r\n\r\n– Dây khóa chắc chắn, dễ dàng điều chỉnh. Màu sắc nổi bật, thời trang, chóng bong tróc\r\n\r\n– Nước sơn: được sơn bằng công nghệ hiện đại, tạo bề mặt sáng, bóng, nhẵn mịn, không ngã màu.\r\n\r\n– Dây chuyền sản xuất khép kín, công nghệ sản xuất tiên tiến, máy CNC, máy ép nhựa nhập khẩu từ Nhật Bản.\r\n\r\n– Được kiểm định độ bền và chất lượng kĩ lưỡng trước khi xuất xưởng.\r\n\r\n– Sản phẩm có quai đeo chắc chắn, có thể kết hợp với kính đeo quai sau chống chói, chống tia UV\r\n\r\n– Mũ có lớp vải lót bằng chất liệu đặc biệt, có khả năng kháng khuẩn và chống ẩm, giúp giữ cho mũ luôn sạch và da đầu bạn luôn khoẻ mạnh\r\n\r\n– Mũ bảo hiểm mang tông màu đen trơn, phù hợp cho cả nam lẫn nữ\r\n\r\n– Kiểu dáng hợp thời trang, dễ dàng cho bạn trong việc phối trang phục đi làm, đi học hay đi chơi', '2022-12-14');
+INSERT INTO `products` VALUES (5, 'Mũ bảo hiểm 1/2 SRT 01', 209000, 'SRT', 'NUADAU', 0.01, 'Sản phẩm Mũ bảo hiểm 1/2 đầu kèm kính Phi Công THÔNG TIN CHI TIẾT\r\nMũ bảo hiểm nửa đầu lồng ép nhiệt – kèm kính phi công\r\n\r\n– Thương hiệu: SRT – Xuất xứ: Việt Nam\r\n\r\n– Chất liệu vỏ: Nhựa ABS nguyên sinh chống chịu lực va chạm mạnh.\r\n\r\n– Chất liệu mút xốp: EPS chịu lực cao. Lớp mút xốp dày dặn êm ái, thoải mái khi sử dụng\r\n\r\n– Thiết kế form nón theo phong cách hiện đại.\r\n\r\n– Dây khóa chắc chắn, dễ dàng điều chỉnh. Màu sắc nổi bật, thời trang, chóng bong tróc\r\n\r\n– Nước sơn: được sơn bằng công nghệ hiện đại, tạo bề mặt sáng, bóng, nhẵn mịn, không ngã màu.\r\n\r\n– Dây chuyền sản xuất khép kín, công nghệ sản xuất tiên tiến, máy CNC, máy ép nhựa nhập khẩu từ Nhật Bản.\r\n\r\n– Được kiểm định độ bền và chất lượng kĩ lưỡng trước khi xuất xưởng.\r\n\r\n– Sản phẩm có quai đeo chắc chắn, có thể kết hợp với kính đeo quai sau chống chói, chống tia UV\r\n\r\n– Mũ có lớp vải lót bằng chất liệu đặc biệt, có khả năng kháng khuẩn và chống ẩm, giúp giữ cho mũ luôn sạch và da đầu bạn luôn khoẻ mạnh\r\n\r\n– Mũ bảo hiểm mang tông màu đen trơn, phù hợp cho cả nam lẫn nữ\r\n\r\n– Kiểu dáng hợp thời trang, dễ dàng cho bạn trong việc phối trang phục đi làm, đi học hay đi chơi', '2022-12-14');
 INSERT INTO `products` VALUES (6, 'Royal M136 Nón FullFace', 490000, 'Royal', 'FULLFACE', 0, 'Với những người mới chọn mua cho mình một chiếc mũ bảo hiểm fullface, chọn được một chiếc mũ bảo hiểm tốt, đảm bảo an toàn, đẹp, giá cả phải chăng...giữa rất nhiều thương hiệu mũ bảo hiểm hiện nay luôn là một câu hỏi khó. Tuy nhiên, trên thị trường vẫn có một vài thương hiệu luôn mang lại niềm tin, sự an tâm và hài lòng tuyệt đối cho khách hàng. Một trong những sản phẩm đó là mũ bảo hiểm fullface Royal M136. Là một trong những mũ bảo hiểm fullface phổ biến nhất thị trường hiện nay, M136 chứa trong mình nhiều giá trị để mang lại những giá trị hoàn hảo cho người sở hữu.\r\n\r\nM136 là một chiếc mũ bảo hiểm fullface chuẩn mực.', '2023-01-09');
 INSERT INTO `products` VALUES (7, 'Royal M179 Fullface Lật Hàm', 620000, 'Royal', 'FULLFACE', 0, 'Nón bảo hiểm Royal M179 do công ty Mafa sản xuất. Thương hiệu nón Royal ra đời năm 2008 do ông Mai Văn Thuận sáng lập. Với mục tiêu sản xuất ra những chiếc nón chất lượng nhất, đáp ứng nhu cầu ngày càng cao không chỉ của người dùng ở Việt Nam và cả ở thị trường thế giới.', '2023-01-09');
 INSERT INTO `products` VALUES (8, 'Nón bảo hiểm Royal H01', 730000, 'Royal', 'FULLFACE', 0.08, 'Nón bảo hiểm Royal H1 do công ty Mafa sản xuất. Thương hiệu nón Royal ra đời năm 2008 do ông Mai Văn Thuận sáng lập. Với mục tiêu sản xuất ra những chiếc nón chất lượng nhất, đáp ứng nhu cầu ngày càng cao không chỉ của người dùng ở Việt Nam và cả ở thị trường thế giới.', '2023-01-09');
 INSERT INTO `products` VALUES (9, 'Nón Royal M138B', 680000, 'Royal', 'FULLFACE', 0.08, 'Mũ bảo hiểm Royal M138B do công ty Mafa sản xuất. Thương hiệu nón Royal ra đời năm 2008 do ông Mai Văn Thuận sáng lập. Với mục tiêu sản xuất ra những chiếc nón chất lượng nhất, đáp ứng nhu cầu ngày càng cao không chỉ của người dùng ở Việt Nam và cả ở thị trường thế giới.', '2023-01-09');
-INSERT INTO `products` VALUES (10, 'Mũ phượt 3/4 Bulldog Bravo', 500000, 'BullDog', '3/4', 0.08, 'Mũ bảo hiểm Bulldog Bravo phiên bản đầu tiên ra mắt rất thành công trong năm 2017 sản phẩm được người dùng đón nhận nồng nhiệt và hàng luôn trong tình trạng “Cháy” bởi giá thành rẻ đi đôi với chất lượng. Đây cũng là mẫu tầm giá rẻ mà hãng đã cho ra đời đáp ứng nhu cầu của người dùng.', '2023-01-09');
+INSERT INTO `products` VALUES (10, 'Mũ phượt 3/4 Bulldog Bravo', 500000, 'BullDog', '3/4', 0.05, 'Mũ bảo hiểm Bulldog Bravo phiên bản đầu tiên ra mắt rất thành công trong năm 2017 sản phẩm được người dùng đón nhận nồng nhiệt và hàng luôn trong tình trạng “Cháy” bởi giá thành rẻ đi đôi với chất lượng. Đây cũng là mẫu tầm giá rẻ mà hãng đã cho ra đời đáp ứng nhu cầu của người dùng.', '2023-01-09');
 INSERT INTO `products` VALUES (11, 'Nón 3/4 Bulldog POM', 1100000, 'BullDog', '3/4', 0.08, 'Sau mẫu Bulldog Beagle ra mắt vào quý 3 năm 2019, thương hiệu Bulldog tiếp tục ra mắt mẫu Bulldog Pom vào quý 4 năm 2019.\r\n\r\nVẫn là lớp lót mũ màu nâu quen thuộc, thêm sự lựa chọn là lót đen huyền bí, cùng với thiết kế mới, form mũ gọn nhẹ, Bulldog Pom hứa hẹn sẽ đem lại vẻ ngoài cá tính và thời trang, phù hợp với mọi lứa tuổi.', '2023-01-09');
 INSERT INTO `products` VALUES (12, 'Bulldog Beagle', 1000000, 'BullDog', '3/4', 0.08, 'Nón 3/4 Bulldog Beagle 2 Đen Nhám là phiên bản thứ 2 được hãng Bulldog cho ra mắt vào đầu năm 2022 với thiết kế vẻ bề ngoài không có gì quá khác so với phiên bản Beagle 1 cũ tuy nhiên hãng đã tiếp thu và cải tiến ở phần size có thêm size XXL, so với đời trước form nón có kích cỡ thoải mái hơn, dễ đội hơn cho người sử dụng. Ngoài ra nón còn được làm bằng lót da cao cấp hơn so với mã cũ.', '2023-01-09');
 INSERT INTO `products` VALUES (13, 'Bulldog Beagle 2 chính hãng', 1550000, 'BullDog', '3/4', 0.08, 'Bulldog Beagle 2 là phiên bản mới của dòng Beagle, là dòng nón bảo hiểm 3/4 kính âm được hỗ trợ vòng đầu XXL, phù hợp với những ai có size đầu to.', '2023-01-09');
@@ -1730,7 +2116,7 @@ INSERT INTO `products` VALUES (56, 'Nón bảo hiểm Pikachu', 250000, 'LittleA
 INSERT INTO `products` VALUES (57, 'Mũ bảo hiểm chim cánh cụt', 250000, 'LittleAngel', 'CHILDREN', 0, 'Mũ bảo hiểm hình thú cho bé thuộc thương hiệu Xì Trum đã được kiểm định chất lượng nên đây là một sản phẩm an toàn. Bạn yên tâm không sợ hàng giả trôi nổi như trên các sàn TMĐT…', '2022-12-14');
 INSERT INTO `products` VALUES (58, 'Nón bảo hiểm đôrêmon', 250000, 'LittleAngel', 'CHILDREN', 0, 'Nón bảo hiểm trẻ em 3/4 đôrêmon nhỏ gọn, dễ thương được nhiều trẻ em mê mệt. Nón gọn nhẹ chính hãng Đức Huy, có thể lắp kính bảo hộ chống bụi và mưa cho trẻ.', '2022-12-14');
 INSERT INTO `products` VALUES (59, 'Nón bảo hiểm Hello Kitty', 250000, 'LittleAngel', 'CHILDREN', 0, 'Khi nhắc đến nón bảo hiểm tai mèo, chắc chắn không chiếc nón nào dễ thương bằng nón mèo hồng Hello Kitty quá nổi tiếng. Cô mèo không hề có miệng nhưng ai cũng có thể cảm nhận nụ cười tươi tắn.', '2022-12-14');
-INSERT INTO `products` VALUES (65, 'Nón trùm đầu kính ẩn chống nắng GRS 388K', 490000, 'GRS', '3/4', 0.1, 'Kính râm không chỉ bảo vệ mắt của bạn khỏi tia cực tím độc hại, giúp tầm nhìn ổn định khi lái xe mà còn là một phụ kiện thời trang trên đường rất phổ biến từ xưa đến nay. Trong điều kiện nắng nhiều như nước ta thì kính râm thật sự cần thiết bởi khói bụi và tia cực tím rất nguy hại cho bạn. Bên cạnh dòng nón nửa đầu GRS 966, thì chiếc kính râm bảo hộ đã được tích hợp vào nón 3/4 đầu như GRS A388 giúp sản phẩm này trở thành chiếc nón bảo hộ đẹp, tiện dụng và vô cùng cá tính.', '2023-05-13');
+INSERT INTO `products` VALUES (65, 'Nón trùm đầu kính ẩn chống nắng GRS 388K', 490000, 'GRS', '3/4', 0.04, 'Kính râm không chỉ bảo vệ mắt của bạn khỏi tia cực tím độc hại, giúp tầm nhìn ổn định khi lái xe mà còn là một phụ kiện thời trang trên đường rất phổ biến từ xưa đến nay. Trong điều kiện nắng nhiều như nước ta thì kính râm thật sự cần thiết bởi khói bụi và tia cực tím rất nguy hại cho bạn. Bên cạnh dòng nón nửa đầu GRS 966, thì chiếc kính râm bảo hộ đã được tích hợp vào nón 3/4 đầu như GRS A388 giúp sản phẩm này trở thành chiếc nón bảo hộ đẹp, tiện dụng và vô cùng cá tính.', '2023-05-13');
 INSERT INTO `products` VALUES (66, 'Yohe 935 SV Xám Xi Măng Bóng-Nón fullface 2 kính', 2400000, 'Yohe', 'FULLFACE', 0.1, 'Sản phẩm chất lượng cao', '2023-05-13');
 INSERT INTO `products` VALUES (67, 'Mũ 3/4 KLT Venom', 1050000, 'KLT', '3/4', 0, 'Thương hiệu Malaysia| Chất liệu nhựa nhiệt dẻo|Mút xốp EPS| Size M L XL| Bảo hành 12 tháng chốt kính, dây khóa| Cân nặng 1000gr', '2022-12-14');
 INSERT INTO `products` VALUES (68, 'Mũ 3/4 ROYCE M787', 390000, 'ROYCE', '3/4', 0, 'Royce Helmet là thương hiệu mới nhất của Á Châu Group, tiền thân là công ty MAFA VN – Nhà sản xuất mũ bảo hiểm rất có uy tín tại Việt Nam sở hữu hàng loạt thương hiệu mũ bảo hiểm phổ biến hàng đầu hiện nay như Royal, ROC, Asia… Mang đầy đủ tính năng và có khuôn nón như người anh Royal M787 và ROC 06 nhưng Royce M787 đang nhắm vào phân khúc thấp hơn nên có giá rẻ chỉ bằng một nửa.', '2022-12-14');
