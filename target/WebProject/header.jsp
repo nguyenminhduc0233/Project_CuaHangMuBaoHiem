@@ -98,7 +98,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
                         <a href="/Project_CuaHangMuBaoHiem_war/Home" class="nav-item nav-link">Trang chủ</a>
-                        <a href="/Project_CuaHangMuBaoHiem_war/ListPro" class="nav-item nav-link">Sản phẩm</a>
+                        <a href="/Project_CuaHangMuBaoHiem_war/ListProduct" class="nav-item nav-link">Sản phẩm</a>
                         <a href="/Project_CuaHangMuBaoHiem_war/list-brand" class="nav-item nav-link">Thương hiệu</a>
                         <a href="contact.jsp" class="nav-item nav-link">Liên hệ</a>
                     </div>
@@ -125,7 +125,7 @@
                                 <div class="dropdown-menu bg-dark border-bt-primary m-0">
                                     <a href="account.jsp" class="dropdown-item text-primary">Thông tin</a>
                                     <%
-                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==0){
+                                        if(CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==0||CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==1||CustomerService.customer((String)request.getSession().getAttribute("tendangnhap")).getPermission()==2){
                                     %>
                                     <a href="/Project_CuaHangMuBaoHiem_war/ManageProduct" class="dropdown-item text-primary">Trang quản lý</a>
                                     <%}%>

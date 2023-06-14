@@ -457,7 +457,7 @@
                                     if(pages==1){
                                         first =1;
                                     }else{
-                                        first = (pages - 1) * 10;
+                                        first = (pages - 1) * 10+1;
                                     }
                                     last = 10;
                                 }

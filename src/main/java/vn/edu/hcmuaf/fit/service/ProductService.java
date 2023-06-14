@@ -18,7 +18,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id_product from product");
+            ResultSet rs = statement.executeQuery("select id_product from products");
             while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
             }
@@ -33,7 +33,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from product limit ?,10");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from products limit ?,10");
             ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -50,7 +50,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id_product from product where name like '%" + para + "%'");
+            ResultSet rs = statement.executeQuery("select id_product from products where name like '%" + para + "%'");
             while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
             }
@@ -68,7 +68,7 @@ public class ProductService {
         Statement statement = dbConnect.get();
         if (price == null) {
             try {
-                ResultSet rs = statement.executeQuery("select id_product from product");
+                ResultSet rs = statement.executeQuery("select id_product from products");
                 while (rs.next()) {
                     priceProduct.add(rs.getInt("id_product"));
                 }
@@ -80,7 +80,7 @@ public class ProductService {
                 switch (key) {
                     case "price-1": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=0 and (price-price*discount)<=500000");
+                            ResultSet rs = statement.executeQuery("select id_product from products where (price-price*discount)>=0 and (price-price*discount)<=500000");
                             while (rs.next()) {
                                 priceProduct.add(rs.getInt("id_product"));
                             }
@@ -91,7 +91,7 @@ public class ProductService {
                     }
                     case "price-2": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=500000 and (price-price*discount)<=1000000");
+                            ResultSet rs = statement.executeQuery("select id_product from products where (price-price*discount)>=500000 and (price-price*discount)<=1000000");
                             while (rs.next()) {
                                 priceProduct.add(rs.getInt("id_product"));
                             }
@@ -102,7 +102,7 @@ public class ProductService {
                     }
                     case "price-3": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=1000000 and (price-price*discount)<=2000000");
+                            ResultSet rs = statement.executeQuery("select id_product from products where (price-price*discount)>=1000000 and (price-price*discount)<=2000000");
                             while (rs.next()) {
                                 priceProduct.add(rs.getInt("id_product"));
                             }
@@ -113,7 +113,7 @@ public class ProductService {
                     }
                     case "price-4": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=2000000 and (price-price*discount)<=5000000");
+                            ResultSet rs = statement.executeQuery("select id_product from products where (price-price*discount)>=2000000 and (price-price*discount)<=5000000");
                             while (rs.next()) {
                                 priceProduct.add(rs.getInt("id_product"));
                             }
@@ -124,7 +124,7 @@ public class ProductService {
                     }
                     case "price-5": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from product where (price-price*discount)>=5000000");
+                            ResultSet rs = statement.executeQuery("select id_product from products where (price-price*discount)>=5000000");
                             while (rs.next()) {
                                 priceProduct.add(rs.getInt("id_product"));
                             }
@@ -139,7 +139,7 @@ public class ProductService {
         }
         if (star == null) {
             try {
-                ResultSet rs = statement.executeQuery("select id_product from product");
+                ResultSet rs = statement.executeQuery("select id_product from products");
                 while (rs.next()) {
                     starProduct.add(rs.getInt("id_product"));
                 }
@@ -151,7 +151,7 @@ public class ProductService {
                 switch (key) {
                     case "star-1": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from star_vote where star>=0 and star<=1");
+                            ResultSet rs = statement.executeQuery("select id_product from star_votes where star>=0 and star<=1");
                             while (rs.next()) {
                                 starProduct.add(rs.getInt("id_product"));
                             }
@@ -162,7 +162,7 @@ public class ProductService {
                     }
                     case "star-2": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from star_vote where star>1 and star<=2");
+                            ResultSet rs = statement.executeQuery("select id_product from star_votes where star>1 and star<=2");
                             while (rs.next()) {
                                 starProduct.add(rs.getInt("id_product"));
                             }
@@ -173,7 +173,7 @@ public class ProductService {
                     }
                     case "star-3": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from star_vote where star>2 and star<=3");
+                            ResultSet rs = statement.executeQuery("select id_product from star_votes where star>2 and star<=3");
                             while (rs.next()) {
                                 starProduct.add(rs.getInt("id_product"));
                             }
@@ -184,7 +184,7 @@ public class ProductService {
                     }
                     case "star-4": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from star_vote where star>3 and star<=4");
+                            ResultSet rs = statement.executeQuery("select id_product from star_votes where star>3 and star<=4");
                             while (rs.next()) {
                                 starProduct.add(rs.getInt("id_product"));
                             }
@@ -195,7 +195,7 @@ public class ProductService {
                     }
                     case "star-5": {
                         try {
-                            ResultSet rs = statement.executeQuery("select id_product from star_vote where star>4 and star<=5");
+                            ResultSet rs = statement.executeQuery("select id_product from star_votes where star>4 and star<=5");
                             while (rs.next()) {
                                 starProduct.add(rs.getInt("id_product"));
                             }
@@ -241,7 +241,7 @@ public class ProductService {
         List<ImageProduct> img = new ArrayList<ImageProduct>();
         ImageProduct imgP = new ImageProduct();
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from image where id_product=? and allow=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from images where id_product=? and allow=?");
         prs.setInt(1, id);
         prs.setString(2, "1");
         ResultSet rs = prs.executeQuery();
@@ -254,7 +254,7 @@ public class ProductService {
 
     public static String getname(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select name from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select name from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -265,7 +265,7 @@ public class ProductService {
 
     public static long getprice(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select price from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select price from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -276,7 +276,7 @@ public class ProductService {
 
     public static String getbrand(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select brand from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select brand from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -287,7 +287,7 @@ public class ProductService {
 
     public static String gettype(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select type from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select type from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -298,7 +298,7 @@ public class ProductService {
 
     public static double getdiscount(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select discount from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select discount from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -309,7 +309,7 @@ public class ProductService {
 
     public static Double getstar(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select star from star_vote where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select star from star_votes where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -320,7 +320,7 @@ public class ProductService {
 
     public static int getamount(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select amount from star_vote where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select amount from star_votes where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -331,7 +331,7 @@ public class ProductService {
 
     public static String getdecrispe(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select decrispe from product where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select decrispe from products where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         if (rs.next()) {
@@ -342,7 +342,7 @@ public class ProductService {
 
     public static Date getrelease(int id) throws SQLException {
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.date from product p where p.id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select p.date from products p where p.id_product=?");
 
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
@@ -355,7 +355,7 @@ public class ProductService {
     public static int getStarComment(int id_comt){
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id = ?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select star from comments where id = ?");
             ps.setInt(1, id_comt);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
@@ -369,7 +369,7 @@ public class ProductService {
     public static String getDateComment(int id_comt) {
         String result = "";
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select DAY(date),MONTH(date),YEAR(date) from comment where id = ?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select DAY(date),MONTH(date),YEAR(date) from comments where id = ?");
             ps.setInt(1, id_comt);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -384,7 +384,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comment values(?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comments values(?, ?, ?, ?, ?, ?, ?)");
             prs.setInt(1,id_customer);
             prs.setInt(2,id_product);
             prs.setString(3,content);
@@ -402,7 +402,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("delete from comment where id = ?");
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("delete from comments where id = ?");
             prs.setInt(1, id_comt);
             prs.executeUpdate();
 
@@ -413,7 +413,7 @@ public class ProductService {
     public static List<Comment> getAllComment(){
         List<Comment> list = new ArrayList<>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, id_product, comment, star, date, id, display from comments");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 list.add(new Comment(rs.getInt(1),
@@ -432,7 +432,7 @@ public class ProductService {
     public static List<Comment> getListCommentById(int id_pro){
         List<Comment> list = new ArrayList<>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  * from comment where id_product=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id_customer, id_product, comment, star, date, id, display from comments where id_product=?");
             ps.setInt(1,id_pro);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
@@ -457,21 +457,21 @@ public class ProductService {
             DBConnect dbConnect = DBConnect.getInstance();
             switch (s) {
                 case "new": {
-                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p order by p.date desc ");
+                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from products p order by p.date desc ");
                     while (rs.next()) {
                         result.add(getProduct(rs.getInt("id_product")));
                     }
                     break;
                 }
                 case "popular": {
-                    ResultSet rs = dbConnect.get().executeQuery("select dp.id_product, count(dp.id_product) from bill b join detail_bill db on b.id = db.id_bill join detail_product dp on db.id_dp = dp.id_dp group by dp.id_product order by count(dp.id_product) desc");
+                    ResultSet rs = dbConnect.get().executeQuery("select dp.id_product, count(dp.id_product) from bills b join detail_bills db on b.id = db.id_bill join detail_products dp on db.id_dp = dp.id_dp group by dp.id_product order by count(dp.id_product) desc");
                     while (rs.next()) {
                         result.add(getProduct(rs.getInt("id_product")));
                     }
                     break;
                 }
                 case "rating": {
-                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from product p join star_vote s on p.id_product = s.id_product order by s.star desc");
+                    ResultSet rs = dbConnect.get().executeQuery("select p.id_product from products p join star_votes s on p.id_product = s.id_product order by s.star desc");
                     while (rs.next()) {
                         result.add(getProduct(rs.getInt("id_product")));
                     }
@@ -505,7 +505,7 @@ public class ProductService {
     public static List<DetailProduct> getfirst(int id) throws SQLException {
         List<DetailProduct> detail = new ArrayList<DetailProduct>();
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_product where id_product=? and quantity>0");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_products where id_product=? and quantity>0");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         while (rs.next()) {
@@ -536,7 +536,7 @@ public class ProductService {
     public static List<DetailProduct> getDetail(int id, String size, String color) throws SQLException {
         List<DetailProduct> detail = new ArrayList<DetailProduct>();
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_product where id_product=? and size =? and color = ?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_dp, size, color, quantity from detail_products where id_product=? and size =? and color = ?");
         prs.setInt(1, id);
         prs.setString(2, size);
         prs.setString(3, color);
@@ -548,14 +548,14 @@ public class ProductService {
     }
 
     public static Bill getBill(int id) throws SQLException {
-        PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_dp from detail_bill where id_bill=?");
+        PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_dp from detail_bills where id_bill=?");
         prs.setInt(1, id);
         List<Integer> list_product = new ArrayList<Integer>();
         ResultSet rs = prs.executeQuery();
         while (rs.next()) {
             list_product.add(rs.getInt("id_dp"));
         }
-        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone from bill where id=?");
+        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, date, status, address, phone from bills where id=?");
         ps.setInt(1, id);
         ResultSet resultSet = ps.executeQuery();
         if (resultSet.next()) {
@@ -569,7 +569,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id_customer from customer where name like '%" + para + "%'");
+            ResultSet rs = statement.executeQuery("select id_customer from customers where name like '%" + para + "%'");
             while (rs.next()) {
                 list.add(getCustomer(rs.getInt("id_customer")));
             }
@@ -581,7 +581,7 @@ public class ProductService {
 
     public static Customer getCustomer(int idc) throws SQLException {
         Customer c = new Customer();
-        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select name,email,phone,address,username,password,permission from customer where id_customer=?");
+        PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select name,email,phone,address,username,password,permission from customers where id_customer=?");
         ps.setInt(1, idc);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
@@ -605,7 +605,7 @@ public class ProductService {
             if (resultSet.next()) {
                 date = resultSet.getDate(1);
             }
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bill(id_customer,date,status,address,phone,id_transport, received_date,fee, total_cost ) values(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("INSERT into bills(id_customer,date,status,address,phone,id_transport, received_date,fee, total_cost ) values(?,?,?,?,?,?,?,?,?)");
             prs.setInt(1, id_Customer);
             prs.setDate(2, (java.sql.Date) date);
             prs.setString(3, status);
@@ -617,11 +617,11 @@ public class ProductService {
             prs.setInt(9, Integer.parseInt(total_cost));
             prs.executeUpdate();
 
-            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bill");
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bills");
             rs.last();
             id_bill = rs.getInt("id");
 
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bill(id_bill,id_dp, quantitySold, price) values(?,?,?,?)");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("INSERT into detail_bills(id_bill,id_dp, quantitySold, price) values(?,?,?,?)");
             for (BillDetail i : id_dp) {
                 ps.setInt(1, id_bill);
                 ps.setInt(2, i.getId_dp());
@@ -638,7 +638,7 @@ public class ProductService {
     public static void cancel_bill(int id_bill) {
         try {
             String status = "Đã hủy";
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE bill set status = ? where id =?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE bills set status = ? where id =?");
             ps.setString(1, status);
             ps.setInt(2, id_bill);
             ps.executeUpdate();
@@ -653,7 +653,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where type =?");
             ps.setString(1, "FULLFACE");
             ResultSet rs = ps.executeQuery();
 
@@ -673,7 +673,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id_customer from customer");
+            ResultSet rs = statement.executeQuery("select id_customer from customers");
             while (rs.next()) {
                 list.add(getCustomer(rs.getInt("id_customer")));
             }
@@ -689,7 +689,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =? ");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where type =? ");
             ps.setString(1, "3/4");
             ResultSet rs = ps.executeQuery();
 
@@ -708,7 +708,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =? ");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where type =? ");
             ps.setString(1, "NUADAU");
             ResultSet rs = ps.executeQuery();
 
@@ -727,7 +727,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =? ");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where type =? ");
             ps.setString(1, "CHILDREN");
             ResultSet rs = ps.executeQuery();
 
@@ -744,7 +744,7 @@ public class ProductService {
         int count = 0;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 count++;
@@ -759,7 +759,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp from detail_product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp from detail_products");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 count++;
@@ -788,7 +788,7 @@ public class ProductService {
         String date = year + "-" + mont + "-" + day;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into product(name,price,brand,type,discount,decrispe,date) values (?,?,?,?,?,?,?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into products(name,price,brand,type,discount,decrispe,date) values (?,?,?,?,?,?,?)");
 
             ps.setString(1, name);
             ps.setInt(2, priceDB);
@@ -798,7 +798,7 @@ public class ProductService {
             ps.setString(6, decrispe);
             ps.setString(7, date);
             ps.executeUpdate();
-            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id_product from product");
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id_product from products");
             rs.last();
             id = rs.getInt("id_product");
         } catch (SQLException e) {
@@ -812,7 +812,7 @@ public class ProductService {
 
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into detail_product(id_product,size,color,quantity) values (?,?,?,?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into detail_products(id_product,size,color,quantity) values (?,?,?,?)");
             ps.setInt(1, id);
             ps.setString(2, size.toUpperCase());
 
@@ -829,7 +829,7 @@ public class ProductService {
         boolean result = false;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select size, color from detail_product where id_product=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select size, color from detail_products where id_product=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -845,7 +845,7 @@ public class ProductService {
     public static int getIdDetailProductByCS(int id, String size, String color) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp, size, color from detail_product where id_product=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp, size, color from detail_products where id_product=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -862,7 +862,7 @@ public class ProductService {
         int quantityDB = Integer.parseInt(quantity);
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_product set quantity = quantity+? where id_dp=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_products set quantity = quantity+? where id_dp=?");
             ps.setInt(1, quantityDB);
             ps.setInt(2, id);
             ps.executeUpdate();
@@ -875,7 +875,7 @@ public class ProductService {
 
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into image(id_product,link_image,allow) values (?,?,?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("insert into images(id_product,link_image,allow) values (?,?,?)");
 
             ps.setInt(1, id);
             ps.setString(2, img);
@@ -897,7 +897,7 @@ public class ProductService {
 
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update product set name=?, price=?,brand=?,type=?,discount=?,decrispe=? where id_product=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update products set name=?, price=?,brand=?,type=?,discount=?,decrispe=? where id_product=?");
 
             ps.setString(1, name);
             ps.setInt(2, priceDB);
@@ -916,7 +916,7 @@ public class ProductService {
     public static void removeProduct(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from product where id_product=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from products where id_product=?");
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -926,7 +926,7 @@ public class ProductService {
     public static void removeImage(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from image where id_img=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from images where id_img=?");
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -936,7 +936,7 @@ public class ProductService {
     public static void updateImage(int id, String allow) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update image set allow = ? where id_img= ?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update images set allow = ? where id_img= ?");
 
             ps.setString(1, allow);
 
@@ -949,7 +949,7 @@ public class ProductService {
     public static Map<String, Integer> getListBrand() {
         Map<String, Integer> result = new HashMap<String, Integer>();
         try {
-            ResultSet rs = DBConnect.getInstance().get().executeQuery("select brand,count(id_product)as SL from product group by brand");
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select brand,count(id_product)as SL from products group by brand");
             while (rs.next()) {
                 result.put(rs.getString(1), Integer.parseInt(rs.getString(2)));
             }
@@ -962,7 +962,7 @@ public class ProductService {
     public static List<Product> getProductByBrand(String brand) {
         List<Product> result = new ArrayList<Product>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from product where brand =?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from products where brand =?");
             ps.setString(1, brand);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -978,14 +978,14 @@ public class ProductService {
         int result = 0;
         try {
             if (endPrice == 0) {
-                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select count(price) from product where (price-price*discount)>=?");
+                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select count(price) from products where (price-price*discount)>=?");
                 ps.setLong(1, starPrice);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     result += rs.getInt(1);
                 }
             } else {
-                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select count(price) from product where (price-price*discount)>=? and (price-price*discount)<=?");
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select count(price) from products where (price-price*discount)>=? and (price-price*discount)<=?");
                 prs.setLong(1, starPrice);
                 prs.setLong(2, endPrice);
                 ResultSet resultSet = prs.executeQuery();
@@ -1003,13 +1003,13 @@ public class ProductService {
         int result = 0;
         try {
             if (star == 1) {
-                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select count(star) from star_vote where star>=0 and star<=1");
+                PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select count(star) from star_votes where star>=0 and star<=1");
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     result += rs.getInt(1);
                 }
             } else {
-                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select count(star) from star_vote where star>?-1 and star<=?");
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select count(star) from star_votes where star>?-1 and star<=?");
                 prs.setInt(1, star);
                 prs.setInt(2, star);
                 ResultSet resultSet = prs.executeQuery();
@@ -1043,7 +1043,7 @@ public class ProductService {
         List<ImageProduct> img = new ArrayList<ImageProduct>();
         ImageProduct imgP = new ImageProduct();
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from image where id_product=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select id_img,id_product ,link_image, allow from images where id_product=?");
         prs.setInt(1, id);
         ResultSet rs = prs.executeQuery();
         while (rs.next()) {
@@ -1056,7 +1056,7 @@ public class ProductService {
     public static void removeDetailProduct(int id) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from detail_product where id_dp=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("delete from detail_products where id_dp=?");
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -1067,7 +1067,7 @@ public class ProductService {
         int quantityDB = Integer.parseInt(quantity);
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_product set quantity = ? where id_dp=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update detail_products set quantity = ? where id_dp=?");
             ps.setInt(1, quantityDB);
             ps.setInt(2, id);
 
@@ -1082,7 +1082,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product limit ?,?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products limit ?,?");
             ps.setInt(1, a);
             ps.setInt(2, b);
             ResultSet rs = ps.executeQuery();
@@ -1112,7 +1112,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where discount =?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where discount =?");
             ps.setDouble(1, discountDB);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1126,7 +1126,7 @@ public class ProductService {
 
     public static void delete_customer(int id) {
         try {
-            PreparedStatement preparedStatement = DBConnect.getInstance().getConnection().prepareStatement("delete from customer where id_customer=?");
+            PreparedStatement preparedStatement = DBConnect.getInstance().getConnection().prepareStatement("delete from customers where id_customer=?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -1136,7 +1136,7 @@ public class ProductService {
 
     public static void fix_customer(int id, String name, String phone, String email, String address) {
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update customer set name=?,phone=?,email=?,address=? where id_customer=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update customers set name=?,phone=?,email=?,address=? where id_customer=?");
             ps.setString(1, name);
             ps.setString(2, phone);
             ps.setString(3, email);
@@ -1151,7 +1151,7 @@ public class ProductService {
     public static List<Bill> getBillByDate(int month, int year) {
         List<Bill> result = new ArrayList<Bill>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id from bill where month(date)=? and year(date)=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id from bills where month(date)=? and year(date)=?");
             ps.setInt(1, month);
             ps.setInt(2, year);
             ResultSet rs = ps.executeQuery();
@@ -1166,7 +1166,7 @@ public class ProductService {
 
     public static int getIdProduct(int id_dp) {
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select p.id_product from product p join detail_product dp on p.id_product = dp.id_product where dp.id_dp=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select p.id_product from products p join detail_products dp on p.id_product = dp.id_product where dp.id_dp=?");
             ps.setInt(1, id_dp);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) return rs.getInt("id_product");
@@ -1179,7 +1179,7 @@ public class ProductService {
     public static List<Bill> getListBill() {
         List<Bill> result = new ArrayList<Bill>();
         try {
-            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bill");
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from bills");
             while (rs.next()) {
                 result.add(getBill(rs.getInt("id")));
             }
@@ -1194,7 +1194,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select id from bill where id like '%" + para + "%'");
+            ResultSet rs = statement.executeQuery("select id from bills where id like '%" + para + "%'");
             while (rs.next()) {
                 list.add(getBill(rs.getInt("id")));
             }
@@ -1207,7 +1207,7 @@ public class ProductService {
     public static List<Bill> getListBillByIdCustomer(int id_cus) {
         List<Bill> result = new ArrayList<Bill>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id from bill where id_customer=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id from bills where id_customer=?");
             ps.setInt(1, id_cus);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1247,7 +1247,7 @@ public class ProductService {
     public static String getSize(int id_dp) {
         String result = "";
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select size from detail_product where id_dp=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select size from detail_products where id_dp=?");
             ps.setInt(1, id_dp);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1262,7 +1262,7 @@ public class ProductService {
     public static String getColor(int id_dp) {
         String result = "";
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select color from detail_product where id_dp=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select color from detail_products where id_dp=?");
             ps.setInt(1, id_dp);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1277,7 +1277,7 @@ public class ProductService {
     public static int getQuantity(int id_bill, int id_dp) {
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_bill,count(id_dp) as quantity from detail_bill where id_dp=? and id_bill=? group by id_bill");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_bill,count(id_dp) as quantity from detail_bills where id_dp=? and id_bill=? group by id_bill");
             ps.setInt(1, id_dp);
             ps.setInt(2, id_bill);
             ResultSet rs = ps.executeQuery();
@@ -1290,7 +1290,7 @@ public class ProductService {
 
     public static void updateBill(int id, String address, String phone, String status) {
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bill set address=?,phone=?, status=? where id=? ");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bills set address=?,phone=?, status=? where id=? ");
             ps.setString(1, address);
             ps.setString(2, phone);
             ps.setString(3, status);
@@ -1303,7 +1303,7 @@ public class ProductService {
 
     public static void updateStatus(int id, String status) {
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bill set status=? where id=? ");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("update bills set status=? where id=? ");
             ps.setString(1, status);
             ps.setInt(2, id);
             ps.executeUpdate();
@@ -1314,10 +1314,10 @@ public class ProductService {
 
     public static void deleteBill(int id_bill) {
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("delete from bill where id=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("delete from bills where id=?");
             ps.setInt(1, id_bill);
             ps.executeUpdate();
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("delete from detail_bill where id_bill=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("delete from detail_bills where id_bill=?");
             prs.setInt(1, id_bill);
             prs.executeUpdate();
         } catch (SQLException e) {
@@ -1331,7 +1331,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where type =? and id_product not in(?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where type =? and id_product not in(?)");
             ps.setString(1, type);
             ps.setInt(2, id);
             ResultSet rs = ps.executeQuery();
@@ -1350,7 +1350,7 @@ public class ProductService {
         boolean result = false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from product where id_product=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product from products where id_product=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1366,7 +1366,7 @@ public class ProductService {
         boolean result = false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp from detail_product where id_dp=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_dp from detail_products where id_dp=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1382,7 +1382,7 @@ public class ProductService {
         boolean result = false;
         try {
             DBConnect dbConnect = DBConnect.getInstance();
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_img from image where id_img=?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_img from images where id_img=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1397,7 +1397,7 @@ public class ProductService {
     public static int getIdProductByIddp(int id_dp) {
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from detail_product where id_dp=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_product from detail_products where id_dp=?");
             ps.setInt(1, id_dp);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1412,7 +1412,7 @@ public class ProductService {
     public static int getIdCusByUserName(String username) {
         int result = 0;
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from customer where username=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from customers where username=?");
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1426,7 +1426,7 @@ public class ProductService {
     public static List<Log> onePageLog(int index) {
         List<Log> list = new ArrayList<>();
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from log limit ?,10");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,10");
             prs.setInt(1, (index-1)*10);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
@@ -1445,7 +1445,7 @@ public class ProductService {
         return list;
     }
     public static int getTotalLog(){
-        String query = "select count(distinct id) from log";
+        String query = "select count(distinct id) from logs";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -1460,7 +1460,7 @@ public class ProductService {
     public static List<Integer> getListCommentByProduct(int idpro,  int index) {
         List<Integer> list = new ArrayList<Integer>();
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from comment where id_product=? limit ?,10");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from comments where id_product=? limit ?,10");
             prs.setInt(1, idpro);
             prs.setInt(2, (index-1)*10);
             ResultSet rs = prs.executeQuery();
@@ -1474,7 +1474,7 @@ public class ProductService {
     }
 
     public static int getTotalComment(int idPro){
-        String query = "select count(distinct id) from comment where id_product = ?";
+        String query = "select count(distinct id) from comments where id_product = ?";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, idPro);
@@ -1491,7 +1491,7 @@ public class ProductService {
     public static int getIdCustomerByIdComment(int id) {
         int result = 0;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from comment where id=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id_customer from comments where id=?");
             prs.setInt(1, id);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
@@ -1506,7 +1506,7 @@ public class ProductService {
     public static String getCommentByIdComment(int id) {
         String result = "";
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select comment from comment where id=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select comment from comments where id=?");
             prs.setInt(1, id);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
@@ -1521,7 +1521,7 @@ public class ProductService {
     public static int getStarByIdComment(int id) {
         int result = 0;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select star from comment where id=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select star from comments where id=?");
             prs.setInt(1, id);
             ResultSet rs = prs.executeQuery();
             while (rs.next()) {
@@ -1536,7 +1536,7 @@ public class ProductService {
     public static Date getDateByIdComment(int id) {
         String result = "";
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select date from comment where id=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select date from comments where id=?");
             prs.setInt(1, id);
             ResultSet rs = prs.executeQuery();
             if (rs.next()) {
@@ -1551,7 +1551,7 @@ public class ProductService {
     public static int getDisplayByIdComment(int id) {
         int result = 0;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select display from comment where id=?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select display from comments where id=?");
             prs.setInt(1, id);
             ResultSet rs = prs.executeQuery();
             if (rs.next()) {
@@ -1566,7 +1566,7 @@ public class ProductService {
     public static void changeDisplayComment(int id) {
         int dislay = getDisplayByIdComment(id);
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update comment set display = ? where id =?");
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("update comments set display = ? where id =?");
             prs.setInt(2, id);
             if (dislay == 0) {
                 prs.setInt(1, 1);
@@ -1614,7 +1614,7 @@ public class ProductService {
     public static void updatePriceMax(String id) {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update product set price = ? where id_product= ?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("update products set price = ? where id_product= ?");
             ps.setInt(1, (int) (maxPrice(id)));
             ps.setString(2, id);
             ps.executeUpdate();
@@ -1639,7 +1639,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         long total = 0;
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  detail_product where id_product= ?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(quantity) from  detail_products where id_product= ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1686,7 +1686,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         long priceMax = 0;
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct i.id_product, p.name from  importproducts i join products p on i.id_product = p.id_product");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1701,7 +1701,7 @@ public class ProductService {
     public static String getimgFirst(int id) throws SQLException {
         String img = "";
         DBConnect dbConnect = DBConnect.getInstance();
-        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select link_image from image where id_product=? and allow=?");
+        PreparedStatement prs = dbConnect.getConnection().prepareStatement("select link_image from images where id_product=? and allow=?");
         prs.setInt(1, id);
         prs.setString(2, "1");
         ResultSet rs = prs.executeQuery();
@@ -1734,7 +1734,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1752,7 +1752,7 @@ public class ProductService {
         long count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().
-                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp where dp.id_product=?");
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_products dp join detail_bills db on dp.id_dp = db.id_dp where dp.id_product=?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -1768,7 +1768,7 @@ public class ProductService {
         long count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().
-                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp where dp.id_product=? and dp.size=? and dp.color=?");
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_products dp join detail_bills db on dp.id_dp = db.id_dp where dp.id_product=? and dp.size=? and dp.color=?");
             ps.setInt(1, id_product);
             ps.setString(2, size);
             ps.setString(3, color);
@@ -1819,7 +1819,7 @@ public class ProductService {
     }
 
     public static int getTotalProduct(){
-        String query = "select count(id_product) from product";
+        String query = "select count(id_product) from products";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -1834,7 +1834,7 @@ public class ProductService {
 
     public static List<Product> onePageProduct(int index){
         List<Product> list = new ArrayList<>();
-        String  query = "select id_product from product  limit ?, 24";
+        String  query = "select id_product from products  limit ?, 24";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, (index-1)*24);
@@ -1852,7 +1852,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?, 10");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products limit ?, 10");
             ps.setInt(1, (index - 1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1877,7 +1877,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?, 10");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products limit ?, 10");
             ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1902,7 +1902,7 @@ public class ProductService {
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from product p join detail_product dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5 limit ?8");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from products p join detail_products dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5 limit ?8");
             ps.setInt(1, (index-1)*8);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1926,7 +1926,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product limit ?,10");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products limit ?,10");
             ps.setInt(1, (index-1)*10);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -1943,7 +1943,7 @@ public class ProductService {
     }
 
     public static int getTotalBill(){
-        String query = "select count(id) from bill";
+        String query = "select count(id) from bills";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -1958,7 +1958,7 @@ public class ProductService {
 
     public static List<Bill> onePageBill(int index){
         List<Bill> list = new ArrayList<>();
-        String  query = "select id from bill  limit ?, 10";
+        String  query = "select id from bills  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, (index-1)*10);
@@ -1972,7 +1972,7 @@ public class ProductService {
     }
 
     public static int getTotalCustomer(){
-        String query = "select count(id_customer) from customer";
+        String query = "select count(id_customer) from customers";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -1987,7 +1987,7 @@ public class ProductService {
 
     public static List<Customer> onePageCustomer(int index){
         List<Customer> list = new ArrayList<>();
-        String  query = "select id_customer from customer  limit ?, 10";
+        String  query = "select id_customer from customers  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, (index-1)*10);
@@ -2001,7 +2001,7 @@ public class ProductService {
     }
 
     public static int getTotalImport(){
-        String query = "select count(distinct i.id_product) from  importproducts i join product p on i.id_product = p.id_product";
+        String query = "select count(distinct i.id_product) from  importproducts i join products p on i.id_product = p.id_product";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -2017,7 +2017,7 @@ public class ProductService {
     public static List<ImportProduct> onePageImport(int index){
         List<ImportProduct> list = new ArrayList<>();
         ImportProduct im = new ImportProduct();
-        String  query = "select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product limit ?, 10";
+        String  query = "select distinct i.id_product, p.name from  importproducts i join products p on i.id_product = p.id_product limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, (index-1)*10);
@@ -2032,7 +2032,7 @@ public class ProductService {
     }
 
     public static int getTotalInventory(){
-        String query = "select count(distinct id_product) from product";
+        String query = "select count(distinct id_product) from products";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -2048,7 +2048,7 @@ public class ProductService {
     public static List<Product> onePageInventory(int index){
         List<Product> list = new ArrayList<>();
         Product p = new Product();
-        String  query = "select id_product, name from product  limit ?, 10";
+        String  query = "select id_product, name from products  limit ?, 10";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
             ps.setInt(1, (index-1)*10);
@@ -2069,7 +2069,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement(
-                    "select id_product from product limit " + (start - 1) + "," + total);
+                    "select id_product from products limit " + (start - 1) + "," + total);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(getProduct(rs.getInt("id_product")));
@@ -2086,7 +2086,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement(
-                    "select id_product from product  where name like '%" + text + "%' limit ?,?");
+                    "select id_product from products  where name like '%" + text + "%' limit ?,?");
             ps.setInt(1, start - 1);
             ps.setInt(2, total);
             ResultSet rs = ps.executeQuery();
@@ -2105,7 +2105,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Statement statement = dbConnect.get();
         try {
-            ResultSet rs = statement.executeQuery("select  count(id_product) count from product where name like '%" + para + "%'");
+            ResultSet rs = statement.executeQuery("select  count(id_product) count from products where name like '%" + para + "%'");
             while (rs.next()) {
                 result += rs.getInt("count");
             }
@@ -2120,7 +2120,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2145,7 +2145,7 @@ public class ProductService {
         int count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().
-                    prepareStatement("select  SUM(db.quantitySold) sum from detail_product dp join detail_bill db on dp.id_dp = db.id_dp join bill b on b.id= db.id_bill where dp.id_product=? and b.status=?");
+                    prepareStatement("select  SUM(db.quantitySold) sum from detail_products dp join detail_bills db on dp.id_dp = db.id_dp join bills b on b.id= db.id_bill where dp.id_product=? and b.status=?");
             ps.setInt(1, id);
             ps.setString(2, "Đã hủy");
             ResultSet rs = ps.executeQuery();
@@ -2162,7 +2162,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2187,7 +2187,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2208,7 +2208,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select MAX(b.date) d from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where dp.id_product = ? and b.status = ?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select MAX(b.date) d from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where dp.id_product = ? and b.status = ?");
             ps.setInt(1, id);
             ps.setString(2, "Đã nhận");
             ResultSet rs = ps.executeQuery();
@@ -2237,7 +2237,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         int count = 0;
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
             ps.setString(1, String.valueOf(LocalDate.now().getYear()));
             ps.setString(2, "Đã nhận");
             ResultSet rs = ps.executeQuery();
@@ -2260,7 +2260,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         int count = 0;
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bill b join detail_bill db on db.id_bill = b.id join detail_product dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
 
             ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
             ps.setString(2, String.valueOf(LocalDate.now().getYear()));
@@ -2286,7 +2286,7 @@ public class ProductService {
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from product p join detail_product dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sl.id_product, sl.s from  (select distinct  p.id_product,sum(dp.quantity) s  from products p join detail_products dp on dp.id_product = p.id_product group by p.id_product ) sl where sl.s<=5");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 product = getProduct(rs.getInt("id_product"));
@@ -2307,7 +2307,7 @@ public class ProductService {
         long total = 0;
         DBConnect dbConnect = DBConnect.getInstance();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(total_cost - fee) s from bill where status=? and month(date)=? and year(date) = ?");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select sum(total_cost - fee) s from bills where status=? and month(date)=? and year(date) = ?");
             ps.setString(1, "Đã nhận");
             ps.setString(2, String.valueOf(month));
             ps.setString(3, String.valueOf(year));
@@ -2342,7 +2342,7 @@ public class ProductService {
     public static List<ImportProduct> findProductImport(String para){
         List<ImportProduct> list = new ArrayList<>();
         ImportProduct im = new ImportProduct();
-        String  query = "select distinct i.id_product, p.name from  importproducts i join product p on i.id_product = p.id_product where p.name like '%" + para + "%'";
+        String  query = "select distinct i.id_product, p.name from  importproducts i join products p on i.id_product = p.id_product where p.name like '%" + para + "%'";
         try{
             ResultSet rs = DBConnect.getInstance().get().executeQuery(query);
             while (rs.next()){
@@ -2359,7 +2359,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product where LOWER(name) like LOWER(?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products where LOWER(name) like LOWER(?)");
             ps.setString(1, "%" + para + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2389,7 +2389,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product where LOWER(name) like LOWER(?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products where LOWER(name) like LOWER(?)");
             ps.setString(1, "%" + para + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2419,7 +2419,7 @@ public class ProductService {
         DBConnect dbConnect = DBConnect.getInstance();
         Product p = new Product();
         try {
-            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from product where LOWER(name) like LOWER(?)");
+            PreparedStatement ps = dbConnect.getConnection().prepareStatement("select id_product, name from products where LOWER(name) like LOWER(?)");
             ps.setString(1,"%" + para + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2440,6 +2440,15 @@ public class ProductService {
         }
         return list;
     }
+    public static List<Product> onePageDisplayProduct(int index, List<Product> listPro){
+        List<Product> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = Math.min(start+24,listPro.size()-1);
+        for(int i=start;i<end+1;i++){
+            list.add(listPro.get(i));
+        }
+        return list;
+    }
     public static void main(String[] args) throws SQLException {
 //        List<BillDetail> list = new ArrayList<>();
 //        list.add(new BillDetail(1,1,400000));
@@ -2456,7 +2465,7 @@ public class ProductService {
 //        for(Product p : topThreeByYear()){
 //            System.out.println(p.getId());
 //        }
-        System.out.println(topThreeByMonth().size());
+        System.out.println(getProduct(14).getImg());
 //        System.out.println(LocalDate.now().getYear());
         }
 }
