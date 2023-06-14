@@ -441,7 +441,7 @@ public class ApiLogistic {
     public static String formatDateYMD(String date){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneId.of("UTC"));
         LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-        String newPattern = "yyyy-dd-MM";
+        String newPattern = "yyyy-MM-dd";
         DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern(newPattern);
         String newDateString = dateTime.format(newFormatter);
         return newDateString;

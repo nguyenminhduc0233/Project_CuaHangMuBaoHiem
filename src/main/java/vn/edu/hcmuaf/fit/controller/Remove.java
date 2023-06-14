@@ -29,7 +29,7 @@ public class Remove extends HttpServlet {
             }
             String id = request.getParameter("id");
             String pages = request.getParameter("pages");
-//        ProductService.removeProduct(Integer.parseInt(id));
+        ProductService.removeProduct(Integer.parseInt(id));
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageProduct?pages="+pages);
         }catch (SQLException e){
             e.printStackTrace();

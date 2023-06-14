@@ -12,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -57,8 +58,11 @@ public class Add_Bill extends HttpServlet {
             }
             ApiLogistic api = new ApiLogistic();
             String id_transport = api.registerTransport(25, 25, 25, 3000, 3695, 90735, Integer.parseInt(district), Integer.parseInt(ward)).getId();
+
             try {
                 int id_bill = ProductService.addBill(id_cus, "Đang gửi", id_dp, address, phone, id_transport, api.formatDateYMD(received_date), fee, total_cost);
+//                PrintWriter out = response.getWriter();
+//                out.println(api.formatDateYMD(api.formatDateYMD(received_date)+" "+ id_dp+" "+ address+" "+phone+" "+ id_transport+" "+fee+" "+ total_cost));
                 cart.getCart().clear();
                 cart.setTotal(0);
                 cart.setQuantity(0);

@@ -60,7 +60,7 @@ public class UploadImageInDetailProduct extends HttpServlet {
             throw new ServletException("Content type is not multipart/form-data");
         }
         int id =  Integer.parseInt(request.getParameter("id"));
-
+        int pages = Integer.parseInt(request.getParameter("pages"));
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         out.write("<html><head></head><body>");
@@ -75,7 +75,7 @@ public class UploadImageInDetailProduct extends HttpServlet {
                         getAttribute("FILES_DIR")+File.separator+fileItem.getName());
                 fileItem.write(file);
                 ProductService.insertImg(id,"/Project_CuaHangMuBaoHiem_war/manage/upload/"+fileItem.getName());
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id="+id);
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id="+id+"&pages="+pages);
             }
 
 

@@ -29,9 +29,10 @@ public class UpdateDetailProduct extends HttpServlet {
             }
             String id_product = request.getParameter("id");
             int id_dp = Integer.parseInt(request.getParameter("id_dp"));
+            int pages = Integer.parseInt(request.getParameter("pages"));
             String quantity = request.getParameter("quantity");
             ProductService.updateDetailPQuantity(id_dp, quantity);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product);
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_product+"&pages="+pages);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
