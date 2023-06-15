@@ -2440,11 +2440,20 @@ public class ProductService {
         }
         return list;
     }
+    public static List<Product> onePageDisplayProduct(int index, List<Product> listPro){
+        List<Product> list = new ArrayList<>();
+        int start = (index-1)*10;
+        int end = Math.min(start+24,listPro.size()-1);
+        for(int i=start;i<end+1;i++){
+            list.add(listPro.get(i));
+        }
+        return list;
+    }
     public static void main(String[] args) throws SQLException {
-//        List<BillDetail> list = new ArrayList<>();
-//        list.add(new BillDetail(1,1,400000));
-//        list.add(new BillDetail(2,1,50000));
-//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-05-02","49000", "17271"));
+        List<BillDetail> list = new ArrayList<>();
+        list.add(new BillDetail(1,1,400000));
+        list.add(new BillDetail(2,1,50000));
+       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
 //        System.out.print(getRevenueByMonthYear( 4,  2023));
 //        for(long l : chartLine()){
 //            System.out.println(l);
@@ -2456,7 +2465,12 @@ public class ProductService {
 //        for(Product p : topThreeByYear()){
 //            System.out.println(p.getId());
 //        }
-        System.out.println(topThreeByMonth().size());
+//        System.out.println(getProduct(14).getImg());
 //        System.out.println(LocalDate.now().getYear());
+//        for(long l :chartLine()){
+//            System.out.println(l);
+//        }
+//        System.out.println(getRevenueByMonthYear(4,2023));
+//        addBill
         }
 }

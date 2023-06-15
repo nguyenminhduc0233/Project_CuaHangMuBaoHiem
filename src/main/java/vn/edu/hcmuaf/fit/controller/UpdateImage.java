@@ -26,7 +26,7 @@ public class UpdateImage extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
+            if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
@@ -36,10 +36,11 @@ public class UpdateImage extends HttpServlet {
                 return;
             }
             int id_img = Integer.parseInt(request.getParameter("id_img"));
+            int pages = Integer.parseInt(request.getParameter("pages"));
             String id_pd = request.getParameter("id");
             String allow = request.getParameter("allow");
             ProductService.updateImage(id_img, allow);
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_pd);
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_pd+"&pages="+pages);
 
             log.setSrc(this.namee + "UPDATE IMAGE");
             log.setContent("UPDATE IMAGE AT: Username - "  + username);

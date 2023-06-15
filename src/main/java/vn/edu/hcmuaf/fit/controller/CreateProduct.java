@@ -25,7 +25,7 @@ public class CreateProduct extends HttpServlet {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        if(customer==null||customer.getId_customer()!=0||!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))){
+        if(customer==null||customer.getId_customer()!=0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))){
             request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
 

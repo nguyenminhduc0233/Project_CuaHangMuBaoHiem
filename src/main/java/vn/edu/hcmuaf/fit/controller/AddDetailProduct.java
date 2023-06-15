@@ -22,7 +22,7 @@ public class AddDetailProduct extends HttpServlet {
         Customer customer = null;
         try {
             customer = CustomerService.customer(username);
-            if (customer == null || customer.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))) {
+            if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
@@ -32,6 +32,7 @@ public class AddDetailProduct extends HttpServlet {
             String color = request.getParameter("color");
             String quantity = request.getParameter("quantity");
             String price = request.getParameter("price");
+            int pages = Integer.parseInt(request.getParameter("pages"));
             int iddp = 0;
             if (ProductService.checkDBContainSizeColor(id, size, color)) {
                 iddp = ProductService.getIdDetailProductByCS(id, size, color);
@@ -43,7 +44,7 @@ public class AddDetailProduct extends HttpServlet {
                 ProductService.insertImportProduct(id,size,color,quantity,price);
                 ProductService.updatePriceMax((request.getParameter("id")));
             }
-            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id);
+            response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id+"&pages="+pages);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

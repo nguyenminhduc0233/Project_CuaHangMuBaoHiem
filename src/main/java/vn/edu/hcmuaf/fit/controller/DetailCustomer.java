@@ -27,7 +27,7 @@ public class DetailCustomer extends HttpServlet {
         try {
             Log log = new Log(Log.INFO, username, this.name, "", 0);
             cus = CustomerService.customer(username);
-            if (cus == null || cus.getPermission() != 0||!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",cus.getPermission(),"EDIT"))) {
+            if (cus == null || cus.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",cus.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
