@@ -529,7 +529,7 @@
                     <ul class="inline-flex items-center">
 
                       <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
                             </path>
@@ -538,13 +538,13 @@
                       </li>
                       <%for(int i = 1; i <= endPage; i++){%>
                         <li>
-                        <a  href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
+                        <a  href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
                           <%=i%>
                         </button></a>
                         </li>
                       <%}%>
                       <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/list-customer?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ManageImport?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
                             </path>
