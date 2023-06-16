@@ -32,8 +32,8 @@ public class DetailProduct extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
+                log.setSrc(this.name + "INVALID ACCOUNT");
+                log.setContent(username + " IS NOT ADMIN");
                 log.setLevel(Log.WARNING);
                 return;
             }

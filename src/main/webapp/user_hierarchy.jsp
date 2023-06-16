@@ -29,6 +29,12 @@
           defer
   ></script>
   <script src="admin/assets/js/init-alpine.js"></script>
+  <style>
+    .page-item.disabled{
+      color: #d5d6d7;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
 <div

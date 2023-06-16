@@ -110,7 +110,7 @@
                             <td class="align-middle">
                                 <form method="get" action="/Project_CuaHangMuBaoHiem_war/Delete">
                                 <input type="hidden" name="delete" value="<%= p.getKey() %>">
-                                    <input type="hidden" name="name" value="<%= p.getName() %>">
+                                    <input type="hidden" name="proName" value="<%= p.getName() %>">
                                 <button class="btn btn-sm btn-danger" ><i class="fa fa-times"></i></button>
                             </form></td>
                         </tr>

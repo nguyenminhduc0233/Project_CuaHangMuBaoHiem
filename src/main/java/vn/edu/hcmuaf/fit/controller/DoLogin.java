@@ -34,6 +34,10 @@ public class DoLogin extends HttpServlet {
             } else if(CustomerService.checkActive(username) == 0 && CustomerService.checkUsername(username)) {
                 request.setAttribute("error", "Tài khoản đã bị khóa.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+
+                log.setSrc(this.name + "LOGIN FALSE");
+                log.setContent("LOGIN FALSE: Username - " + username);
+                log.setLevel(Log.WARNING);
             } else if (CustomerService.checkLogin(username, CustomerService.toMD5(password)) == true) {
                 CustomerService.resetLock(username);
                 session.setAttribute("tendangnhap", username);
@@ -56,6 +60,9 @@ public class DoLogin extends HttpServlet {
                     request.setAttribute("error", "Người dùng nhập không đúng Tên đăng nhập hoặc Mật khẩu.");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
 
+                    log.setSrc(this.name + "LOGIN FALSE");
+                    log.setContent("LOGIN FALSE: Username - " + username);
+                    log.setLevel(Log.WARNING);
                 }
             }
             LogService.log(log);

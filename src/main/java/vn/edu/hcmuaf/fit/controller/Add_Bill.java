@@ -5,6 +5,7 @@ import vn.edu.hcmuaf.fit.model.BillDetail;
 import vn.edu.hcmuaf.fit.model.Cart;
 import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.model.Product;
+import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.MailService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
@@ -84,6 +85,7 @@ public class Add_Bill extends HttpServlet {
 
                 log.setSrc(this.namee + "CHECK OUT");
                 log.setContent("CHECK OUT " + name + " SUCCESS: Username - "  + username);
+                LogService.log(log);
             } catch (Exception e) {
                 e.printStackTrace();
             }
