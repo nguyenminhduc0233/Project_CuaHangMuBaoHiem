@@ -30,16 +30,17 @@ public class DeleteBill extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.name + "DELETE BILL FALSE");
+                log.setContent("DELETE BILL FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
             ProductService.deleteBill(id);
 
             log.setSrc(this.name + "DELETE BILL");
-            log.setContent("DELETE BILL " + id + " AT: Username - "  + username);
+            log.setContent("DELETE BILL: ID - " + id + " SUCCESS: Username - "  + username);
+            log.setLevel(Log.DANGER);
             LogService.log(log);
             response.sendRedirect(request.getHeader("Referer"));
         } catch (SQLException e) {

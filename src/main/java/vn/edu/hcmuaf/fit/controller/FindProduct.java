@@ -18,11 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "FindProduct", value = "/find-product")
 public class FindProduct extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = (String) request.getSession().getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
         String indexPage = request.getParameter("index");
         int index = Integer.parseInt(indexPage);
         int pre = index - 1;
@@ -45,9 +43,6 @@ public class FindProduct extends HttpServlet {
 
         request.getRequestDispatcher("shop.jsp").forward(request,response);
 
-        log.setSrc("FIND PRODUCT");
-
-        log.setContent("FIND PRODUCT " + text + " SUCCESS: Username - " + username);
     }
 
     @Override

@@ -2,8 +2,6 @@ package vn.edu.hcmuaf.fit.controller;
 
 import com.google.gson.Gson;
 import vn.edu.hcmuaf.fit.model.Comment;
-import vn.edu.hcmuaf.fit.model.Log;
-import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -14,62 +12,72 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 @WebServlet(name = "CommentServlet", value = "/CommentServlet")
 public class CommentServlet extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-
         HttpSession session = request.getSession();
-        String username = (String) session.getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
-        String name = request.getParameter("name");
 
-//        String username = (String) request.getSession().getAttribute("tendangnhap");
-        int id_cus = ProductService.getIdCusByUserName(username);
-        int id_pro = Integer.parseInt(request.getParameter("id"));
+        String username = (String) session.getAttribute("tendangnhap");
+        String idPro =request.getParameter("id");
+
+        String stars =request.getParameter("star");
         String content = request.getParameter("mess");
-        int star = Integer.parseInt(request.getParameter("star"));
+
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
 
-        int id_comt = ProductService.getAllComment().size();
-        System.out.println(id_pro);
-        System.out.println();
-        if (username == null) {
-            request.setAttribute("error ", "Vui lòng đăng nhập để sử dụng chức năng này!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-            return;
+        try {
+            if (username != null) {
+                int id_cus = ProductService.getIdCusByUserName(username);
+                int star = Integer.parseInt(stars);
+                int id_pro = Integer.parseInt(idPro);
+
+                if (stars == "" || content == ""){
+                    System.out.println("stars null");
+                    request.setAttribute("error", "Vui lòng không để trống!.");
+                    request.getRequestDispatcher("/Project_CuaHangMuBaoHiem_war/detail?id="+idPro).forward(request, response);
+                } else{
+                    ProductService ps = new ProductService();
+                    ps.addComment(id_cus, id_pro, content, star, date, 1);
+
+                    List<Comment> comts =  ProductService.getAllComment();
+                    Comment comt = comts.get(comts.toArray().length-1);
+                    int idc = comt.getId();
+
+                    Gson gson = new Gson();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    String dateStr = sdf.format(date);
+
+                    // Thêm tên người dùng vào đối tượng JSON được trả về
+                    String responseText = "{\"idcus\": " + id_cus + ",\"idp\": " + id_pro + ",\"idc\": " + idc + ", \"comment\": " + gson.toJson(comt) + ", \"date\": \"" + dateStr + "\", \"username\": \"" + username + "\" }";
+                    System.out.println(responseText);
+                    out.print(responseText);
+                    out.flush();
+
+                }
+            } else{
+                System.out.println("error response");
+                request.setAttribute("error", "Vui lòng đăng nhập để bình luận!.");
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                return;
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        id_comt++;
-        ProductService ps = new ProductService();
-        ps.addComment(id_cus, id_pro, content, star, date, id_comt, 1);
-
-        Gson gson = new Gson();
-        List<Comment> comts =  ProductService.getAllComment();
-        System.out.println(comts);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dateStr = sdf.format(date);
-
-        // Thêm tên người dùng vào đối tượng JSON được trả về
-        String responseText = "{ \"comments\": " + gson.toJson(comts) + ", \"date\": \"" + dateStr + "\", \"username\": \"" + username + "\" }";
-        out.print(responseText);
-        out.flush();
-
-        log.setSrc(this.name + "COMMENT");
-        log.setContent("COMMENT AT "  + name + ": Username - "  + username);
-        LogService.log(log);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+
     }
 }

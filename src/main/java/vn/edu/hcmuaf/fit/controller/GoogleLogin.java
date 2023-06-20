@@ -29,8 +29,9 @@ public class GoogleLogin extends HttpServlet {
             request.setAttribute("error", "Đăng nhập thất bại!");
             request.getRequestDispatcher("login.jsp").forward(request,response);
 
-            log.setSrc(this.name + " LOGIN FALSE");
+            log.setSrc(this.name + "GOOGLE LOGIN FALSE");
             log.setContent("LOGIN FALSE AT: " + userGoogle.getName());
+            log.setLevel(Log.ERROR);
         } else {
             try {
                 if(!CustomerService.checkLogin(userGoogle.getId(), CustomerService.toMD5(userGoogle.getId()))) {

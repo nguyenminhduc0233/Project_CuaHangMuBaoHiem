@@ -48,6 +48,10 @@ public class Add_Bill extends HttpServlet {
         if(name==""||email==""||phone==""||address==""){
             request.setAttribute("error","error");
             request.getRequestDispatcher("checkout.jsp").forward(request,response);
+
+            log.setSrc(this.namee + "CHECKOUT FALSE");
+            log.setLevel(Log.ERROR);
+            log.setContent("CHECKOUT FALSE: Username - " + username);
         }else {
             LocalDateTime date = LocalDateTime.now();
 //            String username = (String) request.getSession().getAttribute("tendangnhap");
@@ -85,10 +89,10 @@ public class Add_Bill extends HttpServlet {
 
                 log.setSrc(this.namee + "CHECK OUT");
                 log.setContent("CHECK OUT " + name + " SUCCESS: Username - "  + username);
-                LogService.log(log);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            LogService.log(log);
         }
     }
 

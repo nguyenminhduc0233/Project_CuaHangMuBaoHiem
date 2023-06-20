@@ -30,9 +30,9 @@ public class AddDetailInDetailProduct extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.name + "ADD PRODUCT FALSE");
+                log.setContent("ADD PRODUCT FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
@@ -44,13 +44,14 @@ public class AddDetailInDetailProduct extends HttpServlet {
                 iddp = ProductService.getIdDetailProductByCS(id, size, color);
                 ProductService.updateSizeColorById(iddp, quantity);
 
-                log.setSrc(this.name + " UPDATE DETAIL PRODUCT");
-                log.setContent("UPDATE PRODUCT " + id);
+                log.setSrc(this.name + " UPDATE PRODUCT");
+                log.setContent("UPDATE PRODUCT SUCCESS" + id);
             } else {
                 ProductService.insertDetailProduct(id, size, color, quantity);
 
                 log.setSrc(this.name + " ADD DETAIL PRODUCT");
-                log.setContent("ADD PRODUCT " + id);
+                log.setContent("ADD PRODUCT SUCCESS" + id);
+                log.setLevel(Log.ALERT);
             }
             LogService.log(log);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id);

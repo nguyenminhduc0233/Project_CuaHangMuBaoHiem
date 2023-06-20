@@ -1,7 +1,9 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
+import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 
 import javax.servlet.ServletException;
@@ -25,6 +27,7 @@ public class AddProductIntoDB extends HttpServlet {
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
+
                 return;
             }
             String name = request.getParameter("name");
@@ -35,6 +38,7 @@ public class AddProductIntoDB extends HttpServlet {
             String decrispe = request.getParameter("decrispe");
             int id = ProductService.insertProduct(name, price, brand, type, discount, decrispe);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/AddDetailProductIntoDB?id=" + id);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

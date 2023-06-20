@@ -81,7 +81,10 @@
 <!-- Breadcrumb End -->
 
 <% NumberFormat nf = new NumberFormat();
-    Product p= (Product) request.getAttribute("product"); %>
+    Product p= (Product) request.getAttribute("product");
+    String error = (String) request.getAttribute("error");
+%>
+
 <!-- Shop Detail Start -->
 <%List<Comment> listComment =  ProductService.getListCommentById(p.getId());%>
 <div class="container-fluid pb-5">
@@ -214,60 +217,48 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-                                <%--                                <%--%>
-                                <%--                                    for(int id:listComment){--%>
-                                <%--                                        if(ProductService.getDisplayByIdComment(id) == 1){--%>
-                                <%--                                %>--%>
-                                <%--                                <div class="col-md-6">--%>
-                                <%--                                    <div class="media mb-4" style="width: 600px;">--%>
-                                <%--                                        <div class="media-body" >--%>
-                                <%--                                            <h6><%=ProductService.getCustomer(ProductService.getIdCustomerByIdComment(id)).getName()%><small> - <i><%=ProductService.getDateByIdComment(id)%></i></small></h6>--%>
-                                <%--                                            <div class="text-primary mb-2">--%>
-                                <%--                                                <%int star = ProductService.getStarByIdComment(id);--%>
-                                <%--                                                    for(int a=0;a<star;a++){%>--%>
-                                <%--                                                <i class="fas fa-star"></i>--%>
-                                <%--                                                <%}%>--%>
-                                <%--                                            </div>--%>
-                                <%--                                            <p><%=ProductService.getCommentByIdComment(id)%></p>--%>
-                                <%--                                        </div>--%>
-                                <%--                                    </div>--%>
-                                <%--                                </div>--%>
-                                <%--                                <%}--%>
-                                <%--                                }%>--%>
-                                <%--                                <%for (Comment com : listComment) {%>--%>
-                                <%for (Comment com : listComment) {%>
-                                <input type="hidden" name="id_comt" value="<%=com.getId()%>">
-                                <div class="col-md-6">
-                                    <div class="media mb-4" style="width: 600px;">
-                                        <div class="media-body">
-                                            <h6><%=ProductService.getCustomer(com.getId_customer()).getName()%><small> -
-                                                <i><%=ProductService.getDateComment(com.getId())%>
-                                                </i></small></h6>
-                                            <div class="text-primary mb-2">
-                                                <%
-                                                    int star = ProductService.getStarComment(com.getId());
-                                                    for (int a = 0; a < star; a++) {
-                                                %>
-                                                <i class="fas fa-star"></i>
-                                                <%}%>
-                                            </div>
-                                            <p><%=com.getContent()%>
-                                            </p>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <p class="small mb-0" style="color: #aaa;">
-                                                    <a href="/Project_CuaHangMuBaoHiem_war/CommentManager"
-                                                       class="link-grey">Remove</a> •
-                                                    <a href="#!" class="link-grey">Reply</a> •
+                                <div class="col-md-6" class="media mb-4" style="width: 600px;" class="media-body" id="display"></div>
+                                    <%
+                                        int idc = 0;
+                                        int idp = 0;
+                                        int idcus = 0;
+                                        for (Comment com : listComment) {%>
+                                    <%
+                                        idc = com.getId();
+                                        idp = com.getId_product();
+                                        idcus = com.getId_customer();
+                                    %>
+                                    <%--                                <input type="hidden" value="<%=com.getId()%>" name="id_comt">--%>
+                                    <div class="col-md-6">
+                                        <div class="media mb-4" style="width: 600px;">
+                                            <div class="media-body">
+                                                <h6><%=ProductService.getCustomer(com.getId_customer()).getName()%><small> -
+                                                    <i><%=ProductService.getDateComment(com.getId())%>
+                                                    </i></small></h6>
+                                                <div class="text-primary mb-2">
+                                                    <%
+                                                        int star = ProductService.getStarComment(com.getId());
+                                                        for (int a = 0; a < star; a++) {
+                                                    %>
+                                                    <i class="fas fa-star"></i>
+                                                    <%}%>
+                                                </div>
+                                                <p><%=com.getContent()%>
                                                 </p>
-                                                <div class="d-flex flex-row">
-                                                    <i class="far fa-check-circle text-primary"></i>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="small mb-0" style="color: #aaa;">
+                                                        <a href="/Project_CuaHangMuBaoHiem_war/DeleteComment?idp=<%=idp%>&idc=<%=idc%>&idcus=<%=idcus%>"
+                                                           class="link-grey">Remove</a> •
+                                                        <a href="#!" class="link-grey">Reply</a> •
+                                                    </p>
+                                                    <div class="d-flex flex-row">
+                                                        <i class="far fa-check-circle text-primary"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <%}%>
-                                <div class="col-md-6" class="media mb-4" style="width: 600px;" class="media-body" id="display"></div>
+                                    <%}%>
                             </div>
                             <div class="col-md-6" style="float: right; width: 500px;">
 
@@ -294,13 +285,17 @@
                                         <label for="message">Bình luận *</label>
                                         <textarea id="message" name="mess" cols="30" rows="5"
                                                   class="form-control"></textarea>
+                                        <p style="color: red"><%=(error != null && error != "") ? error : ""%>
+                                        </p>
                                     </div>
                                     <div class="form-group">
+                                        <input type="hidden" name="idc" value="<%=idc%>">
                                         <input type="hidden" name="id_Pro" value="1" class="form-control" id="email">
                                     </div>
                                     <div class="form-group mb-0">
                                         <input id="gui" type="button" value="Gửi" class="btn btn-primary px-3">
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -374,10 +369,11 @@
         var id = $('input[name="id"]').val();
         var mess = $('textarea[name="mess"]').val();
         var star = $('input[name="star"]:checked').val();
+        // var idc = $('input[name="idc"]').val();
         var currentDate = new Date().toLocaleString();
         // Gửi yêu cầu ajax đến servlet
         $.ajax({
-            url: '/Project_CuaHangMuBaoHiem_war/CommentServlet',
+            url: 'CommentServlet',
             type: 'POST',
             data: {
                 "id": id,
@@ -385,12 +381,13 @@
                 "star": star,
             },
             success: function (data) {
-
-                console.log(data)
                 // Hiển thị comment mới vừa thêm vào
-                var newComment = data.comments[data.comments.length - 1];
+                var newComment = data.comment;
                 var date = data.date;
                 var username = data.username;
+                var idp = data.idp;
+                var idcus = data.idcus;
+                var idc = data.idc;
                 // Tạo đoạn HTML mới cho comment mới
                 var html = '<div class="media mb-4" style="width: 600px;">' +
                     '<div class="media-body">' +
@@ -403,7 +400,7 @@
                     '<p>' + newComment.content + '</p>' +
                     '<div class="d-flex justify-content-between align-items-center">' +
                     '<p class="small mb-0" style="color: #aaa;">' +
-                    '<a href="/Project_CuaHangMuBaoHiem_war/CommentManager" class="link-grey">Remove</a> •' +
+                    '<a href="/Project_CuaHangMuBaoHiem_war/DeleteComment?idp='+idp+'&idc='+idc+'&idcus='+idcus+'" class="link-grey">Remove</a>' +
                     '<a href="#!" class="link-grey">Reply</a> •' +
                     '</p>' +
                     '<div class="d-flex flex-row">' +

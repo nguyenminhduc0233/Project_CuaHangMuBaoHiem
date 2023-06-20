@@ -29,17 +29,18 @@ public class AddDetailProductIntoDB extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.name + "ADD PRODUCT FALSE");
+                log.setContent("ADD PRODUCT FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             String id = request.getParameter("id");
             request.setAttribute("id",id);
             request.getRequestDispatcher("AddDetailProduct.jsp").forward(request,response);
 
-            log.setSrc(this.name + " ADD DETAIL PRODUCT");
-            log.setContent("ADD PRODUCT: ID - " + id + " SUCCESS: Admin - " + username);
+            log.setSrc(this.name + " ADD PRODUCT");
+            log.setContent("ADD PRODUCT: ID - " + id + " SUCCESS: Username - " + username);
+            log.setLevel(Log.ALERT);
             LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);

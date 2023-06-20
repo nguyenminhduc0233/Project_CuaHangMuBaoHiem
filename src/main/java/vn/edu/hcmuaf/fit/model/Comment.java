@@ -1,22 +1,21 @@
 package vn.edu.hcmuaf.fit.model;
 
 public class Comment {
+    private int id;
+
     private int id_customer;
     private int id_product;
     private int display;
     private String content;
     private String star;
     private String date;
-
-    private int id;
-
-    public Comment(int id_customer, int id_product, String content, String star, String date, int id_comt, int display) {
+    public Comment(int id_comt, int id_customer, int id_product, String content, String star, String date, int display) {
+        this.id = id_comt;
         this.id_customer = id_customer;
         this.id_product = id_product;
         this.content = content;
         this.star = star;
         this.date = date;
-        this.id = id_comt;
         this.display = display;
     }
 
@@ -79,13 +78,13 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "id_customer=" + id_customer +
+                "id=" + id +
+                ", id_customer=" + id_customer +
                 ", id_product=" + id_product +
                 ", display=" + display +
                 ", content='" + content + '\'' +
                 ", star='" + star + '\'' +
                 ", date='" + date + '\'' +
-                ", id=" + id +
                 '}';
     }
 

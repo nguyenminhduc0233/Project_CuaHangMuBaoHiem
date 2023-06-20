@@ -30,9 +30,9 @@ public class UpdateImage extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.namee + "UPDATE IMAGE FALSE");
+                log.setContent("UPDATE IMAGE FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id_img = Integer.parseInt(request.getParameter("id_img"));
@@ -43,7 +43,8 @@ public class UpdateImage extends HttpServlet {
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id=" + id_pd+"&pages="+pages);
 
             log.setSrc(this.namee + "UPDATE IMAGE");
-            log.setContent("UPDATE IMAGE AT: Username - "  + username);
+            log.setContent("UPDATE IMAGE SUCCESS: Username - "  + username);
+            log.setLevel(Log.WARNING);
             LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -15,14 +15,12 @@ import java.util.List;
 
 @WebServlet(name = "find-service", value = "/find-service")
 public class FindService extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
         try {
-            Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
@@ -37,9 +35,6 @@ public class FindService extends HttpServlet {
             request.setAttribute("list",list);
             request.getRequestDispatcher("manager-permission.jsp").forward(request,response);
 
-            log.setSrc(this.name + " FIND SERVICE");
-            log.setContent("FIND SERVICE " + service + " SUCCESS: Admin - " + username);
-            LogService.log(log);
         }catch (SQLException e){
             e.printStackTrace();
         }

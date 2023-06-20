@@ -32,7 +32,7 @@ public class DoResetPassword extends HttpServlet {
 
                 log.setSrc(this.name + "RESET PASSWORD FALSE");
                 log.setContent("RESET PASSWORD FALSE: Username - " + username);
-                log.setLevel(Log.WARNING);
+                log.setLevel(Log.ERROR);
             } else {
                 request.setAttribute("success","Đặt lại mật khẩu hành công! Vui lòng kiểm tra email!");
                 CustomerService.resetPassword(email);
@@ -40,6 +40,7 @@ public class DoResetPassword extends HttpServlet {
 
                 log.setSrc(this.name + "RESET PASSWORD");
                 log.setContent("RESET PASSWORD SUCCESS: Username - "  + username);
+                log.setLevel(Log.WARNING);
             }
             LogService.log(log);
         } catch (SQLException e) {

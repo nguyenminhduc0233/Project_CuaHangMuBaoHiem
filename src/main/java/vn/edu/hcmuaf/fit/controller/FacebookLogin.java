@@ -31,6 +31,9 @@ public class FacebookLogin extends HttpServlet {
             }
             else{
                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/doLogin?username="+email+"&password=" +password);
+
+                log.setSrc(this.name + " GOOGLE LOGIN");
+                log.setContent("LOGIN SUCCESS AT: " + name);
             }
             LogService.log(log);
         } catch (SQLException e) {

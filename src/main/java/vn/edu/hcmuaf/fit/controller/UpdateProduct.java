@@ -30,17 +30,17 @@ public class UpdateProduct extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.namee + "UPDATE PRODUCT FALSE");
+                log.setContent("UPDATE PRODUCT FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             } else if (customer.getPermission() > 2) {
                 request.setAttribute("error", "Bạn không có chức vụ trong trang web này. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.namee + "UPDATE PRODUCT FALSE");
+                log.setContent("UPDATE PRODUCT FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
@@ -55,7 +55,8 @@ public class UpdateProduct extends HttpServlet {
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/DetailProduct?id="+id+"&pages="+pages);
 
             log.setSrc(this.namee + "UPDATE PRODUCT");
-            log.setContent("UPDATE PRODUCT " + name + " AT: Username - "  + username);
+            log.setContent("UPDATE PRODUCT " + name + " SUCCESS: Username - "  + username);
+            log.setLevel(Log.WARNING);
             LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);

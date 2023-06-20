@@ -15,13 +15,11 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AddDetail", value = "/AddDetail")
 public class AddDetail extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String proName = request.getParameter("proName");
         String username = (String) session.getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
 
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         if (cart == null) {
@@ -44,9 +42,6 @@ public class AddDetail extends HttpServlet {
         if (p.getDetail().isEmpty()) {
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id="+id+"&size="+size+"&color="+key+"&quantity="+quantity+"&quantityDB=0");
 
-            log.setSrc("ADD PRODUCT FALSE");
-            log.setContent("ADD PRODUCT FALSE: Username - " + username);
-            log.setLevel(Log.WARNING);
         }else {
             if (!p.getDetail().isEmpty()) {
 
@@ -54,8 +49,6 @@ public class AddDetail extends HttpServlet {
                     key = p.getDetail().get(0).getId();
                     response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id=" + id + "&size=" + size + "&color=" + key + "&quantity=" + quantity + "&quantityDB=" + p.getDetail().get(0).getQuantity());
 
-                    log.setSrc(this.name + "ADD PRODUCT TO CART");
-                    log.setContent("ADD PRODUCT " + proName + " SUCCESS: Username - "  + username);
                 } else {
                     if (cart.getQuantityProduct(p.getKey()) == 0) {
                         if (quantity > p.getDetail().get(0).getQuantity()) {
@@ -68,8 +61,6 @@ public class AddDetail extends HttpServlet {
                                 request.getSession().setAttribute("cart", cart);
                                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail?id=" + id);
 
-                                log.setSrc(this.name + "ADD PRODUCT TO CART");
-                                log.setContent("ADD PRODUCT " + proName + " SUCCESS: Username - "  + username);
                             }
                         }
                     } else {
@@ -79,8 +70,6 @@ public class AddDetail extends HttpServlet {
                                 response.sendRedirect("/Project_CuaHangMuBaoHiem_war/CheckAddProduct?id=" + id + "&size=" + size + "&color=" + key + "&quantity=" + quantity + "&quantityDB=" + (p.getDetail().get(0).getQuantity()-cart.getQuantityProduct(p.getKey())));
 //                            out.write("no");
 
-                                log.setSrc(this.name + "ADD PRODUCT TO CART");
-                                log.setContent("ADD PRODUCT " + proName + " SUCCESS: Username - "  + username);
                             } else {
                                 if ((quantity + cart.getQuantityProduct(p.getKey())) <= p.getDetail().get(0).getQuantity()) {
                                     p.setQuantity(quantity);
@@ -88,8 +77,6 @@ public class AddDetail extends HttpServlet {
                                     request.getSession().setAttribute("cart", cart);
                                     response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail?id=" + id);
 
-                                    log.setSrc(this.name + "ADD PRODUCT TO CART");
-                                    log.setContent("ADD PRODUCT " + proName + " SUCCESS: Username - "  + username);
                                 }
                             }
 
@@ -98,7 +85,6 @@ public class AddDetail extends HttpServlet {
                 }
             }
         }
-        LogService.log(log);
 
     }
 

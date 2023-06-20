@@ -526,6 +526,7 @@
                                             </button>
                                         </a>
                                         <form method="get" action="/Project_CuaHangMuBaoHiem_war/Remove">
+                                            <input type="hidden" name="proName" value="<%=p.getName()%>">
                                             <input type="hidden" name="id" value="<%= p.getId() %>">
                                             <input type="hidden" name="pages" value="<%= pages %>">
                                             <button

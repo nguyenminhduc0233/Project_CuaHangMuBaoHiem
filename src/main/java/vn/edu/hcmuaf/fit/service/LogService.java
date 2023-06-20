@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 public class LogService {
     public static boolean log(Log log){
-        int id = 0;
         String  query = "insert into logs(level, user, src, content, createAt, status) values (?,?,?,?,NOW(),?)";
         try{
             PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);

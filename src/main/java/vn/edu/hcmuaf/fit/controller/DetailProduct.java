@@ -18,7 +18,6 @@ import java.sql.SQLException;
 
 @WebServlet(name = "DetailProduct", value = "/DetailProduct")
 public class DetailProduct extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -26,15 +25,11 @@ public class DetailProduct extends HttpServlet {
         String nameProduct = request.getParameter("nameProduct");
         Customer customer = null;
         try {
-            Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getId_customer(),"VIEW"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
                 return;
             }
             String id = request.getParameter("id");
@@ -50,12 +45,9 @@ public class DetailProduct extends HttpServlet {
                 request.setAttribute("pages", pages);
                 request.getRequestDispatcher("detailProduct.jsp").forward(request, response);
 
-                log.setSrc(this.name + "EDIT PRODUCT");
-                log.setContent("EDIT PRODUCT " + nameProduct + " AT: Username - "  + username);
             }
 //            else
 //                response.sendError(404, "Product not found");
-            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

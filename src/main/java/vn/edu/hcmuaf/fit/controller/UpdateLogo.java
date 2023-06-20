@@ -17,22 +17,17 @@ import java.sql.SQLException;
 
 @WebServlet(name = "UpdateLogo", value = "/UpdateLogo")
 public class UpdateLogo extends HttpServlet {
-    String namee = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
         try {
-            Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ",customer.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
@@ -41,9 +36,6 @@ public class UpdateLogo extends HttpServlet {
             SlideShowService.getInstance().updateLogo(id, allow, name);
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");
 
-            log.setSrc(this.namee + "UPDATE LOGO");
-            log.setContent("UPDATE LOGO " + name + " AT: Username - "  + username);
-            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

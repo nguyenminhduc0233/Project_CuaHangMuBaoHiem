@@ -16,13 +16,11 @@ import java.sql.SQLException;
 
 @WebServlet(name = "ProductDetail", value = "/detail")
 public class ProductDetail extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         String proName = request.getParameter("proName");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
 
         String id = request.getParameter("id");
         try {
@@ -33,11 +31,7 @@ public class ProductDetail extends HttpServlet {
                 request.getRequestDispatcher("detail.jsp").forward(request,response);
                 System.out.println(product);
 
-                log.setSrc(this.name + "VIEW");
-                log.setContent("VIEW PRODUCT " + proName + ": Username - "  + username);
-
             }else response.sendError(404,"Product not found");
-            LogService.log(log);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

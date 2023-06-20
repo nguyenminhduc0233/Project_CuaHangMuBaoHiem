@@ -20,16 +20,16 @@ public class RemoveBanner extends HttpServlet {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
+        Log log = new Log(Log.INFO, username, this.namee, "", 0);
         try {
-            Log log = new Log(Log.INFO, username, this.namee, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0 && !CustomerService.allow_service(CustomerService.id_access("quản lý trang chủ", customer.getPermission(), "DELETE"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.namee + "DELETE BANNER FALSE");
+                log.setContent("DELETE BANNER FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
         }catch (SQLException e){
@@ -39,9 +39,9 @@ public class RemoveBanner extends HttpServlet {
         SlideShowService.getInstance().removeBanner(id);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");
 
-        Log log = new Log(Log.INFO, username, this.namee, "", 0);
-        log.setSrc(this.namee + "REMOVE BANNER");
-        log.setContent("REMOVE BANNER: ID - " + id + " SUCCESS: Admin - "  + username);
+        log.setSrc(this.namee + "DELETE BANNER");
+        log.setContent("DELETE BANNER: ID - " + id + " SUCCESS: Admin - "  + username);
+        log.setLevel(Log.DANGER);
         LogService.log(log);
     }
 

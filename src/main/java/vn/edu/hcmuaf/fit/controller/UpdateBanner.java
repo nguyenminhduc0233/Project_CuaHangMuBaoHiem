@@ -30,9 +30,9 @@ public class UpdateBanner extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.namee + "LOGIN FALSE");
-                log.setContent("THIS ACCOUNT is INVALID: Username - " + username);
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.namee + "UPDATE BANNER FALSE");
+                log.setContent("UPDATE BANNER FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id = Integer.parseInt(request.getParameter("id"));
@@ -43,7 +43,7 @@ public class UpdateBanner extends HttpServlet {
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ManageHome");
 
             log.setSrc(this.namee + "UPDATE BANNER");
-            log.setContent("UPDATE BANERR AT: Username - "  + username);
+            log.setContent("UPDATE BANERR: ID - " + id +" SUCCESS: Username - "  + username);
             LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);

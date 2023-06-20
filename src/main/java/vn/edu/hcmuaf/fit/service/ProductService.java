@@ -380,18 +380,17 @@ public class ProductService {
         }
         return result;
     }
-    public static void addComment(int id_customer, int id_product, String content, int star, Date date, int id_comt, int display) {
+    public static void addComment(int id_customer, int id_product, String content, int star, Date date, int display) {
         DBConnect dbConnect = DBConnect.getInstance();
 
         try {
-            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comments values(?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement prs = dbConnect.getConnection().prepareStatement("insert into comments (id_customer, id_product, comment, star, date, display) values(?, ?, ?, ?, NOW(), ?)");
             prs.setInt(1,id_customer);
             prs.setInt(2,id_product);
             prs.setString(3,content);
             prs.setInt(4,star);
-            prs.setDate(5, (java.sql.Date) date);
-            prs.setInt(6, id_comt);
-            prs.setInt(7, display);
+//            prs.setDate(5, (java.sql.Date) date);
+            prs.setInt(5, display);
             prs.executeUpdate();
 
         }catch (SQLException e){
@@ -413,15 +412,15 @@ public class ProductService {
     public static List<Comment> getAllComment(){
         List<Comment> list = new ArrayList<>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id_customer, id_product, comment, star, date, id, display from comments");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select id, id_customer, id_product, comment, star, date, display from comments");
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3),
+                        rs.getInt(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getInt(7)));
             }
         }catch (SQLException e){
@@ -432,16 +431,16 @@ public class ProductService {
     public static List<Comment> getListCommentById(int id_pro){
         List<Comment> list = new ArrayList<>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id_customer, id_product, comment, star, date, id, display from comments where id_product=?");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id, id_customer, id_product, comment, star, date, display from comments where id_product=? order by date desc");
             ps.setInt(1,id_pro);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 list.add(new Comment(rs.getInt(1),
                         rs.getInt(2),
-                        rs.getString(3),
+                        rs.getInt(3),
                         rs.getString(4),
                         rs.getString(5),
-                        rs.getInt(6),
+                        rs.getString(6),
                         rs.getInt(7)));
             }
         }catch (SQLException e){
@@ -2450,10 +2449,10 @@ public class ProductService {
         return list;
     }
     public static void main(String[] args) throws SQLException {
-        List<BillDetail> list = new ArrayList<>();
-        list.add(new BillDetail(1,1,400000));
-        list.add(new BillDetail(2,1,50000));
-       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
+//        List<BillDetail> list = new ArrayList<>();
+//        list.add(new BillDetail(1,1,400000));
+//        list.add(new BillDetail(2,1,50000));
+//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
 //        System.out.print(getRevenueByMonthYear( 4,  2023));
 //        for(long l : chartLine()){
 //            System.out.println(l);
@@ -2472,5 +2471,7 @@ public class ProductService {
 //        }
 //        System.out.println(getRevenueByMonthYear(4,2023));
 //        addBill
+
+        System.out.println(getAllComment());
         }
 }

@@ -14,12 +14,10 @@ import java.util.List;
 
 @WebServlet(name = "sort", value = "/sort")
 public class Sort extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String text = request.getParameter("text");
         String username = (String) request.getSession().getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.name, "", 0);
 
         String indexPage = request.getParameter("index");
         if(indexPage==null){
@@ -51,9 +49,6 @@ public class Sort extends HttpServlet {
 
         request.getRequestDispatcher("shop.jsp").forward(request,response);
 
-        log.setSrc(this.name + "SORT");
-        log.setContent("SORTED BY " + text + "SUECCES: Username - " + username);
-        LogService.log(log);
     }
 
     @Override

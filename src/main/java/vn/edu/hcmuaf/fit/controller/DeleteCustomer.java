@@ -30,17 +30,20 @@ public class DeleteCustomer extends HttpServlet {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
+                log.setSrc(this.name + "DELETE CUSTOMER FALSE");
+                log.setContent("DELETE CUSTOMER FALSE: Username - " + username);
+                log.setLevel(Log.ERROR);
                 return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));
+            Customer cus = ProductService.getCustomer(id_Cus);
+            String name_Cus = cus.getName();
             ProductService.delete_customer(id_Cus);
 
 
             log.setSrc(this.name + "DELETE CUSTOMER");
-            log.setContent("DELETE CUSTOMER " + id_Cus + " AT: Username - "  + username);
+            log.setContent("DELETE CUSTOMER " + name_Cus + " SUCCESS: Username - "  + username);
+            log.setLevel(Log.DANGER);
             LogService.log(log);
             response.sendRedirect(request.getHeader("Referer"));
         } catch (SQLException e) {

@@ -11,12 +11,10 @@ import java.io.IOException;
 
 @WebServlet(name = "Delete", value = "/Delete")
 public class Delete extends HttpServlet {
-    String namee = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
-        Log log = new Log(Log.INFO, username, this.namee, "", 0);
         String proName = request.getParameter("proName");
 
         String id = request.getParameter("delete");
@@ -25,9 +23,6 @@ public class Delete extends HttpServlet {
         request.getSession().setAttribute("cart",cart);
         response.sendRedirect("/Project_CuaHangMuBaoHiem_war/ListProductInCart");
 
-        log.setSrc(this.namee + "REMOVE PRODUCT FROM CART");
-        log.setContent("REMOVE " + proName + " SUCCESS: Username - "  + username);
-        LogService.log(log);
     }
 
     @Override

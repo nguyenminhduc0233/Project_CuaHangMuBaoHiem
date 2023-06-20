@@ -17,22 +17,17 @@ import java.util.List;
 
 @WebServlet(name = "find-bill", value = "/find-bill")
 public class FindBill extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
         Customer customer = null;
         try {
-            Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý hóa đơn",customer.getPermission(),"VIEW"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
                 return;
             }
             int id_bill = Integer.parseInt(request.getParameter("text"));
@@ -67,9 +62,6 @@ public class FindBill extends HttpServlet {
 
             request.getRequestDispatcher("bill_manager.jsp").forward(request, response);
 
-            log.setSrc(this.name + " FIND BILL");
-            log.setContent("FIND BILL: ID - " + id_bill + " SUCCESS: Admin - " + username);
-            LogService.log(log);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

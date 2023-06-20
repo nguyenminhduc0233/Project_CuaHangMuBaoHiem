@@ -1,6 +1,7 @@
 package vn.edu.hcmuaf.fit.controller;
 
 import vn.edu.hcmuaf.fit.model.Customer;
+import vn.edu.hcmuaf.fit.model.Log;
 import vn.edu.hcmuaf.fit.service.CustomerService;
 import vn.edu.hcmuaf.fit.service.ProductService;
 

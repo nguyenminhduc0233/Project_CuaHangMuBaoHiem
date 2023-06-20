@@ -17,23 +17,17 @@ import java.sql.SQLException;
 
 @WebServlet(name = "detail-customer", value = "/detail-customer")
 public class DetailCustomer extends HttpServlet {
-    String name = "AUTH ";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String username = (String) session.getAttribute("tendangnhap");
-        String nameCus = request.getParameter("nameCus");
         Customer cus = null;
         try {
-            Log log = new Log(Log.INFO, username, this.name, "", 0);
             cus = CustomerService.customer(username);
             if (cus == null || cus.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý khách hàng",cus.getPermission(),"EDIT"))) {
                 request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
 
-                log.setSrc(this.name + "INVALID ACCOUNT");
-                log.setContent(username + " IS NOT ADMIN");
-                log.setLevel(Log.WARNING);
                 return;
             }
             int id_Cus = Integer.parseInt(request.getParameter("id"));
@@ -42,9 +36,6 @@ public class DetailCustomer extends HttpServlet {
                 request.setAttribute("customer", customer);
                 request.getRequestDispatcher("fix_customer.jsp").forward(request, response);
 
-                log.setSrc(this.name + "EDIT CUSTOMER");
-                log.setContent("EDIT CUSTOMER " + nameCus + " AT: Username - "  + username);
-                LogService.log(log);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
