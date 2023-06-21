@@ -974,7 +974,9 @@
                     <% List<Product> list1= (List<Product>) request.getAttribute("list1");
               List<Product> list2= (List<Product>) request.getAttribute("list2");%>
                 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    3 Sản phẩm có doanh số cao nhất trong tháng <%= month %>
+                    3 Sản phẩm có doanh số cao nhất trong tháng <% if(month!=null){ %> <%=month%> <% }else{ %>
+                    <%=String.valueOf(LocalDate.now().getMonthValue())%>
+                <% } %>
                 </h4>
                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
@@ -1021,7 +1023,9 @@
                     </div>
                 </div>
                 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    3 Sản phẩm có doanh số cao nhất trong năm <%= year %>
+                    3 Sản phẩm có doanh số cao nhất trong năm <% if(year!=null){ %> <%=year%> <% }else{ %>
+                    <%=String.valueOf(LocalDate.now().getYear())%>
+                    <% } %>
                 </h4>
                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
