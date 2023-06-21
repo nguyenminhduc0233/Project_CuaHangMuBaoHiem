@@ -29,7 +29,14 @@
           src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
           defer
   ></script>
-  <%long[] data = ProductService.chartLine();%>
+  <% String getYear = request.getParameter("year");
+    int y=0;
+  if(getYear == null){
+    y= LocalDate.now().getYear();
+  }else{
+    y =Integer.parseInt(getYear);
+  }
+    long[] data = ProductService.chartLine(y);%>
   <script src="admin/assets/js/line.js" onload="getData([<%= data[0] %>,<%= data[1] %>,<%= data[2] %>,<%= data[3] %>,<%= data[4] %>,<%= data[5] %>,<%= data[6] %>,<%= data[7] %>,<%= data[8] %>,<%= data[9] %>,<%= data[10] %>,<%= data[11] %>])" defer></script>
 </head>
 <body>
@@ -258,6 +265,26 @@
           </a>
         </li>
         <li class="relative px-6 py-3">
+          <a
+                  class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                  href="/Project_CuaHangMuBaoHiem_war/ManageTransport.jsp"
+          >
+            <svg
+                    class="w-5 h-5"
+                    aria-hidden="true"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+            >
+              <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            <span class="ml-4">Thông tin vận chuyển</span>
+          </a>
+        </li>
+        <li class="relative px-6 py-3">
           <button class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200" @click="togglePagesMenu" aria-haspopup="true">
                 <span class="inline-flex items-center">
                   <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
@@ -433,12 +460,18 @@
       </div>
       <div class="container grid px-6 mx-auto">
         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-          Biểu đồ doanh thu trong năm <%= LocalDate.now().getYear() %>
+          Biểu đồ doanh thu trong năm <%= y %>
         </h2>
-
+        <% long sum = 0;
+          for(long i: data){
+            sum+=i;
+          }
+          NumberFormat numberFormat = new NumberFormat();
+        %>
+        <p> Tổng doanh thu trong năm <%= y %> là: <%= numberFormat.numberFormat(sum) %>đ</p>
         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
           <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-            Lines
+            Biểu đồ đường
           </h4>
           <canvas id="line" style="display: block; height: 106px; width: 212px;" width="265" height="132" class="chartjs-render-monitor"></canvas>
           <div class="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400">

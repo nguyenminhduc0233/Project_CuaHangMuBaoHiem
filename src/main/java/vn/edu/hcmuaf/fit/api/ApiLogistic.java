@@ -15,6 +15,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import vn.edu.hcmuaf.fit.service.TransportService;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -475,9 +476,33 @@ public class ApiLogistic {
         }
         return result;
     }
+    public static String getAddressCurrent(){
+        TransportService transportService =  TransportService.getInstance();
+        int district = transportService.getDistrict();
+        String ward = String.valueOf(transportService.getWard());
+        int province = transportService.getProvince();
+        String result = "";
+        for(Address a : getAllWard(district)){
+            if(a.getWardCode().equals(ward)){
+                result+= a.getWardName()+" - ";
+                break;
+            }
+        }
+        for(Address a : getAllDistrict(province)){
+            if(a.getDistrictID()==district){
+                result+= a.getDistrictName()+" - ";
+                break;
+            }
+        }
+        for(Address a : getAllProvince()){
+            if(a.getProvinceID()==province){
+                result+= a.getProvinceName();
+                break;
+            }
+        }
+        return result;
+    }
     public static void main(String[] args) {
-        System.out.println(getTransferTime(25,25,25,3000,3695,90735,1769,371008).get(0));
-        System.out.println(parseDate("2023-05-02T23:59:59Z"));
-        System.out.println(getAddress(262,1769,"371008"));
+      System.out.println(  getAddressCurrent());
     }
 }

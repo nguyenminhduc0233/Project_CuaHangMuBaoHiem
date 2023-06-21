@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name = "BestSeller", value = "/BestSeller")
@@ -26,8 +27,16 @@ public class BestSeller extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
                 return;
             }
-            List<Product> list1 = ProductService.topThreeByMonth();
-            List<Product> list2 = ProductService.topThreeByYear();
+            String m = request.getParameter("month");
+            String y = request.getParameter("year");
+            if(m==null){
+                m = String.valueOf(LocalDate.now().getMonthValue());
+            }
+            if(y==null){
+                y =  String.valueOf(LocalDate.now().getYear());
+            }
+            List<Product> list1 = ProductService.topThreeByMonth(m, y);
+            List<Product> list2 = ProductService.topThreeByYear(y);
             request.setAttribute("list1", list1);
             request.setAttribute("list2", list2);
             request.getRequestDispatcher("BestSeller.jsp").forward(request, response);
