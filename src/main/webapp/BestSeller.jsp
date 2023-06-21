@@ -875,7 +875,31 @@
                 >
                     Sản phẩm bán nhiều nhất
                 </h2>
+                <div style="display: flex">
+                    <%
+                        String month = request.getParameter("month");
+                        String year = request.getParameter("year");
+                    %>
 
+                    <form id="y_m" action="/Project_CuaHangMuBaoHiem_war/BestSeller" method="get" style="margin-left: 176px">
+                        <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Tháng</span>
+                                <input required="required" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       type="number"   name="month"   value="<%=month%>"  placeholder="Nhập tháng"   />
+                                <span id="error_month" style="color: red"></span>
+                            </label>
+                            <br>
+                            <label class="block text-sm">
+                                <span class="text-gray-700 dark:text-gray-400">Năm</span>
+                                <input required="required" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                       type="number"   name="year"     value="<%=year%>"  placeholder="Nhập năm"   />
+                                <span id="error_year" style="color: red"></span>
+                            </label>
+                            <div><input type="submit" onclick="check()" value="Tìm kiếm" class="button" style="background: #007bff;width: 100px;border-radius: 4px;margin-top: 7px"></div>
+                        </div>
+                    </form>
+                </div>
                 <div class="grid gap-6 mb-8 md:grid-cols-2">
                     <!-- Doughnut/Pie chart -->
                     <%
@@ -950,7 +974,7 @@
                     <% List<Product> list1= (List<Product>) request.getAttribute("list1");
               List<Product> list2= (List<Product>) request.getAttribute("list2");%>
                 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    3 Sản phẩm có doanh số cao nhất trong tháng <%= LocalDate.now().getMonthValue() %>
+                    3 Sản phẩm có doanh số cao nhất trong tháng <%= month %>
                 </h4>
                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">
@@ -997,7 +1021,7 @@
                     </div>
                 </div>
                 <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
-                    3 Sản phẩm có doanh số cao nhất trong năm <%= LocalDate.now().getYear() %>
+                    3 Sản phẩm có doanh số cao nhất trong năm <%= year %>
                 </h4>
                 <div class="w-full mb-8 overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full overflow-x-auto">

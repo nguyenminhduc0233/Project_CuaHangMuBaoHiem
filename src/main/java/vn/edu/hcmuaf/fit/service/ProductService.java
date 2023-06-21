@@ -2231,7 +2231,7 @@ public class ProductService {
         return result;
     }
 
-    public static List<Product> topThreeByYear() {
+    public static List<Product> topThreeByYear(String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2254,7 +2254,7 @@ public class ProductService {
         return list;
     }
 
-    public static List<Product> topThreeByMonth() {
+    public static List<Product> topThreeByMonth(String month, String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2262,8 +2262,8 @@ public class ProductService {
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
 
-            ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
-            ps.setString(2, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(1, month);
+            ps.setString(2, year);
             ps.setString(3, "Đã nhận");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
