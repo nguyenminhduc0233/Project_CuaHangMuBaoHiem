@@ -8,12 +8,15 @@ import vn.edu.hcmuaf.fit.model.Product;
 import vn.edu.hcmuaf.fit.service.LogService;
 import vn.edu.hcmuaf.fit.service.MailService;
 import vn.edu.hcmuaf.fit.service.ProductService;
+import vn.edu.hcmuaf.fit.service.TransportService;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import java.util.List;
 @WebServlet(name = "add_bill", value = "/add_bill")
 public class Add_Bill extends HttpServlet {
     String namee = "AUTH ";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -40,19 +44,19 @@ public class Add_Bill extends HttpServlet {
         Cart cart = (Cart) request.getSession().getAttribute("cart");
         List<BillDetail> id_dp = new ArrayList<BillDetail>();
         BillDetail billDetail = new BillDetail();
-        for(Product p: cart.getListProduct()){
-            billDetail = new BillDetail(p.getDetail().get(0).getId() , (long) p.getQuantity(),(long)(p.getPrice()-p.getPrice()*p.getDiscount()));
+        for (Product p : cart.getListProduct()) {
+            billDetail = new BillDetail(p.getDetail().get(0).getId(), (long) p.getQuantity(), (long) (p.getPrice() - p.getPrice() * p.getDiscount()));
             billDetail.setName(p.getName());
             id_dp.add(billDetail);
         }
-        if(name==""||email==""||phone==""||address==""){
-            request.setAttribute("error","error");
-            request.getRequestDispatcher("checkout.jsp").forward(request,response);
+        if (name == "" || email == "" || phone == "" || address == "") {
+            request.setAttribute("error", "error");
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
 
             log.setSrc(this.namee + "CHECKOUT FALSE");
             log.setLevel(Log.ERROR);
             log.setContent("CHECKOUT FALSE: Username - " + username);
-        }else {
+        } else {
             LocalDateTime date = LocalDateTime.now();
 //            String username = (String) request.getSession().getAttribute("tendangnhap");
             int id_cus = 0;
@@ -61,8 +65,11 @@ public class Add_Bill extends HttpServlet {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+
+            int from_district = TransportService.getInstance().getDistrict();
+            int from_ward = TransportService.getInstance().getWard();
             ApiLogistic api = new ApiLogistic();
-            String id_transport = api.registerTransport(25, 25, 25, 3000, 3695, 90735, Integer.parseInt(district), Integer.parseInt(ward)).getId();
+            String id_transport = api.registerTransport(25, 25, 25, 3000, from_district, from_ward, Integer.parseInt(district), Integer.parseInt(ward)).getId();
 
             try {
                 int id_bill = ProductService.addBill(id_cus, "Đang gửi", id_dp, address, phone, id_transport, api.formatDateYMD(received_date), fee, total_cost);
@@ -89,7 +96,7 @@ public class Add_Bill extends HttpServlet {
                 request.getRequestDispatcher("detail_bill.jsp").forward(request, response);
 
                 log.setSrc(this.namee + "CHECK OUT");
-                log.setContent("CHECK OUT " + name + " SUCCESS: Username - "  + username);
+                log.setContent("CHECK OUT " + name + " SUCCESS: Username - " + username);
             } catch (Exception e) {
                 e.printStackTrace();
             }
