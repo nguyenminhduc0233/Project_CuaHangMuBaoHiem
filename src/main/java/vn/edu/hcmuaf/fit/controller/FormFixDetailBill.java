@@ -20,9 +20,26 @@ public class FormFixDetailBill extends HttpServlet {
         try {
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý hóa đơn",customer.getPermission(),"EDIT"))) {
-                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-                return;
+                if(customer.getPermission()==3){
+                    String message = "Bạn không đủ quyền để truy cập";
+                    session.setAttribute("message",message);
+                    response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                    return;
+                }else{
+                    String previousURL = request.getHeader("referer");
+                    if(!CustomerService.allow_service(CustomerService.id_access_link(previousURL,customer.getPermission(),"VIEW"))){
+                        String message = "Bạn không đủ quyền để truy cập";
+                        session.setAttribute("message",message);
+                        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                        return;
+                    }else{
+                        session.setAttribute("previousURL", previousURL);
+                        String message = "Bạn không đủ quyền để truy cập";
+                        session.setAttribute("message",message);
+                        response.sendRedirect(previousURL);
+                        return;
+                    }
+                }
             }
             int id_bill = Integer.parseInt(request.getParameter("id_bill"));
             request.setAttribute("bill", ProductService.getBill(id_bill));

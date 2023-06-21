@@ -24,10 +24,26 @@ public class CreateProduct extends HttpServlet {
             throw new RuntimeException(e);
         }
         if(customer==null||customer.getId_customer()!=0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"CREATE"))){
-            request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-
-            return;
+            if(customer.getPermission()==3){
+                String message = "Bạn không đủ quyền để truy cập";
+                session.setAttribute("message",message);
+                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                return;
+            }else{
+                String previousURL = request.getHeader("referer");
+                if(!CustomerService.allow_service(CustomerService.id_access_link(previousURL,customer.getPermission(),"VIEW"))){
+                    String message = "Bạn không đủ quyền để truy cập";
+                    session.setAttribute("message",message);
+                    response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                    return;
+                }else{
+                    session.setAttribute("previousURL", previousURL);
+                    String message = "Bạn không đủ quyền để truy cập";
+                    session.setAttribute("message",message);
+                    response.sendRedirect(previousURL);
+                    return;
+                }
+            }
         }else{
             response.sendRedirect("forms.jsp");
 

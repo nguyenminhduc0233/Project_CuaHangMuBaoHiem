@@ -264,7 +264,7 @@
         <li class="relative px-6 py-3">
           <a
                   class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                  href="/Project_CuaHangMuBaoHiem_war/ManageTransport.jsp"
+                  href="/Project_CuaHangMuBaoHiem_war/ManagerTransport"
           >
             <svg
                     class="w-5 h-5"
@@ -516,6 +516,18 @@
           <input type="submit" value="Lưu" class="button" style="background: #007bff; margin-right: 20px">
           <button type="button" onclick="goBack()" class="button cancel" style="background: red">Hủy</button>
         </form>
+        <%
+          String message = (String)session.getAttribute("message"); // Lấy thông báo từ session
+          session.removeAttribute("message"); // Xóa thông báo khỏi session
+
+          if (message != null) { // Nếu thông báo có giá trị
+        %>
+        <script>
+          alert("<%=message%>"); // Hiển thị alert với thông báo được truyền từ Servlet
+        </script>
+        <%
+          }
+        %>
       </div>
 
     </main>

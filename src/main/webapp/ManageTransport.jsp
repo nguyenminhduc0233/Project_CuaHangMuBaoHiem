@@ -253,7 +253,7 @@
                     <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                            href="/Project_CuaHangMuBaoHiem_war/ManageTransport.jsp"
+                            href="/Project_CuaHangMuBaoHiem_war/ManagerTransport"
                     >
                         <svg
                                 class="w-5 h-5"
@@ -550,6 +550,18 @@
                 </div>
                 <%}%>
             </div>
+                <%
+                    String message = (String)session.getAttribute("message"); // Lấy thông báo từ session
+                    session.removeAttribute("message"); // Xóa thông báo khỏi session
+
+                    if (message != null) { // Nếu thông báo có giá trị
+                %>
+                <script>
+                    alert("<%=message%>"); // Hiển thị alert với thông báo được truyền từ Servlet
+                </script>
+                <%
+                    }
+                %>
             </div>
         </main>
     </div>
