@@ -531,6 +531,7 @@ public class CustomerService {
             while(rs.next()){
                 list.add(rs.getInt(1));
             }
+            list.add(0);
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -593,6 +594,23 @@ public class CustomerService {
             throw new RuntimeException(e);
         }
         return list;
+    }
+    public static int id_access_link(String link, int permission, String action){
+        if(permission==0) return -1;
+        int result = 0;
+        try {
+            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id from manager_permissions where link_page=? and permission=? and action =?");
+            prs.setString(1,link);
+            prs.setInt(2,permission);
+            prs.setString(3,action);
+            ResultSet rs = prs.executeQuery();
+            if (rs.next()){
+                result = rs.getInt("id");
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {

@@ -28,8 +28,23 @@ public class Remove extends HttpServlet {
             Log log = new Log(Log.INFO, username, this.name, "", 0);
             customer = CustomerService.customer(username);
             if (customer == null || customer.getPermission() != 0&&!CustomerService.allow_service(CustomerService.id_access("quản lý sản phẩm",customer.getPermission(),"DELETE"))) {
-                request.setAttribute("error", "Đăng nhập quản trị viên để truy cập. Vui lòng đăng nhập lại!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                if(customer.getPermission()==3){
+                    String message = "Bạn không đủ quyền để truy cập";
+                    session.setAttribute("message",message);
+                    response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                }else{
+                    String previousURL = request.getHeader("referer");
+                    if(!CustomerService.allow_service(CustomerService.id_access_link(previousURL,customer.getPermission(),"VIEW"))){
+                        String message = "Bạn không đủ quyền để truy cập";
+                        session.setAttribute("message",message);
+                        response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                    }else{
+                        session.setAttribute("previousURL", previousURL);
+                        String message = "Bạn không đủ quyền để truy cập";
+                        session.setAttribute("message",message);
+                        response.sendRedirect(previousURL);
+                    }
+                }
 
                 log.setSrc(this.name + "DELETE PRODUCT FALSE");
                 log.setContent("DELETE PRODUCT FALSE: Username - " + username);
