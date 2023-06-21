@@ -32,8 +32,8 @@ public class ProductsToBeImported extends HttpServlet {
             int next = index + 1;
 
             int n = ProductService.getTotalProduct();
-            int endPage = n / 8;
-            if (n % 8 != 0) {
+            int endPage = n / 10;
+            if (n % 10 != 0) {
                 endPage++;
             }
 
