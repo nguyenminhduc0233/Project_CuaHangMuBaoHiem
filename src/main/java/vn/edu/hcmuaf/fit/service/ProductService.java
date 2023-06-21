@@ -2238,7 +2238,7 @@ public class ProductService {
         int count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
-            ps.setString(1, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(1, year);
             ps.setString(2, "Đã nhận");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
