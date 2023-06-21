@@ -1424,20 +1424,42 @@ public class ProductService {
     }
     public static List<Log> onePageLog(int index) {
         List<Log> list = new ArrayList<>();
+        int newindex = Math.abs(index - (getTotalLog()/10))*10+getTotalLog()%10;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,10");
-            prs.setInt(1, (index-1)*10);
-            ResultSet rs = prs.executeQuery();
-            while (rs.next()) {
-                list.add(new Log(
-                        rs.getInt("id"),
-                        rs.getInt("level"),
-                        rs.getString("user"),
-                        rs.getString("src"),
-                        rs.getString("content"),
-                        rs.getDate("createAt"),
-                        rs.getInt("status")));
+            if(index==(getTotalLog()/10+1)){
+                int du = getTotalLog()%10;
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,?");
+                prs.setInt(1, 0);
+                prs.setInt(2, du);
+                ResultSet rs = prs.executeQuery();
+                while (rs.next()) {
+                    list.add(new Log(
+                            rs.getInt("id"),
+                            rs.getInt("level"),
+                            rs.getString("user"),
+                            rs.getString("src"),
+                            rs.getString("content"),
+                            rs.getDate("createAt"),
+                            rs.getInt("status")));
+                }
+                Collections.reverse(list);
+            }else{
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,10");
+                prs.setInt(1, newindex);
+                ResultSet rs = prs.executeQuery();
+                while (rs.next()) {
+                    list.add(new Log(
+                            rs.getInt("id"),
+                            rs.getInt("level"),
+                            rs.getString("user"),
+                            rs.getString("src"),
+                            rs.getString("content"),
+                            rs.getDate("createAt"),
+                            rs.getInt("status")));
+                }
+                Collections.reverse(list);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -2231,14 +2253,14 @@ public class ProductService {
         return result;
     }
 
-    public static List<Product> topThreeByYear() {
+    public static List<Product> topThreeByYear(String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
         int count = 0;
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where year(b.date) = ? and b.status=? group by dp.id_product order by c DESC");
-            ps.setString(1, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(1, year);
             ps.setString(2, "Đã nhận");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2254,7 +2276,7 @@ public class ProductService {
         return list;
     }
 
-    public static List<Product> topThreeByMonth() {
+    public static List<Product> topThreeByMonth(String month, String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2262,8 +2284,8 @@ public class ProductService {
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
 
-            ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
-            ps.setString(2, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(1, month);
+            ps.setString(2, year);
             ps.setString(3, "Đã nhận");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2462,30 +2484,21 @@ public class ProductService {
         }
         return 0;
     }
+    public static void removeQuantity(int iddp, long quantity){
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE detail_products set quantity = quantity - ? where id_dp =?");
+            ps.setLong(1, quantity);
+            ps.setInt(2, iddp);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void removesQuantity(List<BillDetail> bill){
+        for(BillDetail b : bill){
+            removeQuantity(b.getId_dp(),b.getQuantitySold());
+        }
+    }
     public static void main(String[] args) throws SQLException {
-//        List<BillDetail> list = new ArrayList<>();
-//        list.add(new BillDetail(1,1,400000));
-//        list.add(new BillDetail(2,1,50000));
-//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
-//        System.out.print(getRevenueByMonthYear( 4,  2023));
-//        for(long l : chartLine()){
-//            System.out.println(l);
-//        }
-
-//        deleteComment(15);
-//        System.out.println(findProductReturn(1,"Nón").size());
-//        System.out.println(getTotalProduct());
-//        for(Product p : topThreeByYear()){
-//            System.out.println(p.getId());
-//        }
-//        System.out.println(getProduct(14).getImg());
-//        System.out.println(LocalDate.now().getYear());
-//        for(long l :chartLine()){
-//            System.out.println(l);
-//        }
-//        System.out.println(getRevenueByMonthYear(4,2023));
-//        addBill
-
-        System.out.println(getAllComment());
         }
 }

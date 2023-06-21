@@ -1,39 +1,28 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ACER
-  Date: 2/19/2023
-  Time: 9:50 AM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Collection" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Customer" %>
-<%@ page import="vn.edu.hcmuaf.fit.model.Log" %>
-<%@ page import="vn.edu.hcmuaf.fit.service.LogService" %>
 <%@ page import="vn.edu.hcmuaf.fit.service.ProductService" %>
+<%@ page import="vn.edu.hcmuaf.fit.api.ApiLogistic" %>
+<%@ page import="vn.edu.hcmuaf.fit.api.Address" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quản lý bình luận</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="admin/assets/css/tailwind.output.css" />
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Địa chỉ vận chuyển</title>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="admin/assets/css/tailwind.output.css"/>
+    <link rel="stylesheet" href="admin/assets/css/filter.css"/>
+    <script
+            src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
+            defer
+    ></script>
     <script src="admin/assets/js/init-alpine.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .text-primary{
-            color: #FFD333;
-        }
-        .page-item.disabled{
-            color: #d5d6d7;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
 <div
@@ -77,6 +66,7 @@
             </ul>
             <ul>
                 <li class="relative px-6 py-3">
+
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                             href="/Project_CuaHangMuBaoHiem_war/ManageProduct"
@@ -97,7 +87,6 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                             href="/Project_CuaHangMuBaoHiem_war/list-bill"
@@ -240,10 +229,6 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
-              <span
-                      class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                      aria-hidden="true"
-              ></span>
 
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
@@ -265,6 +250,7 @@
                     </a>
                 </li>
                 <li class="relative px-6 py-3">
+                    <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
                     <a
                             class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                             href="/Project_CuaHangMuBaoHiem_war/ManageTransport.jsp"
@@ -355,12 +341,28 @@
                 </button>
                 <!-- Search input -->
                 <div class="flex justify-center flex-1 lg:mr-32">
-                    <div
-                            class="relative w-full max-w-xl mr-6 focus-within:text-purple-500"
-                    >
+                    <div class="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
                         <div class="absolute inset-y-0 flex items-center pl-2">
-
+                            <svg
+                                    class="w-4 h-4"
+                                    aria-hidden="true"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                            >
+                                <path
+                                        fill-rule="evenodd"
+                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                        clip-rule="evenodd"
+                                ></path>
+                            </svg>
                         </div>
+                        <form action="/Project_CuaHangMuBaoHiem_war/SearchProduct" method="get">
+                            <input class="w-full pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+                                   type="text"
+                                   name="text"
+                                   placeholder="Tìm kiếm"
+                                   aria-label="Search"/>
+                        </form>
                     </div>
                 </div>
                 <ul class="flex items-center flex-shrink-0 space-x-6">
@@ -403,7 +405,9 @@
                     <li class="relative">
 
                         <a href="/Project_CuaHangMuBaoHiem_war/ManageContact">
-                            <button  class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple" @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu" aria-label="Notifications" aria-haspopup="true">
+                            <button class="relative align-middle rounded-md focus:outline-none focus:shadow-outline-purple"
+                                    @click="toggleNotificationsMenu" @keydown.escape="closeNotificationsMenu"
+                                    aria-label="Notifications" aria-haspopup="true">
                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path>
                                 </svg>
@@ -416,256 +420,158 @@
         </header>
         <main class="h-full pb-16 overflow-y-auto">
             <div class="container grid px-6 mx-auto">
-                <h2
-                        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
-                >
-                    Danh sách log
+                <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                    Địa chỉ vận chuyển
                 </h2>
-                <%
-                    int index = (int) request.getAttribute("index");
-                    int endPage = (int) request.getAttribute("endP");
-                    int pre = (int) request.getAttribute("pre");
-                    int next = (int) request.getAttribute("next");
-                    List<Log> list = (List<Log>) request.getAttribute("list");
-                %>
-                <!-- With actions -->
-                <h4
-                        class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
-                >
 
-                </h4>
-                <div class="w-full overflow-hidden rounded-lg shadow-xs">
-                    <div class="w-full overflow-x-auto">
-                        <table class="w-full whitespace-no-wrap">
-                            <thead>
-                            <tr
-                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
-                            >
-                                <th class="px-4 py-3">ID log</th>
-                                <th class="px-4 py-3">Level</th>
-                                <th class="px-4 py-3">Src</th>
-                                <th class="px-4 py-3">Content</th>
-                                <th class="px-4 py-3">Create at</th>
-                            </tr>
-                            </thead>
-                            <tbody
-                                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800"
-                            >
-                            <%
-                                NumberFormat nf = new NumberFormat();
-                                for(Log l: list){
-
-                            %>
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">
-                                    <%=l.getId()%>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <%=l.getLevel()%>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <%=l.getSrc()%>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <%=l.getContent()%>
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <%=l.getCreateAt()%>
-                                </td>
-                            </tr>
-                            <%}%>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div
-                            class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
-                    >
-                        <%
-                            int size= ProductService.getTotalLog();
-                            int start = Math.min(size,(index-1)*10+1);
-                            int end = Math.min(size,(index-1)*10+10);
-                            if(list.size()==0){
-                                start=end=size=0;
-                                endPage=1;
-                            }
-                            if(list.size()==1){
-                                start=end=size=1;
-                            }
-                        %>
-                        <span class="flex items-center col-span-3">
-                          Hiển thị <%=start%>-<%=end%> của <%=size%>
-                        </span>
-                        <span class="col-span-2"></span>
-                        <!-- Pagination -->
-                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                  <nav aria-label="Table navigation">
-                    <ul class="inline-flex items-center">
-                      <%if(endPage<=7){%>
-                        <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                      <%for(int i = 1; i <= endPage; i++){%>
-                        <li>
-                        <a  href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + i%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==i? "text-white bg-purple-600":""%>">
-                          <%=i%>
-                        </button></a>
-                        </li>
-                      <%}%>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <%}else{
-                            if(index==1||index==endPage){%>
-                        <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
-                          1
-                        </button></a></li>
-                      <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
-                          2
-                        </button></a></li>
-                        <li>...</li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
-                          <%=endPage-1%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
-                          <%=endPage%>
-                        </button></a></li>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <%}else if(index==2){%>
-                        <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
-                          1
-                        </button></a></li>
-                      <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
-                          2
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 3%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==3? "text-white bg-purple-600":""%>">
-                          3
-                        </button></a></li>
-                        <li>...</li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
-                          <%=endPage-1%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
-                          <%=endPage%>
-                        </button></a></li>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <%}else if(index==(endPage-1)){%>
-                        <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
-                          1
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
-                          2
-                        </button></a></li>
-                        <li>...</li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (endPage-2)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-2)? "text-white bg-purple-600":""%>">
-                          <%=endPage-2%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
-                          <%=endPage-1%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
-                          <%=endPage%>
-                        </button></a></li>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <%}else{%>
-                        <li class="page-item <%=index==1? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
-                          1
-                        </button></a></li>
-                        <li>...</li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (index-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index-1)? "text-white bg-purple-600":""%>">
-                          <%=index-1%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (index)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index)? "text-white bg-purple-600":""%>">
-                          <%=index%>
-                        </button></a></li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + (index+1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index+1)? "text-white bg-purple-600":""%>">
-                          <%=index+1%>
-                        </button></a></li>
-                        <li>...</li>
-                        <li><a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
-                          <%=endPage%>
-                        </button></a></li>
-                      <li class="page-item <%=index==endPage? "disabled":""%>">
-                        <a href="<%="/Project_CuaHangMuBaoHiem_war/ListLog?index=" + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
-                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
-                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
-                            </path>
-                          </svg>
-                        </button></a>
-                      </li>
-                        <%}%>
-                        <%}%>
-                    </ul>
-                  </nav>
-                </span>
-                    </div>
+                <div class="col-md-6 form-group">
+                    <p>Địa chỉ hiện tại: </p><%= ApiLogistic.getAddressCurrent() %>
                 </div>
+            <div class="bg-light p-30 mb-5">
+                <% String selectedProvince = request.getParameter("province");
+                    String selectDistrict = request.getParameter("district");
+                    String selectWard = request.getParameter("ward");%>
+
+                <% ApiLogistic api = new ApiLogistic();
+                    List<Address> address = api.getAllProvince(); %>
+                <% boolean res = false;
+                    for (Address a : address) {
+                        if (String.valueOf(a.getProvinceID()).equals(selectedProvince)) {
+                            res = true;
+                        }
+                    }%>
+                <% if (res == false) { %>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"  name="province" class="pix_text" onchange="sendAddress()">
+                    <option value="000">Chọn tỉnh thành</option>
+                    <%for (Address a : address) {%>
+                    <option value="<%= a.getProvinceID()%>"><%= a.getProvinceName()%>
+                    </option>
+                    <%}%>
+                </select>
+                <%}%>
+                <% if (res == true) {
+                    String name = "";
+                    for (Address i : address) {
+                        if (String.valueOf(i.getProvinceID()).equals(selectedProvince)) {
+                            name = i.getProvinceName();
+                        }
+                    }%>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="province" class="pix_text" onchange="sendAddress()">
+                    <option value="<%=selectedProvince%>"><%= name %>
+                    </option>
+                    <%for (Address a : address) {%>
+                    <option value="<%= a.getProvinceID()%>"><%= a.getProvinceName()%>
+                    </option>
+                    <%}%>
+                </select>
+                <%}%>
+                <% boolean res2 = false;
+                    boolean res3 = false;
+                    List<Address> district = new ArrayList<Address>();
+                    if (res == true) {%>
+                <%district = api.getAllDistrict(Integer.parseInt(selectedProvince));%>
+                <% res2 = false;
+                    for (Address d : district) {
+                        if (String.valueOf(d.getDistrictID()).equals(selectDistrict)) {
+                            res2 = true;
+                        }
+                    }%>
+                <%if (res2 == false) {%>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="district" class="pix_text" style="width: 300px" onchange="sendAddressDis()">
+                    <option value="000">Chọn quận huyện</option>
+                    <%for (Address a : district) {%>
+                    <option value="<%= a.getDistrictID()%>"><%= a.getDistrictName()%>
+                    </option>
+                    <%}%>
+                </select>
+                <%}%>
+                <%
+                    if (res2 == true) {
+                        String name = "";
+                        for (Address i : district) {
+                            if (String.valueOf(i.getDistrictID()).equals(selectDistrict)) {
+                                name = i.getDistrictName();
+                            }
+                        }
+                %>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="district" class="pix_text" style="width: 300px" onchange="sendAddressDis()">
+                    <option value="<%=selectDistrict%>"><%= name %>
+                    </option>
+                    <%for (Address a : district) {%>
+                    <option value="<%= a.getDistrictID()%>"><%= a.getDistrictName()%>
+                    </option>
+                    <%}%>
+                </select>
+
+                <%}%>
+                <%}%>
+                <%
+                    if (res2 == true) {%>
+                <%List<Address> ward = api.getAllWard(Integer.parseInt(selectDistrict));%>
+                <% res3 = false;
+                    for (Address d : ward) {
+                        if (String.valueOf(d.getWardCode()).equals(selectWard)) {
+                            res3 = true;
+                        }
+                    }%>
+                <%if (res3 == false) {%>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="ward" class="pix_text" style="width: 300px" onchange="sendAddressWard()">
+                    <option value="000">Chọn phuong xa</option>
+                    <%for (Address a : ward) {%>
+                    <option value="<%= a.getWardCode()%>"><%= a.getWardName()%>
+                    </option>
+                    <%}%>
+                </select>
+                <%}%>
+                <%
+                    if (res3 == true) {
+                        String name = "";
+                        for (Address i : ward) {
+                            if (String.valueOf(i.getWardCode()).equals(selectWard)) {
+                                name = i.getWardName();
+                            }
+                        }
+                %>
+                <select style="width: 200px" class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="ward" class="pix_text" style="width: 300px" onchange="sendAddressWard()">
+                    <option value="<%=selectWard%>"><%= name %>
+                    </option>
+                    <%for (Address a : ward) {%>
+                    <option value="<%= a.getWardCode()%>"><%= a.getWardName()%>
+                    </option>
+                    <%}%>
+                </select>
+                <%}%>
+                <%}%>
+                <%if(res3==true){%>
+                <div class="bg-light p-30">
+                    <a href="<%="/Project_CuaHangMuBaoHiem_war/UpdateInforTransport?province="+selectedProvince+"&district="+selectDistrict+"&ward="+selectWard%>">
+                        <input type="button" class="btn btn-block btn-primary font-weight-bold py-3" value="Cập nhật" style="width: 186px; margin-top: 30px;">
+                    </a>
+                </div>
+                <%}%>
+            </div>
             </div>
         </main>
     </div>
 </div>
+<script>
+    function sendAddress() {
+        var selectedValue = document.getElementsByName("province")[0].value;
+        window.location.href = 'InforTransport?province=' + selectedValue;
+    }
+
+    function sendAddressDis() {
+        var selectedValue = document.getElementsByName("province")[0].value;
+        var selectedDistrict = document.getElementsByName("district")[0].value;
+        window.location.href = 'InforTransport?province=' + selectedValue + '&district=' + selectedDistrict;
+    }
+
+    function sendAddressWard() {
+        var selectedValue = document.getElementsByName("province")[0].value;
+        var selectedDistrict = document.getElementsByName("district")[0].value;
+        var selectedWard = document.getElementsByName("ward")[0].value;
+        window.location.href = 'InforTransport?province=' + selectedValue + '&district=' + selectedDistrict + '&ward=' + selectedWard;
+    }
+</script>
 </body>
 </html>

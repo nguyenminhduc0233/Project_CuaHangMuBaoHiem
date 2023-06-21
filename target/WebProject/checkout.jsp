@@ -1,6 +1,7 @@
 <%@ page import="vn.edu.hcmuaf.fit.model.Product" %>
 <%@ page import="vn.edu.hcmuaf.fit.model.NumberFormat" %>
 <%@ page import="vn.edu.hcmuaf.fit.api.ApiLogistic" %>
+<%@ page import="vn.edu.hcmuaf.fit.service.TransportService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 
@@ -82,7 +83,9 @@
                         address = address== null?"":address;
                     %>
                     <%
-                        long fee = (api.getCalculateFee(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0));
+                        int from_district = TransportService.getInstance().getDistrict();
+                        int from_ward = TransportService.getInstance().getWard();
+                        long fee = (api.getCalculateFee(25,25,25,3000,from_district,from_ward,Integer.parseInt(district),Integer.parseInt(ward)).get(0));
                         long price = 0;
                         for(Product p:cart.getListProduct()){
                             price += p.getPrice()-p.getPrice()*p.getDiscount();
@@ -118,7 +121,7 @@
                             <input type="hidden" name="ward" class="form-control" value="<%=ward%>" type="text" placeholder="">
                         </div>
                         <div class="col-md-6 form-group">
-                            <input type="hidden" name="received_date" class="form-control" value="<%=api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)%>" type="text" placeholder="">
+                            <input type="hidden" name="received_date" class="form-control" value="<%=api.getTransferTime(25,25,25,3000,from_district,from_ward,Integer.parseInt(district),Integer.parseInt(ward)).get(0)%>" type="text" placeholder="">
                         </div>
                     </div>
                     <div><span id="error" class="error"><%=error%></span></div>
@@ -156,7 +159,7 @@
                         </div>
                         <div class="d-flex justify-content-between  mb-3">
                             <h6 class="font-weight-medium">Thời gian vận chuyển</h6>
-                            <h6 class="font-weight-medium"><%= api.getDateNow()%> - <%= api.parseDate(api.getTransferTime(25,25,25,3000,3695,90735,Integer.parseInt(district),Integer.parseInt(ward)).get(0)) %></h6>
+                            <h6 class="font-weight-medium"><%= api.getDateNow()%> - <%= api.parseDate(api.getTransferTime(25,25,25,3000,from_district,from_ward,Integer.parseInt(district),Integer.parseInt(ward)).get(0)) %></h6>
                         </div>
                     </div>
                     <div class="pt-2">
