@@ -550,13 +550,7 @@
                 </td>
                 <td class="px-4 py-3 text-sm">
                   <a href="/Project_CuaHangMuBaoHiem_war/detail-bill?id=<%=b.getId()%>">
-                  <% long price = 0;
-                    for(int id_dp:b.getProductList()){
-                      Product p = ProductService.getProduct(ProductService.getIdProduct(id_dp));
-                      price += p.getPrice()-p.getPrice()*p.getDiscount();
-                    }
-                    NumberFormat nf = new NumberFormat();%>
-                  <%=nf.numberFormat(price)%>đ
+                  <%=ProductService.getTotalCost(b.getId())%>đ
                   </a>
                 </td>
                 <td class="px-4 py-3 text-sm">

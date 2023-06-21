@@ -1970,6 +1970,21 @@ public class ProductService {
         return list;
     }
 
+    public static int getTotalCost(int id_bill){
+        String query = "select total_cost from bills where id= ?";
+        try{
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement(query);
+            ps.setInt(1, id_bill);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static int getTotalCustomer(){
         String query = "select count(id_customer) from customers";
         try{
