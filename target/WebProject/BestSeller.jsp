@@ -942,7 +942,7 @@
                             class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
                     >
                         <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
-                            3 sản phẩm bán nhiều nhất trong năm 
+                            3 sản phẩm bán nhiều nhất trong năm
                         </h4>
                         <canvas id="pie2"></canvas>
                         <div
