@@ -222,7 +222,6 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-
                                     <%
                                         int idc = 0;
                                         int idp = 0;
@@ -253,10 +252,10 @@
                                                 </p>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="small mb-0" style="color: #aaa;">
-                                                        <a href="<%="/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus%>"
-                                                           class="link-grey">Remove</a>
-<%--                                                        <a href="<%=idcus==idUser? "/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus:"#!"%>"--%>
+<%--                                                        <a href=/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+<%=idp%>idp+"&idc="+<%=idc%>+"&idcus="+<%=idcus%>"--%>
 <%--                                                           class="link-grey">Remove</a>--%>
+                                                        <a href="<%=idcus==idUser? "/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus:"#!"%>"
+                                                           class="link-grey">Remove</a>
                                                         <a href="#!" class="link-grey">Reply</a>
                                                     </p>
                                                     <div class="d-flex flex-row">

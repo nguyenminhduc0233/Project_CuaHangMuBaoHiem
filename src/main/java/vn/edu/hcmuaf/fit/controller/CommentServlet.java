@@ -21,7 +21,7 @@ public class CommentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        response.setContentType("application/json");
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
