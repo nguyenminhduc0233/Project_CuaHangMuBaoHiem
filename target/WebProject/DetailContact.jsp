@@ -76,6 +76,18 @@
 
           </div>
         </div>
+        <%
+          String message = (String)session.getAttribute("message"); // Lấy thông báo từ session
+          session.removeAttribute("message"); // Xóa thông báo khỏi session
+
+          if (message != null) { // Nếu thông báo có giá trị
+        %>
+        <script>
+          alert("<%=message%>"); // Hiển thị alert với thông báo được truyền từ Servlet
+        </script>
+        <%
+          }
+        %>
       </div>
     </main>
   </div>
