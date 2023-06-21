@@ -87,6 +87,7 @@
 <% NumberFormat nf = new NumberFormat();
     Product p= (Product) request.getAttribute("product");
     String error = (String) request.getAttribute("error");
+    System.out.println(error);
 %>
 
 <!-- Shop Detail Start -->
@@ -253,8 +254,10 @@
                                                 </p>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="small mb-0" style="color: #aaa;">
-                                                        <a href="<%=idcus==idUser? "/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus:"#!"%>"
+                                                        <a href="<%="/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus%>"
                                                            class="link-grey">Remove</a>
+<%--                                                        <a href="<%=idcus==idUser? "/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus:"#!"%>"--%>
+<%--                                                           class="link-grey">Remove</a>--%>
                                                         <a href="#!" class="link-grey">Reply</a>
                                                     </p>
                                                     <div class="d-flex flex-row">
