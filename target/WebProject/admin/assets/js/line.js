@@ -8,7 +8,7 @@ function getData(d){
     const lineConfig = {
         type: 'line',
         data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: ['1', '2', '3', '4', '5', '6', '7','8', '9', '10', '11', '12'],
             datasets: [
                 {
                     label: 'Doanh thu',

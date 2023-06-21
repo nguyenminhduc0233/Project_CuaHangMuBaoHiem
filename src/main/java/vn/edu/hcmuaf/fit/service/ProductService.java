@@ -2220,12 +2220,13 @@ public class ProductService {
         return date;
     }
 
-    public static long[] chartLine() {
+    public static long[] chartLine(int year) {
         long[] result = new long[12];
         LocalDate localDate = LocalDate.now();
         long res = 0;
         for (int i = 1; i < 13; i++) {
-            result[i-1] = getRevenueByMonthYear(i, localDate.getYear());
+//            result[i-1] = getRevenueByMonthYear(i, localDate.getYear());
+            result[i-1] = getRevenueByMonthYear(i, year);
         }
         return result;
     }
