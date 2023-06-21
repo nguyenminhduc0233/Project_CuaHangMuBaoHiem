@@ -431,7 +431,7 @@ public class ProductService {
     public static List<Comment> getListCommentById(int id_pro){
         List<Comment> list = new ArrayList<>();
         try {
-            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id, id_customer, id_product, comment, star, date, display from comments where id_product=? order by date desc");
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("select  id, id_customer, id_product, comment, star, date, display from comments where id_product=?");
             ps.setInt(1,id_pro);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){

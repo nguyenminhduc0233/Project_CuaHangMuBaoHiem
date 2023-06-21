@@ -56,6 +56,10 @@
             content: '\f006';
             font-family: FontAwesome;
         }
+        .small .mb-0 .disabled{
+            color: #d5d6d7;
+            pointer-events: none;
+        }
     </style>
 </head>
 
@@ -217,7 +221,7 @@
                     <div class="tab-pane fade" id="tab-pane-3">
                         <div class="row" style="overflow: auto">
                             <div style="float:left;width:680px; padding-right:0px;">
-                                <div class="col-md-6" class="media mb-4" style="width: 600px;" class="media-body" id="display"></div>
+
                                     <%
                                         int idc = 0;
                                         int idp = 0;
@@ -227,8 +231,10 @@
                                         idc = com.getId();
                                         idp = com.getId_product();
                                         idcus = com.getId_customer();
+                                        String username = (String) request.getSession().getAttribute("tendangnhap");
+                                        int idUser = ProductService.getIdCusByUserName(username);
                                     %>
-                                    <%--                                <input type="hidden" value="<%=com.getId()%>" name="id_comt">--%>
+
                                     <div class="col-md-6">
                                         <div class="media mb-4" style="width: 600px;">
                                             <div class="media-body">
@@ -247,9 +253,9 @@
                                                 </p>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <p class="small mb-0" style="color: #aaa;">
-                                                        <a href="/Project_CuaHangMuBaoHiem_war/DeleteComment?idp=<%=idp%>&idc=<%=idc%>&idcus=<%=idcus%>"
-                                                           class="link-grey">Remove</a> •
-                                                        <a href="#!" class="link-grey">Reply</a> •
+                                                        <a href="<%=idcus==idUser? "/Project_CuaHangMuBaoHiem_war/DeleteComment?idp="+idp+"&idc="+idc+"&idcus="+idcus:"#!"%>"
+                                                           class="link-grey">Remove</a>
+                                                        <a href="#!" class="link-grey">Reply</a>
                                                     </p>
                                                     <div class="d-flex flex-row">
                                                         <i class="far fa-check-circle text-primary"></i>
@@ -259,6 +265,7 @@
                                         </div>
                                     </div>
                                     <%}%>
+                                <div class="col-md-6" class="media mb-4" style="width: 600px;" class="media-body" id="display"></div>
                             </div>
                             <div class="col-md-6" style="float: right; width: 500px;">
 

@@ -28,17 +28,14 @@ public class DeleteComment extends HttpServlet {
             log.setSrc(this.name + "DELETE COMMENT FALSE");
             log.setContent("DELETE COMMENT FALSE: Username - " + username);
             log.setLevel(Log.ERROR);
-        } else if (ProductService.getIdCusByUserName(username) == id_cus) {
+        } else {
             ProductService.deleteComment(id_comt);
-
             response.sendRedirect("/Project_CuaHangMuBaoHiem_war/detail?id=" + id_pro);
 
             log.setSrc(this.name + "DELETE COMMENT");
             log.setContent("DELETE COMMENT AT PRODUCT " + id_pro + " SUCCESS: Username - "  + username);
             log.setLevel(Log.DANGER);
             LogService.log(log);
-        } else {
-            response.sendRedirect("#!");
         }
 
     }

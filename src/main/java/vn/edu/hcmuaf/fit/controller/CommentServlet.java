@@ -21,7 +21,7 @@ public class CommentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json");
+//        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
@@ -40,33 +40,25 @@ public class CommentServlet extends HttpServlet {
                 int star = Integer.parseInt(stars);
                 int id_pro = Integer.parseInt(idPro);
 
-                if (stars == "" || content == ""){
-                    System.out.println("stars null");
-                    request.setAttribute("error", "Vui lòng không để trống!.");
-                    request.getRequestDispatcher("/Project_CuaHangMuBaoHiem_war/detail?id="+idPro).forward(request, response);
-                } else{
-                    ProductService ps = new ProductService();
-                    ps.addComment(id_cus, id_pro, content, star, date, 1);
+                ProductService ps = new ProductService();
+                ps.addComment(id_cus, id_pro, content, star, date, 1);
 
-                    List<Comment> comts =  ProductService.getAllComment();
-                    Comment comt = comts.get(comts.toArray().length-1);
-                    int idc = comt.getId();
+                List<Comment> comts =  ProductService.getAllComment();
+                Comment comt = comts.get(comts.toArray().length-1);
+                int idc = comt.getId();
 
-                    Gson gson = new Gson();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                    String dateStr = sdf.format(date);
+                Gson gson = new Gson();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                String dateStr = sdf.format(date);
 
-                    // Thêm tên người dùng vào đối tượng JSON được trả về
-                    String responseText = "{\"idcus\": " + id_cus + ",\"idp\": " + id_pro + ",\"idc\": " + idc + ", \"comment\": " + gson.toJson(comt) + ", \"date\": \"" + dateStr + "\", \"username\": \"" + username + "\" }";
-                    System.out.println(responseText);
-                    out.print(responseText);
-                    out.flush();
-
-                }
+                // Thêm tên người dùng vào đối tượng JSON được trả về
+                String responseText = "{\"idcus\": " + id_cus + ",\"idp\": " + id_pro + ",\"idc\": " + idc + ", \"comment\": " + gson.toJson(comt) + ", \"date\": \"" + dateStr + "\", \"username\": \"" + username + "\" }";
+                System.out.println(responseText);
+                out.print(responseText);
+                out.flush();
             } else{
-                System.out.println("error response");
                 request.setAttribute("error", "Vui lòng đăng nhập để bình luận!.");
-                response.sendRedirect("/Project_CuaHangMuBaoHiem_war/Home");
+                request.getRequestDispatcher("login.jsp").forward(request,response);
                 return;
             }
 
