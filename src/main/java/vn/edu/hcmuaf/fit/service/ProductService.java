@@ -2449,30 +2449,21 @@ public class ProductService {
         }
         return list;
     }
+    public static void removeQuantity(int iddp, long quantity){
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE detail_products set quantity = quantity - ? where id_dp =?");
+            ps.setLong(1, quantity);
+            ps.setInt(2, iddp);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void removesQuantity(List<BillDetail> bill){
+        for(BillDetail b : bill){
+            removeQuantity(b.getId_dp(),b.getQuantitySold());
+        }
+    }
     public static void main(String[] args) throws SQLException {
-//        List<BillDetail> list = new ArrayList<>();
-//        list.add(new BillDetail(1,1,400000));
-//        list.add(new BillDetail(2,1,50000));
-//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
-//        System.out.print(getRevenueByMonthYear( 4,  2023));
-//        for(long l : chartLine()){
-//            System.out.println(l);
-//        }
-
-//        deleteComment(15);
-//        System.out.println(findProductReturn(1,"Nón").size());
-//        System.out.println(getTotalProduct());
-//        for(Product p : topThreeByYear()){
-//            System.out.println(p.getId());
-//        }
-//        System.out.println(getProduct(14).getImg());
-//        System.out.println(LocalDate.now().getYear());
-//        for(long l :chartLine()){
-//            System.out.println(l);
-//        }
-//        System.out.println(getRevenueByMonthYear(4,2023));
-//        addBill
-
-        System.out.println(getAllComment());
         }
 }

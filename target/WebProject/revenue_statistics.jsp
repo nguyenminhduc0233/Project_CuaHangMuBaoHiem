@@ -448,7 +448,7 @@
           }
           NumberFormat numberFormat = new NumberFormat();
         %>
-        <p> Tổng doanh thu trong năm <%= y %> là: <%= numberFormat.numberFormat(sum) %></p>
+        <p> Tổng doanh thu trong năm <%= y %> là: <%= numberFormat.numberFormat(sum) %>đ</p>
         <div class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
           <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
             Biểu đồ đường
