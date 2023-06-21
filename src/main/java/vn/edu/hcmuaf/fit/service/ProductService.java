@@ -2231,7 +2231,7 @@ public class ProductService {
         return result;
     }
 
-    public static List<Product> topThreeByYear() {
+    public static List<Product> topThreeByYear(String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2254,7 +2254,7 @@ public class ProductService {
         return list;
     }
 
-    public static List<Product> topThreeByMonth() {
+    public static List<Product> topThreeByMonth(String month, String year) {
         List<Product> list = new ArrayList<Product>();
         Product product = new Product();
         DBConnect dbConnect = DBConnect.getInstance();
@@ -2262,8 +2262,8 @@ public class ProductService {
         try {
             PreparedStatement ps = dbConnect.getConnection().prepareStatement("select distinct  dp.id_product,sum(db.quantitySold) c from bills b join detail_bills db on db.id_bill = b.id join detail_products dp on dp.id_dp = db.id_dp where month(b.date) = ? and year(b.date)=? and b.status=? group by dp.id_product order by c DESC");
 
-            ps.setString(1, String.valueOf(LocalDate.now().getMonthValue()));
-            ps.setString(2, String.valueOf(LocalDate.now().getYear()));
+            ps.setString(1, month);
+            ps.setString(2, year);
             ps.setString(3, "Đã nhận");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -2449,30 +2449,21 @@ public class ProductService {
         }
         return list;
     }
+    public static void removeQuantity(int iddp, long quantity){
+        try {
+            PreparedStatement ps = DBConnect.getInstance().getConnection().prepareStatement("UPDATE detail_products set quantity = quantity - ? where id_dp =?");
+            ps.setLong(1, quantity);
+            ps.setInt(2, iddp);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void removesQuantity(List<BillDetail> bill){
+        for(BillDetail b : bill){
+            removeQuantity(b.getId_dp(),b.getQuantitySold());
+        }
+    }
     public static void main(String[] args) throws SQLException {
-//        List<BillDetail> list = new ArrayList<>();
-//        list.add(new BillDetail(1,1,400000));
-//        list.add(new BillDetail(2,1,50000));
-//       System.out.println(addBill(1, "Đang gửi", list,"Nhon hau", "121", "1821772","2023-18-06","49000", "17271"));
-//        System.out.print(getRevenueByMonthYear( 4,  2023));
-//        for(long l : chartLine()){
-//            System.out.println(l);
-//        }
-
-//        deleteComment(15);
-//        System.out.println(findProductReturn(1,"Nón").size());
-//        System.out.println(getTotalProduct());
-//        for(Product p : topThreeByYear()){
-//            System.out.println(p.getId());
-//        }
-//        System.out.println(getProduct(14).getImg());
-//        System.out.println(LocalDate.now().getYear());
-//        for(long l :chartLine()){
-//            System.out.println(l);
-//        }
-//        System.out.println(getRevenueByMonthYear(4,2023));
-//        addBill
-
-        System.out.println(getAllComment());
         }
 }

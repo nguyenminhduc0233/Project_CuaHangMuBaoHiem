@@ -78,6 +78,7 @@ public class Add_Bill extends HttpServlet {
                 request.setAttribute("id_bill", id_bill);
                 request.setAttribute("list", id_dp);
                 request.setAttribute("fee", fee);
+                ProductService.removesQuantity(id_dp);
                 String conttent_recive = "";
                 conttent_recive += id_bill + "\n" + name + "\n" + email + "\n" + phone + "\n" + address + "\n" + "Tuy cập vào đây nếu giao hàng thành công" + "\n" + "http://localhost:8080/Project_CuaHangMuBaoHiem_war/ReciveProduct?id_bill=" + id_bill;
                 MailService.sendMail("20130233@st.hcmuaf.edu.vn", "Giao hàng", conttent_recive);
