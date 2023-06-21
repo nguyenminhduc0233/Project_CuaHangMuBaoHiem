@@ -2449,6 +2449,19 @@ public class ProductService {
         }
         return list;
     }
+    public static int getTotalImportProduct(){
+        try{
+            int count = 0;
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from importproducts");
+            while (rs.next()){
+                count++;
+            }
+            return count;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
     public static void main(String[] args) throws SQLException {
 //        List<BillDetail> list = new ArrayList<>();
 //        list.add(new BillDetail(1,1,400000));

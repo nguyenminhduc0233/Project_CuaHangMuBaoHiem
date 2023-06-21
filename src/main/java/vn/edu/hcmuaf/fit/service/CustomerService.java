@@ -509,9 +509,7 @@ public class CustomerService {
         List<Customer> list = new ArrayList<Customer>();
         List<Customer> list_data = ProductService.getData_Customer();
         for(Customer c:list_data){
-            if(c.getPermission()!=0){
-                list.add(c);
-            }
+            list.add(c);
         }
         return list;
     }

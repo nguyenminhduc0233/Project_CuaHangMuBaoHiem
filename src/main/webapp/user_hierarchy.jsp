@@ -545,7 +545,8 @@
             <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
                   <nav aria-label="Table navigation">
                     <ul class="inline-flex items-center">
-                      <li class="page-item <%=index==1? "disabled":""%>">
+                      <%if(endPage<=7){%>
+                        <li class="page-item <%=index==1? "disabled":""%>">
                         <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
                           <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
                             <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
@@ -568,6 +569,139 @@
                           </svg>
                         </button></a>
                       </li>
+                        <%}else{
+                          if(index==1||index==endPage){%>
+                        <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <li><a href="<%=link + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
+                          1
+                        </button></a></li>
+                      <li><a href="<%=link + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
+                          2
+                        </button></a></li>
+                        <li>...</li>
+                        <li><a href="<%=link + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
+                          <%=endPage-1%>
+                        </button></a></li>
+                        <li><a href="<%=link + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
+                          <%=endPage%>
+                        </button></a></li>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="<%=link + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <%}else if(index==2){%>
+                        <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <li><a href="<%=link + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
+                          1
+                        </button></a></li>
+                      <li><a href="<%=link + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
+                          2
+                        </button></a></li>
+                        <li><a href="<%=link + 3%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==3? "text-white bg-purple-600":""%>">
+                          3
+                        </button></a></li>
+                        <li>...</li>
+                        <li><a href="<%=link + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
+                          <%=endPage-1%>
+                        </button></a></li>
+                        <li><a href="<%=link + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
+                          <%=endPage%>
+                        </button></a></li>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="<%=link + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <%}else if(index==(endPage-1)){%>
+                        <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <li><a href="<%=link + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
+                          1
+                        </button></a></li>
+                        <li><a href="<%=link + 2%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==2? "text-white bg-purple-600":""%>">
+                          2
+                        </button></a></li>
+                        <li>...</li>
+                        <li><a href="<%=link + (endPage-2)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-2)? "text-white bg-purple-600":""%>">
+                          <%=endPage-2%>
+                        </button></a></li>
+                        <li><a href="<%=link + (endPage-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(endPage-1)? "text-white bg-purple-600":""%>">
+                          <%=endPage-1%>
+                        </button></a></li>
+                        <li><a href="<%=link + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
+                          <%=endPage%>
+                        </button></a></li>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="<%=link + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <%}else{%>
+                        <li class="page-item <%=index==1? "disabled":""%>">
+                        <a href="<%=link + pre%>"><button class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple" aria-label="Previous">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <li><a href="<%=link + 1%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==1? "text-white bg-purple-600":""%>">
+                          1
+                        </button></a></li>
+                        <li>...</li>
+                        <li><a href="<%=link + (index-1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index-1)? "text-white bg-purple-600":""%>">
+                          <%=index-1%>
+                        </button></a></li>
+                        <li><a href="<%=link + (index)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index)? "text-white bg-purple-600":""%>">
+                          <%=index%>
+                        </button></a></li>
+                        <li><a href="<%=link + (index+1)%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==(index+1)? "text-white bg-purple-600":""%>">
+                          <%=index+1%>
+                        </button></a></li>
+                        <li>...</li>
+                        <li><a href="<%=link + endPage%>"><button class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <%=index==endPage? "text-white bg-purple-600":""%>">
+                          <%=endPage%>
+                        </button></a></li>
+                      <li class="page-item <%=index==endPage? "disabled":""%>">
+                        <a href="<%=link + next%>"><button class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple" aria-label="Next">
+                          <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" fill-rule="evenodd">
+                            </path>
+                          </svg>
+                        </button></a>
+                      </li>
+                        <%}%>
+                        <%}%>
                     </ul>
                   </nav>
                 </span>
