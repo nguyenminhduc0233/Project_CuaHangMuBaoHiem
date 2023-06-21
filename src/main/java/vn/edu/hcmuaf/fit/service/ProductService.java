@@ -1424,20 +1424,42 @@ public class ProductService {
     }
     public static List<Log> onePageLog(int index) {
         List<Log> list = new ArrayList<>();
+        int newindex = Math.abs(index - (getTotalLog()/10))*10+getTotalLog()%10;
         try {
-            PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,10");
-            prs.setInt(1, (index-1)*10);
-            ResultSet rs = prs.executeQuery();
-            while (rs.next()) {
-                list.add(new Log(
-                        rs.getInt("id"),
-                        rs.getInt("level"),
-                        rs.getString("user"),
-                        rs.getString("src"),
-                        rs.getString("content"),
-                        rs.getDate("createAt"),
-                        rs.getInt("status")));
+            if(index==(getTotalLog()/10+1)){
+                int du = getTotalLog()%10;
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,?");
+                prs.setInt(1, 0);
+                prs.setInt(2, du);
+                ResultSet rs = prs.executeQuery();
+                while (rs.next()) {
+                    list.add(new Log(
+                            rs.getInt("id"),
+                            rs.getInt("level"),
+                            rs.getString("user"),
+                            rs.getString("src"),
+                            rs.getString("content"),
+                            rs.getDate("createAt"),
+                            rs.getInt("status")));
+                }
+                Collections.reverse(list);
+            }else{
+                PreparedStatement prs = DBConnect.getInstance().getConnection().prepareStatement("select id, level, user, src, content, createAt, status from logs limit ?,10");
+                prs.setInt(1, newindex);
+                ResultSet rs = prs.executeQuery();
+                while (rs.next()) {
+                    list.add(new Log(
+                            rs.getInt("id"),
+                            rs.getInt("level"),
+                            rs.getString("user"),
+                            rs.getString("src"),
+                            rs.getString("content"),
+                            rs.getDate("createAt"),
+                            rs.getInt("status")));
+                }
+                Collections.reverse(list);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -2448,6 +2470,19 @@ public class ProductService {
             list.add(listPro.get(i));
         }
         return list;
+    }
+    public static int getTotalImportProduct(){
+        try{
+            int count = 0;
+            ResultSet rs = DBConnect.getInstance().get().executeQuery("select id from importproducts");
+            while (rs.next()){
+                count++;
+            }
+            return count;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
     public static void removeQuantity(int iddp, long quantity){
         try {
